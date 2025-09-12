@@ -1,0 +1,96 @@
+\documentclass[11pt, letterpaper]{article}
+
+% Compact lists
+\usepackage{enumitem}
+
+% Images
+\usepackage{graphicx}
+
+% Tables
+\usepackage{booktabs}
+
+% Document boarders
+\usepackage{geometry}
+\geometry{
+    letterpaper,
+    margin=.85in
+}
+
+% Remove page numbers
+% \pagenumbering{gobble}
+
+% Double spacing
+\usepackage{setspace}
+\doublespacing
+
+% Spacing out footnotes
+\setlength{\footnotesep}{0.75\baselineskip}
+
+% Palatino
+\usepackage{newpxtext}
+\usepackage{newpxmath}
+
+% Nicer monospace font
+\usepackage{inconsolata}
+
+% Improved typography
+\usepackage{microtype}
+
+% URL and hyperlink settings
+\usepackage[dvipsnames]{xcolor}
+\usepackage{xurl}
+\usepackage[
+    colorlinks,
+    breaklinks=true,
+    urlcolor=NavyBlue,
+    citecolor=NavyBlue,
+    linkcolor=NavyBlue,
+    % breaklinks,
+    linktocpage
+]{hyperref}
+\urlstyle{same}
+
+% Bib settings
+\usepackage[
+    backend=biber,
+    % style=apa,
+    style=chem-acs,
+    doi=true,
+    % url=true,
+    url=false,
+    articletitle=true,
+    maxbibnames=99
+    %natbib=true
+    ]{biblatex}
+\addbibresource{bibliography.bib}
+
+% author settings
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        
+        \Huge
+        Your Project Name
+
+        \LARGE
+        Project proposal \& Statement of Work
+        \break
+        PM's name, Project Manager
+        
+        List remaining team members here, one name per line, first name, last name, alphabetically by last name
+        
+        POTENTIAL ADVISORS: \emph{LIST POTENTIAL ADVISORS FOR GROUP HERE}
+        
+        Date: Month, Day, Year
+    \end{center}
+\end{titlepage}
+
+
+
+How does this work \parencite{kane2022}?
+
+\printbibliography
+
+\end{document}
