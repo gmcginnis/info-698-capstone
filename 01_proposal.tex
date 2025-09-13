@@ -73,6 +73,12 @@
 % \newlength{\origsubsecwidth}
 % \setlength{\origsubsecwidth}{\cftsubsecnumwidth}
 
+% Add dots for sections
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+% Remove dots for subsections
+\renewcommand{\cftsubsecdotsep}{\cftnodots}
+\renewcommand{\cftsubsubsecdotsep}{\cftnodots}
+
 % \addtolength{\cftsubsecnumwidth}{25pt}
 % \addtolength{\cftsubsecnumwidth}{-25pt}
 \setlength{\cftsubsecnumwidth}{0pt}
@@ -361,7 +367,7 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 % \renewcommand{\thesubsubsection}{\arabic{subsubsection}}
 
 \setcounter{subsection}{1}
-\renewcommand{\thesubsection}{\Alph{subsection}.\ }
+\renewcommand{\thesubsection}{\Alph{subsection}.\hspace{1em}}
 \custsubsection{Advisor Engagement}
 
 % \renewcommand{\addtolength{\cftsubsecnumwidth}{0pt}}
@@ -370,7 +376,7 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 % \subsection{Advisor Engagement}
 
 \setcounter{subsubsection}{1}
-\renewcommand{\thesubsubsection}{\arabic{subsubsection} )\ }
+\renewcommand{\thesubsubsection}{\arabic{subsubsection} )\hspace{1em}}
 % \subsubsection{Project Team Responsibilities}
 \custsubsubsection{Project Team Responsibilities}
 \begin{itemize}
