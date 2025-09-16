@@ -90,6 +90,9 @@
     \addtocounter{subsubsection}{1}
 }
 
+% Section numbering
+\newcommand{\secref}[1]{\S\ref{#1}}
+
 \begin{document}
 
 \begin{titlepage}
@@ -152,8 +155,12 @@
                 \toprule
                 Version & Summary of Changes & Date \\
                 \midrule
-                0.1 & Converted template from \texttt{.docx} to \LaTeX & 09/13/25 \\
-                1.0 & Started bibliography, Executive Summary & 09/13/25 \\
+                % 0.1 & Converted template from \texttt{.docx} to \LaTeX & 09/13/25 \\
+                % 0.2 & Started bibliography, \secref{sec_es} Executive Summary & 09/13/25 \\
+                % 0.3 & Began User Research, Features; Transcribed Project Timeline; finished Ethics & 09/16/25 \\
+                0.1 & Converted template to \LaTeX, started bibliography and \secref{sec_es} & 09/13/25 \\
+                % 0.2 & Started bibliography and \secref{sec_es} & 09/13/25 \\
+                0.2 & Began \secref{sec_market}, \secref{sec_features}; transcribed \secref{sec_time}; completed \secref{sec_ethics} & 09/16/25 \\
                 \bottomrule
             \end{tabular}
         \end{table}
@@ -185,7 +192,7 @@
 
 % How does this work \parencite{kane2022}?
 
-\section{Executive Summary}
+\section{Executive Summary}\label{sec_es}
 % The Executive Summary was written by John Doe.
 
 % (Complete this with the author of each section)
@@ -201,13 +208,14 @@ Other variables---such as rainfall and soil moisture measurements---can be integ
 
 % 2nd paragraph - Explain why the product is needed and what problem it is solving. If current solutions to the problem exists explain how your solution is better and unique. Some context is needed here but only enough to establish “Why?” product will benefit the user.) If it is an internal project, state why it is important. This may be to facilitate learning, but hopefully it also has a tie to some greater good for society. Find credible sources and cite them in a footnote. Don’t say “everyone knows flooding is an issue…” research and say, “according to <insert credible reference, peer reviewed paper, gov’t agency, etc> flooding in 2019 caused $32M in damages in Acme County, our product will aid in the detection….”
 % The Lutz~Weir (Figure~\ref{fig_weir}) is located on the northeast slope of Barro~Colorado~Island, Panama, and has been collecting run-off data since January 1, 1972.
-The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figures~\ref{fig_map},~\ref{fig_weir}).
+% The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figures~\ref{fig_map},~\ref{fig_weir}).
+The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figure~\ref{fig_map}).
 It has been collecting run-off data since January 1, 1972, with frequency of measurements ranging from three~minutes to three~hours.
 Until July 19, 1989, water level was recorded on paper charts, which have since been digitized.
 % Frequency of measurements range from three~minutes to three~hours.
 % In addition to rainfall measurements from Clearing station 170~m north of the weir, the run-off data contains millions of records over time.
 Millions of data points are currently present in the set, with more added as the sensor continues to record measurements.
-%
+
 Quality issues in the data come about due to the need for re-calibration, debris blockages resulting in monomodal run-off value increases without rainfall, complications from weir blockages paired with rainfall, false positives, impossible sub-zero values, evapotranspiration, considerations for annual intentional pond drains, and signal noise.
 % 
 Currently, quality assurance is conducted manually via the Visual~FoxPro interactive visual interface.
@@ -216,62 +224,85 @@ Not only does this approach run the risk of imprecise or inconsistent correction
 % Past attempts at quality assurance using stochastic methods have failed, as past teams have attempted to automate it with stochastic methods but concluded it to be resilient against automation.
 Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 
-\pagebreak
+% \pagebreak
 
 \begin{figure}[hbt!]
     \centering
-    \fbox{\includegraphics[width=.55\textwidth]{figures/map_bci.jpg}}
-    \caption{The location of Barro~Colorado~Island in Panama \parencite{stri2025}.}
+    \fbox{\includegraphics[width=.45\textwidth]{figures/map_bci.jpg}}
+    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
+    \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
     \label{fig_map}
 \end{figure}
 
-\begin{figure}[hbt!]
-    \centering
-    \includegraphics[width=.6\textwidth]{figures/lutz_weir_wide.jpg}
-    \caption{The Lutz~Weir \parencite{stri2025}.}
-    % \caption{The Lutz~Weir CITE.}
-    \label{fig_weir}
-\end{figure}
+% \begin{figure}[hbt!]
+%     \centering
+%     \includegraphics[width=.6\textwidth]{figures/lutz_weir_wide.jpg}
+%     \caption{The Lutz~Weir \parencite{stri2025}.}
+%     % \caption{The Lutz~Weir CITE.}
+%     \label{fig_weir}
+% \end{figure}
 
-\pagebreak
+% \pagebreak
 
 % In addition, rainfall measurements have been recorded at the Clearing station 170~m north of the weir.
 
 
 % 3rd Paragraph - Describe the process of development: What work will you be doing (“We will be /building XYZ) Who is involved, Where the project work will take place, what you will have completed at the end of semester.
 Given that the project is still in its early stages, a literature review will first need to be conducted to identify comparable machine learning approaches for quality assurance of temporal data.
+Table~\ref{tab_dol}
 
 % Include a table as shown. For this and all tables you do not want to repeat the information in the table – that’s what the table is for.  Rather you should introduce the table and point out anything significant. Something like “Table 1 shows the preliminary division of responsibilities among the team members.  Since the User Interface for this product is quite complex, we have divided it among multiple team members as listed.”
 
+An outline of anticipated features is provided in Table~\ref{tab_dol}.
+% 
+Dr.~Steven~Paton of the Smithsonian~Tropical~Research~Institute will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{l|l}
+    \begin{tabular}{ll}
         \toprule
         Team Member & Feature responsibility \\
         \midrule
-        Violet Parr & UI: Display \\
-        Helen Parr & Remote mgmt \\
+        Gillian McGinnis & Literature review \& research \\
+          & Exploratory data analysis (EDA) \\
+          & Failure mode classification model \\
+          & Failure mode correction models \\
+          & Reproducibility documentation \\
+          & Course deliverables and presentation preparations \\
+          & User interface (\textit{time permitting}) \\
         \bottomrule
     \end{tabular}
     \caption{Preliminary Subsystem Responsibilities}
-    \label{tab_sample}
+    \label{tab_dol}
 \end{table}
 
 % After a quick read through, a person should feel familiar with your project, and understand the team and the high-level tasks that you will perform. The rest of the document will provide more details on the topics introduced in the summary. In fact, many people find it easiest to write the summary last by pulling key items from the following sections.
 
 % Executive summary max 300 words.
 
-\section{User/Market Research}
+\pagebreak
+
+\section{User/Market Research}\label{sec_market}
 % This section describes who your product is for and what they want. One of the worst things product developers can do is create a product that no one wants, needs or will pay for. This section is designed to illustrate you have an understanding of your user, the market for your product and should be updated frequently as you learn more. In this section you should look at the macro market to evaluate existing products and market opportunity. You should also look at the micro market by performing empathy interviews with potential users. Please refer to the research module for more information. 
 
+
+\subsection*{Overall market}
 % Overall market: Do some basic research about the size and scope of the market your product will be in. If it is a web-based game please include the size and scope of web based games. How many players, how many games, how much revenue is created in the market. 
+The target user for these models will be hydrology researchers analyzing temporal weir and environmental data in parallel.
+However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on run-off data at other weirs around the world and could render final correction models unsuitable for other weirs.
 
+\subsection*{Existing competitors}
 % Existing competitors: List your closest competitors and any information you can glean about their market including user base, etc. Also include how your product will be differentiated from them. 
+Visual~FoxPro is currently the only software used by Dr.~Paton to manipulate the data.
+While the interface is sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation. Furthermore, it is not currently set up to automatically detect problematic portions of the data.
 
+Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
+
+\subsection*{User insights}
 % User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
 
-\section{Product Features}
+\section{Product Features}\label{sec_features}
 % This section describes the scope and features of the _product_ created by the _project_. It is what the project will PRODUCE.. 
 
 % The key objective of the next section is to: 
@@ -284,21 +315,48 @@ Given that the project is still in its early stages, a literature review will fi
 
 \renewcommand{\thesubsection}{Feature \arabic{subsection}.\ }
 \setcounter{subsection}{1}
-\custsubsection{Wireless Transmission of Data}
+\custsubsection{Detection of Periods Containing a Failure Mode}
 
 % This section was written by (the owner of the subsystem that implements this feature should write this section.)
 % Write a sentence to briefly describe the feature and introduce the table of parameters. Think hard about how to define the requirements – usually min and max measurable values of some sort. Example:
 
 % The system will transmit the water level readings from the remote unit located at the retention pond to the main unit located in the construction office.  The requirements for transmission are summarized in Table 1.
 
-\custsubsection{Temperature Sensing and Logging}
+The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
+
+\custsubsection{Classification of Failure Mode}
 
 % This section was written by (the owner of the subsystem that implements this feature should write this section.)
 
 % Repeat format from Feature 1 as needed. You should have a minimum of 3 key Features, and a maximum of 8.  Most projects will have 4 or 5.
 
+Upon a period being flagged as containing a failure mode, it will need to be classified.
+A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 
-\section{Project Timeline \& Gannt Chart}
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{l p{0.5\textwidth}}
+        \toprule
+        Failure Mode & Description \\
+        \midrule
+        Calibration & Standard checks that require baseline correction or slight data pivot. \\
+        Spike & Short and abrupt changes in level typically caused by equipment issues.\\
+        Sub-zero & The stream runs dry, or when the pond is drained for cleaning.\\
+        Signal noise & Equipment failure results in impossible variability of reported values.\\
+        \midrule
+        Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
+        Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
+        Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
+        \bottomrule
+    \end{tabular}
+    \caption{Overview of Weir Failure Modes \parencite{hydroPC}}
+    \label{tab_fm}
+\end{table}
+
+\custsubsection{Quality Assurance on Periods of Failure}
+
+
+\section{Project Timeline \& Gannt Chart}\label{sec_time}
 
 % In this section, you will list the major deliverables and decision points of the project. You must establish early in the project how you are going to approach the project and get the work done. You will track your work over time using the Gannt Chart and will continually update and submit the chart in weekly check-ins.
 
@@ -310,7 +368,8 @@ Given that the project is still in its early stages, a literature review will fi
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{l|l}
+    \rowcolors{2}{white}{gray!20}
+    \begin{tabular}{l l}
         \toprule
         Milestone & Date \\
         \midrule
@@ -342,18 +401,22 @@ Given that the project is still in its early stages, a literature review will fi
 % The Project Manager should ensure that the milestones and SOW are reviewed constantly by team members, your D2 mentors your advisor, and the sponsor. 
 % A Gannt chart is a visual representation of the project timeline linked to a schedule with task ownership and dependencies. A Gannt chart is a critical tool in product management. Refer to the Gannt Chart Module on D2L for instructions and resources to complete your Gannt chart.  
 
-\section{Ethics}
+\pagebreak
+
+\section{Ethics}\label{sec_ethics}
 
 % Data ethics is a key consideration in any product we create. Please include a completed ethics chart. Please see examples on D2L. 
 
-\begin{table}[htbp]
+\begin{table}[h!]
+% \begin{table}[htbp]
     \small
     % \singlespacing
     \centering
-    \begin{tabular}{r p{0.6\textwidth} c c}
+    \rowcolors{2}{white}{gray!20}
+    \renewcommand{\arraystretch}{1.23}
+    \begin{tabular}{r p{0.68\textwidth} c c}
         \toprule
-        \rowcolors{2}{gray!20}{white}
-        \# & Question & Generally & Data Brech \\
+        \# & Question & Generally & Data Breach \\
         \midrule
         1 & Could a user sell drugs or other illegal items on your platform? & No & No \\
         2 & Could a user of your platform engage in sex trafficking? & No & No \\
@@ -389,7 +452,9 @@ Given that the project is still in its early stages, a literature review will fi
     \label{tab_ethics}
 \end{table}
 
-\section{Approvals}
+\pagebreak
+
+\section{Approvals}\label{sec_approvals}
 
 % The project proposal is a document that needs the approval of everyone to move forward. If approval is denied, rework the proposal to fix the issue and begin the approval cycle again. 
 % The Faculty advisor should be consulted often for the purposes of creating the proposal. After the Faculty Sponsor and the Team are comfortable with the contents of the SOW, only then should it go to the Sponsor for review. 
@@ -409,12 +474,12 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
         \toprule
         Approver Name & Title & Signature & Date \\
         \midrule
-        All team members must sign the SOW & Team Member & . & . \\
-        . & Team Member & . & . \\
-        . & Team Member & . & . \\
-        . & Project Manager & . & . \\
-        . & Advisor & . & . \\
-        . & Instructor & . & . \\
+        % All team members must sign the SOW & Team Member & . & . \\
+        % . & Team Member & . & . \\
+        % . & Team Member & . & . \\
+        Gillian McGinnis & Project Manager & . & 09/23/25 \\
+        Sriram Iyengar & Advisor & . & . \\
+        Nitika Sharma & Instructor & . & . \\
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
@@ -449,7 +514,7 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 
 \pagebreak
 
-\section{Appendix}
+\section{Appendix}\label{sec_appendix}
 
 
 \setcounter{subsection}{1}
