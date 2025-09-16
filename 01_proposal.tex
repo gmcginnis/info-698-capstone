@@ -19,8 +19,8 @@
 % Remove page numbers
 % \pagenumbering{gobble}
 
-% % Double spacing
-% \usepackage{setspace}
+% Double spacing
+\usepackage{setspace}
 % \doublespacing
 
 % Spacing out footnotes
@@ -37,7 +37,8 @@
 \usepackage{microtype}
 
 % URL and hyperlink settings
-\usepackage[dvipsnames]{xcolor}
+% \usepackage[dvipsnames]{xcolor}
+\usepackage[table, dvipsnames]{xcolor}
 \usepackage{xurl}
 \usepackage[
     colorlinks,
@@ -313,14 +314,16 @@ Given that the project is still in its early stages, a literature review will fi
         \toprule
         Milestone & Date \\
         \midrule
-        Team formulation & 1/29/24 \\
-        . & . \\
-        . & . \\
-        Signed proposal & 2/19/2024 \\
-        . & . \\
-        Poster Demo & 4/23/24 \\
-        . & . \\
-        iShowcase & 5/1/25 \\
+        Mentor finalization & 09/12/25 \\
+        Signed proposal & 09/23/25 \\
+        EDA & 09/29/25 \\
+        Failure mode multiclass categorization model & 10/27/25 \\
+        Individual failure mode QA models & 11/17/25 \\
+        Model instructional writeup & 11/24/25 \\
+        % Signed proposal & 2/19/2024 \\
+        % Poster Demo & 4/23/24 \\
+        iShowcase presentation & 12/05/25 \\
+        Final capstone & 12/10/25 \\
         \bottomrule
     \end{tabular}
     \caption{Milestone Schedule}
@@ -344,14 +347,42 @@ Given that the project is still in its early stages, a literature review will fi
 % Data ethics is a key consideration in any product we create. Please include a completed ethics chart. Please see examples on D2L. 
 
 \begin{table}[htbp]
+    \small
+    % \singlespacing
     \centering
-    \begin{tabular}{r|l|c|c}
+    \begin{tabular}{r p{0.6\textwidth} c c}
         \toprule
-        \# & Question & Generally & Data Breach \\
+        \rowcolors{2}{gray!20}{white}
+        \# & Question & Generally & Data Brech \\
         \midrule
-        1 & Could a user sell drugs or other illegal items on your platform? & Y/N/M & Y/N/M \\
-        . & . & . & .\\
-        28 & Could your research outcomes harm an individual or entity? & Y/N/M & Y/N/M \\
+        1 & Could a user sell drugs or other illegal items on your platform? & No & No \\
+        2 & Could a user of your platform engage in sex trafficking? & No & No \\
+        3 & Could a user sell class notes or cheat on their homework on your platform? & No & No \\
+        4 & Could a stalker use your project to find someone? & No & No \\
+        5 & Could your app be used to spy on or track individuals? & No & No \\
+        6 & Could your app/software access the camera or microphone and record things without users being aware? & No & No \\
+        7 & If someone uses your platform, could they be re-traumatized or have their mental health impacted in some way? & No & No \\
+        8 & Could your algorithm promote material that would traumatize or upset individuals? & No & No \\
+        9 & Would your users be upset if the data you collect was given to someone else? & No & No \\
+        10 & Could a data leak potentially lead to identity theft? & No & No \\
+        11 & If your site was hacked, would users of that product potentially lose their job, spouse, or family? & No & No \\
+        12 & Should there be an age limitation on your product? & No & No \\
+        13 & Could someone use your product to find, contact, and potentially commit elder abuse? & No & No \\
+        14 & If the data on your platform was breached, could it be used to blackmail the users? & No & No \\
+        15 & Does the existence of your project imply that a particular racial group, gender, religion or other protected category is inherently bad, gross, or unwanted? & No & No \\
+        16 & Could your product be used to commit hate crimes against a specific group? & No & No \\
+        17 & Does the primary content of your game or algorithm focus on something considered deeply unethical? & No & No \\
+        18 & Does your game or software contain race, gender, or other stereotypes? & No & No \\
+        19 & Could users of your app scam other individuals? & No & No \\
+        20 & Is your particular algorithm biased towards predicting correctly only for one race, gender, or other group? & No & No \\
+        21 & Are the users of your project, players of your game, or those being surveyed for your data aware of how their data will be used? & No & No \\
+        22 & What are the possible misinterpretations of your results? For example: would a white supremacist or misogynist be stoked about your results if they misinterpreted it? & No & No \\
+        23 & Does the use or purchase of your data potentially contribute to a dangerous group or regime? & No & No \\
+        24 & Could your virtual reality environment cause injury to the user? & No & No \\
+        25 & Are your study participants or game players aware that their data will be collected and used? & No & No \\
+        26 & Does your game or app contain addictive design elements without benefit to the user? & No & No \\
+        27 & Does your survey contain an aspect of compulsion or unusually large incentive, that would command users to take it even if it was to their detriment? & No & No \\
+        28 & Could your research outcomes harm an individual or entity? & No & No \\
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
