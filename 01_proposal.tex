@@ -93,6 +93,8 @@
 % Section numbering
 \newcommand{\secref}[1]{\S\ref{#1}}
 
+\newcommand{\ditto}{\multicolumn{1}{c}{\texttt{"}}}
+
 \begin{document}
 
 \begin{titlepage}
@@ -117,7 +119,8 @@
         POTENTIAL ADVISORS:\\ %\emph{LIST POTENTIAL ADVISORS FOR GROUP HERE}
         \Large
         Dr. Sriram Iyengar (\emph{The University of Arizona College of Medicine, Phoenix}),\\
-        Dr. Steven Paton (\emph{Smithsonian Tropical Research Institute})
+        Steven Paton (\emph{Smithsonian Tropical Research Institute})
+        % Dr. Steven Paton (\emph{Smithsonian Tropical Research Institute})
         
         \bigskip
 
@@ -158,9 +161,10 @@
                 % 0.1 & Converted template from \texttt{.docx} to \LaTeX & 09/13/25 \\
                 % 0.2 & Started bibliography, \secref{sec_es} Executive Summary & 09/13/25 \\
                 % 0.3 & Began User Research, Features; Transcribed Project Timeline; finished Ethics & 09/16/25 \\
-                0.1 & Converted template to \LaTeX, started bibliography and \secref{sec_es} & 09/13/25 \\
+                0.1 & Converted template to \LaTeX, started \hyperref[sec_bib]{References} and \secref{sec_es} & 09/13/25 \\
                 % 0.2 & Started bibliography and \secref{sec_es} & 09/13/25 \\
                 0.2 & Began \secref{sec_market}, \secref{sec_features}; transcribed \secref{sec_time}; completed \secref{sec_ethics} & 09/16/25 \\
+                0.3 & Continued \secref{sec_features}; updated \secref{sec_time} & 09/18/25 \\
                 \bottomrule
             \end{tabular}
         \end{table}
@@ -230,7 +234,8 @@ Past attempts at automated quality assurance have failed due to the failure mode
     \centering
     \fbox{\includegraphics[width=.45\textwidth]{figures/map_bci.jpg}}
     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
-    \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
+    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
+    \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama.~\parencite{stri2025}}
     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
     \label{fig_map}
 \end{figure}
@@ -250,13 +255,13 @@ Past attempts at automated quality assurance have failed due to the failure mode
 
 % 3rd Paragraph - Describe the process of development: What work will you be doing (“We will be /building XYZ) Who is involved, Where the project work will take place, what you will have completed at the end of semester.
 Given that the project is still in its early stages, a literature review will first need to be conducted to identify comparable machine learning approaches for quality assurance of temporal data.
-Table~\ref{tab_dol}
+% Table~\ref{tab_dol}
 
 % Include a table as shown. For this and all tables you do not want to repeat the information in the table – that’s what the table is for.  Rather you should introduce the table and point out anything significant. Something like “Table 1 shows the preliminary division of responsibilities among the team members.  Since the User Interface for this product is quite complex, we have divided it among multiple team members as listed.”
 
-An outline of anticipated features is provided in Table~\ref{tab_dol}.
+An outline of anticipated project responsibilities is provided in Table~\ref{tab_dol}.
 % 
-Dr.~Steven~Paton of the Smithsonian~Tropical~Research~Institute will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
+Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
 
 \begin{table}[htbp]
     \centering
@@ -265,12 +270,13 @@ Dr.~Steven~Paton of the Smithsonian~Tropical~Research~Institute will be the prim
         Team Member & Feature responsibility \\
         \midrule
         Gillian McGinnis & Literature review \& research \\
-          & Exploratory data analysis (EDA) \\
-          & Failure mode classification model \\
-          & Failure mode correction models \\
-          & Reproducibility documentation \\
-          & Course deliverables and presentation preparations \\
-          & User interface (\textit{time permitting}) \\
+        \ditto & Exploratory data analysis (EDA) \\
+        \ditto & Failure mode classification model \\
+        \ditto & Failure mode correction models \\
+        \ditto & Model quality evaluations \\
+        \ditto & Reproducibility documentation \\
+        \ditto & Course deliverables and presentation preparations \\
+        \ditto & User interface (\textit{time permitting}) \\
         \bottomrule
     \end{tabular}
     \caption{Preliminary Subsystem Responsibilities}
@@ -294,13 +300,15 @@ However, given the specificity in location of the weir of interest, it is possib
 
 \subsection*{Existing competitors}
 % Existing competitors: List your closest competitors and any information you can glean about their market including user base, etc. Also include how your product will be differentiated from them. 
-Visual~FoxPro is currently the only software used by Dr.~Paton to manipulate the data.
+Visual~FoxPro is currently the only software used by Paton to manipulate the data.
 While the interface is sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation. Furthermore, it is not currently set up to automatically detect problematic portions of the data.
 
 Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
 
 \subsection*{User insights}
 % User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
+
+Because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
 
 \section{Product Features}\label{sec_features}
 % This section describes the scope and features of the _product_ created by the _project_. It is what the project will PRODUCE.. 
@@ -323,8 +331,9 @@ Currently, there is no plan to ``market'' these tools---rather, emphases on read
 % The system will transmit the water level readings from the remote unit located at the retention pond to the main unit located in the construction office.  The requirements for transmission are summarized in Table 1.
 
 The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
+A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
 
-\custsubsection{Classification of Failure Mode}
+\custsubsection{Classification of Failure Mode}\label{subsec_class}
 
 % This section was written by (the owner of the subsystem that implements this feature should write this section.)
 
@@ -333,20 +342,41 @@ The system will determine where there are readings containing a potential failur
 Upon a period being flagged as containing a failure mode, it will need to be classified.
 A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 
+% \begin{table}[htbp]
+%     \centering
+%     \begin{tabular}{l p{0.5\textwidth}}
+%         \toprule
+%         Failure Mode & Description \\
+%         \midrule
+%         Calibration & Standard checks that require baseline correction or slight data pivot. \\
+%         Spike & Short and abrupt changes in level typically caused by equipment issues.\\
+%         Sub-zero & The stream runs dry, or when the pond is drained for cleaning.\\
+%         Signal noise & Equipment failure results in impossible variability of reported values.\\
+%         \midrule
+%         Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
+%         Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
+%         Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Overview of Weir Failure Modes \parencite{hydroPC}}
+%     \label{tab_fm}
+% \end{table}
+
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{l p{0.5\textwidth}}
+    \begin{tabular}{l p{0.395\textwidth} p{0.395\textwidth}}
         \toprule
-        Failure Mode & Description \\
+        Failure Mode & Description & Complicating Factors \\
         \midrule
-        Calibration & Standard checks that require baseline correction or slight data pivot. \\
-        Spike & Short and abrupt changes in level typically caused by equipment issues.\\
-        Sub-zero & The stream runs dry, or when the pond is drained for cleaning.\\
-        Signal noise & Equipment failure results in impossible variability of reported values.\\
-        \midrule
-        Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
-        Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
-        Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
+        Calibration & Standard checks that require baseline correction or slight data pivot. & Recovery after blockage clearing can render calibration points ineffective.\\
+        Spike & Short and abrupt changes in level typically caused by equipment issues. & Extremely short-term issue that could be skipped over by random sampling. \\
+        Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable.\\
+        Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix.\\
+        % \midrule
+        Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
+        % Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
+        % Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
+        % Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
         \bottomrule
     \end{tabular}
     \caption{Overview of Weir Failure Modes \parencite{hydroPC}}
@@ -354,6 +384,8 @@ A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 \end{table}
 
 \custsubsection{Quality Assurance on Periods of Failure}
+
+Based on the classification result from Feature~\hyperref[subsec_class]{2}, additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred. This will likely involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply flattened.
 
 
 \section{Project Timeline \& Gannt Chart}\label{sec_time}
@@ -470,16 +502,19 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{l|l|c|l}
+    \begin{tabular}{llcl}
         \toprule
         Approver Name & Title & Signature & Date \\
+        \midrule
         \midrule
         % All team members must sign the SOW & Team Member & . & . \\
         % . & Team Member & . & . \\
         % . & Team Member & . & . \\
         Gillian McGinnis & Project Manager & . & 09/23/25 \\
-        Sriram Iyengar & Advisor & . & . \\
-        Nitika Sharma & Instructor & . & . \\
+        \midrule
+        Sriram Iyengar & Advisor & . &   \\
+        \midrule
+        Nitika Sharma & Instructor & . &   \\
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
@@ -498,14 +533,15 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{l|l|r}
+    \begin{tabular}{rllr}
         \toprule
-        Section & Author & Word Count \\
+         & Section & Author & Word Count \\
         \midrule
-        1. Introduction & Jane Doe & 268 \\
-        . & . & . \\
-        . & . & . \\
-        . & . & . \\
+        1. & Executive Summary & Gillian McGinnis & \# \\
+        2. & User/Market Research & \ditto & \# \\
+        3. & Product Features & \ditto & . \\
+        4. & Project Timeline & \ditto & . \\
+        5. & Ethics & \ditto & N/A \\
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
@@ -564,7 +600,7 @@ As a team and as individual team members, we agree to:
 
 \pagebreak
 % \nocite{*}
-
 \printbibliography
+\label{sec_bib}
 
 \end{document}
