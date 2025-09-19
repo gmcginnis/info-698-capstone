@@ -65,6 +65,19 @@
     ]{biblatex}
 \addbibresource{bibliography.bib}
 
+% \usepackage[
+%     backend=biber,
+%     % style=apa,
+%     style=chem-acs,
+%     doi=true,
+%     url=true,
+%     articletitle=true,
+%     chaptertitle=true,
+%     maxbibnames=99
+%     %natbib=true
+% ]{biblatex}
+\newcommand{\citean}[1]{\citeauthor{#1}\autocite{#1}}
+
 % % ToC Settings
 \usepackage{tocloft}
 % Dots for sections
@@ -195,7 +208,7 @@
 
 \pagebreak
 
-% How does this work \parencite{kane2022}?
+How does this work \autocite{sasu2025,srdrRepo}?
 
 \section{Executive Summary}\label{sec_es}
 % The Executive Summary was written by John Doe. (Complete this with the author of each section)
@@ -251,8 +264,11 @@ Past attempts at automated quality assurance have failed due to the failure mode
 % In addition, rainfall measurements have been recorded at the Clearing station 170~m north of the weir.
 
 % 3rd Paragraph - Describe the process of development: What work will you be doing (“We will be /aquiring data through web scraping, and analyzing XYZ) Who is involved, Where the project work will take place, what you will have completed at the end of semester.
+
 Given that the project is still in its early stages, a literature review will first need to be conducted to identify comparable machine learning approaches for quality assurance of temporal data.
 % Table~\ref{tab_dol}
+Relevant data will first need to be uniformly coded and united into a cohesive set in order to conduct relevant analyses.
+Fortunately, all data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository online repository with \texttt{CC BY 4.0} licensing.\autocite{srdrRepo}
 
 % Include a table as shown. For this and all tables you do not want to repeat the information in the table – that’s what the table is for.  Rather you should introduce the table and point out anything significant. Something like “Table 1 shows the preliminary division of responsibilities among the team members.  Since the User Interface for this product is quite complex, we have divided it among multiple team members as listed.”
 
@@ -274,7 +290,7 @@ Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tr
         \ditto & Model quality evaluations \\
         \ditto & Reproducibility documentation \\
         \ditto & Course deliverables and presentation preparations \\
-        \ditto & User interface (\textit{time permitting}) \\
+        % \ditto & User interface (\textit{time permitting}) \\
         \bottomrule
     \end{tabular}
     \caption{Preliminary Subsystem Responsibilities}
@@ -292,6 +308,8 @@ Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tr
 
 \subsection*{Overall research landscape}
 % Overall research landscape: Do some basic research about existing research, cite papers and clarify how your project will contribute new knowledge to the world and or utilize novel approaches to existing data sets. 
+
+
 
 \subsection*{User insights}
 % User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users of your research output and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
@@ -512,9 +530,9 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
          & Section & Author & Word Count \\
         \midrule
         1. & Executive Summary & Gillian McGinnis & \# \\
-        2. & User/Market Research & \ditto & \# \\
-        3. & Product Features & \ditto & . \\
-        4. & Project Timeline & \ditto & . \\
+        2. & Literature Review/Market Research & \ditto & \# \\
+        3. & Research Project Deliverables & \ditto & . \\
+        4. & Project Timeline \& Gannt Chart & \ditto & . \\
         5. & Ethics & \ditto & N/A \\
         \bottomrule
     \end{tabular}
