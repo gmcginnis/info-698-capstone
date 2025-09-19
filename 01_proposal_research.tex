@@ -104,7 +104,11 @@
 }
 
 % Section numbering
-\newcommand{\secref}[1]{\S\ref{#1}}
+% \newcommand{\secref}[1]{\S\ref{#1}}
+% \newcommand{\secrefdot}[1]{\ref{#1}}
+\newcommand{\secref}[1]{\hyperref[#1]{\S\ref{#1}}}
+% \newcommand{\secrefdot}[1]{\hyperref[#1]{\ref{#1}.}}
+\newcommand{\secrefboth}[1]{\hyperref[#1]{\ref{#1}.} & \nameref*{#1}}
 
 \newcommand{\ditto}{\multicolumn{1}{c}{\texttt{"}}}
 
@@ -522,23 +526,41 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 % You can highlight the words in a section to get the word count (it will be displayed in the lower left).  For tables and diagrams just put n/a for the word count.
 
 
-
 \begin{table}[htbp]
     \centering
     \begin{tabular}{rllr}
         \toprule
          & Section & Author & Word Count \\
         \midrule
-        1. & Executive Summary & Gillian McGinnis & \# \\
-        2. & Literature Review/Market Research & \ditto & \# \\
-        3. & Research Project Deliverables & \ditto & . \\
-        4. & Project Timeline \& Gannt Chart & \ditto & . \\
-        5. & Ethics & \ditto & N/A \\
+        \secrefboth{sec_es} & Gillian McGinnis & \# \\
+        \secrefboth{sec_lit} & \ditto & \# \\
+        \secrefboth{sec_deliv} & \ditto & \# \\
+        \secrefboth{sec_time} & \ditto & . \\
+        \secrefboth{sec_ethics} & \ditto & N/A \\
+        % \ & \ditto & N/A \\
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
     \label{tab_contributions}
 \end{table}
+
+% \begin{table}[htbp]
+%     \centering
+%     \begin{tabular}{rllr}
+%         \toprule
+%          & Section & Author & Word Count \\
+%         \midrule
+%         % \secrefdot{sec_es} & Executive Summary & Gillian McGinnis & \# \\
+%         \secrefboth{sec_es} & \ditto & \# \\
+%         \secrefdot{sec_lit} & Literature Review/Market Research & \ditto & \# \\
+%         3. & Research Project Deliverables & \ditto & . \\
+%         4. & Project Timeline \& Gannt Chart & \ditto & . \\
+%         5. & Ethics & \ditto & N/A \\
+%         \bottomrule
+%     \end{tabular}
+%     % \caption{Milestone Schedule}
+%     \label{tab_contributions}
+% \end{table}
 
 \pagebreak
 
