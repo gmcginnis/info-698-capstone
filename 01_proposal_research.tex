@@ -183,7 +183,7 @@
                 0.2 & Began \secref{sec_lit}; transcribed \secref{sec_time}; completed \secref{sec_ethics} & 09/16/25 \\
                 0.3 & Continued \secref{sec_lit}; updated \secref{sec_time} & 09/18/25 \\
                 0.4 & Switch to research template; updated \secref{sec_lit} & 09/19/25 \\
-                0.5 & Expanded \secref{sec_time}; added \hyperref[fig_gantt]{Gantt chart} & 09/22/25 \\
+                0.5 & Updated \secref{sec_time}, expanded \secref{sec_deliv}; added \hyperref[fig_gantt]{Gantt chart} & 09/22/25 \\
                 \bottomrule
             \end{tabular}
         \end{table}
@@ -260,15 +260,15 @@ Past attempts at automated quality assurance have failed due to the failure mode
 %     \label{fig_map}
 % \end{figure}
 
-\begin{figure}[hbt!]
-    \centering
-    \fbox{\includegraphics[width=.5\textwidth]{figures/map_bci_soil.jpg}}
-    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
-    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
-    \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
-    \label{fig_map}
-\end{figure}
+% \begin{figure}[hbt!]
+%     \centering
+%     \fbox{\includegraphics[width=.5\textwidth]{figures/map_bci_soil.jpg}}
+%     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
+%     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
+%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+%     \label{fig_map}
+% \end{figure}
 
 % \begin{figure}[hbt!]
 %     \centering
@@ -297,7 +297,27 @@ An outline of anticipated project responsibilities is provided in Table~\ref{tab
 Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
 Project work will be conducted remotely, with regular advisor check-ins via teleconference meetings.
 
-\begin{table}[htbp]
+By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
+Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
+Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
+Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
+Measured success of the models can determine which failure modes are the most difficult to accurately repair.
+
+\pagebreak
+
+\begin{figure}[!h!tp]
+% \begin{figure}[hbt!]
+    \centering
+    \fbox{\includegraphics[width=.85\textwidth]{figures/map_bci_soil.jpg}}
+    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
+    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
+    \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+    \label{fig_map}
+\end{figure}
+
+\begin{table}[!h!bp]
+% \begin{table}[htbp]
     \centering
     \begin{tabular}{ll}
         \toprule
@@ -317,11 +337,11 @@ Project work will be conducted remotely, with regular advisor check-ins via tele
     \label{tab_dol}
 \end{table}
 
-By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
-Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
-Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
-Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
-Measured success of the models can determine which failure modes are the most difficult to accurately repair.
+% By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
+% Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
+% Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
+% Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
+% Measured success of the models can determine which failure modes are the most difficult to accurately repair.
 
 % After a quick read through, a person should feel familiar with your project, and understand the team and the high-level tasks that you will perform. The rest of the document will provide more details on the topics introduced in the summary. In fact, many people find it easiest to write the summary last by pulling key items from the following sections.
 
@@ -425,13 +445,22 @@ A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 \subsubsection*{Quality Assurance on Periods of Failure}
 
 % Feature~\hyperref[subsec_class]{2}
-Based on the classification result from FEATURE, additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred. This will likely involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply flattened.
+Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred. This will likely involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply flattened.
 
 \custsubsection{What Accuracy Is Expected?}
 % Sometimes models don't perform super well. If you're running a model, do you expect 100% accuracy? 65% accuracy across multiple outputs? An R2 of .6? What happens if the model isn't very accurate?
 
+Accuracy for certain failure mode classifications are expected to be high---for instance, ``sub-zero'' values are simple to flag. Others, such as ``spikes'', are also expected to be easily found.
+Accuracy for multiple failure modes may be more difficult, especially in the dry season when non-erroneous fluctuations in flow caused by evapotranspiration without rain.
+
+Similarly, correction models for simpler failure modes are expected to be highly accurate and precise, since they are often simple linear gap-fills.
+Corrections for the failure mode of a blockage in combination with a rain event may have reasonable accuracy but lower precision.
+
 \custsubsection{What if the Analysis doesn't work?}
 % Sometimes analyses don't work. Is a null result acceptable, or do you need to do work to circumvent that?
+
+If the error type categorization has poor performance or is unable to consistently perform, and the needs of the correction models become more pressing as the semester continues, fortunately the informative data set includes the flagged error types.
+If correction models do not work, it will still valuable information as it provides insights into which failure modes are most difficult to automate or most ``resistant'' to certain algorithms.
 
 % \custsubsection{What if the Data Isn't Available?}
 % This is only for projects that require data scraping – what will happen if your data is not scrapable? How will you salvage your project?
