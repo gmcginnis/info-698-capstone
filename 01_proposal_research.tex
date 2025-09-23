@@ -223,30 +223,39 @@
 % 1st paragraph - Introduce your project - What is your research project and its key features? (“Our product [is a high efficiency controller/web-based application/wireless smart sensor/….] that [displays/computes/transforms/…] [temperature data/DC current/] into [easy to read graphs/control signals/wireless data] while [lowering cost/improving response time/achieving high efficiency/].
 The primary goal of this project is to create models that can automate quality assurance of temporal run-off data from the Lutz~Catchment of Barro~Colorado~Island, Panama (Figure~\ref{fig_map}).
 % The algorithms will conduct quality assurance of temporal run-off data from the Lutz~Weir of Barro~Colorado~Island, Panama.
-This will remove the need for manual data corrections, which not only use the vaLuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
+This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
 % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
-Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
+Rainfall and soil moisture measurement data can be integrated to produce a more well-informed model.
+% Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
 
 % 2nd paragraph - Explain why the project is needed, what problem it is solving. If current solutions to the problem exists explain how your solution is better and unique. Some context is needed here but only enough to establish “Why?” product will benefit the user.) If it is an internal project, state why it is important. This may be to facilitate learning, but hopefully it also has a tie to some greater good for society. Find credible sources and cite them in a footnote. Don’t say “everyone knows flooding is an issue…” research and say, “according to <insert credible reference, peer reviewed paper, gov’t agency, etc> flooding in 2019 caused $32M in damages in Acme County, our product will aid in the detection….”
 % The Lutz~Weir (Figure~\ref{fig_weir}) is located on the northeast slope of Barro~Colorado~Island, Panama, and has been collecting run-off data since January 1, 1972.
 % The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figures~\ref{fig_map},~\ref{fig_weir}).
 % The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figure~\ref{fig_map}).
 
-The weir has been electronically collecting run-off data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
-% It has been collecting run-off data since January 1, 1972, with frequency of measurements ranging from three~minutes to three~hours.
-% Until July 19, 1989, water level was recorded on paper charts, which have since been digitized.
-% Frequency of measurements range from three~minutes to three~hours.
-% In addition to rainfall measurements from Clearing station 170~m north of the weir, the run-off data contains millions of records over time.
-The set contains millions of data points, with more added as the sensor continues to record measurements.
-% Millions of data points are currently present in the set, with more added as the sensor continues to record measurements.
-% 
-Quality issues in the data come about due to the need for re-calibration, debris blockages resulting in monomodal run-off value increases without rainfall, complications from weir blockages paired with rainfall, false positives, impossible sub-zero values, evapotranspiration, considerations for annual intentional pond drains, and signal noise.
-% 
-Currently, quality assurance is conducted manually via the Visual~FoxPro interactive visual interface.
+The weir has been electronically collecting run-off data since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
+Quality issues in the data come about due to environmental factors, sensor issues, and calibration requirements.
+Currently, quality assurance is conducted manually in Visual~FoxPro interactive interface.
 Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
-% 
-% Past attempts at quality assurance using stochastic methods have failed, as past teams have attempted to automate it with stochastic methods but concluded it to be resilient against automation.
 Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
+
+% % LONGER
+% The weir has been electronically collecting run-off data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
+% % It has been collecting run-off data since January 1, 1972, with frequency of measurements ranging from three~minutes to three~hours.
+% % Until July 19, 1989, water level was recorded on paper charts, which have since been digitized.
+% % Frequency of measurements range from three~minutes to three~hours.
+% % In addition to rainfall measurements from Clearing station 170~m north of the weir, the run-off data contains millions of records over time.
+% The set contains millions of data points, with more added as the sensor continues to record measurements.
+% % Millions of data points are currently present in the set, with more added as the sensor continues to record measurements.
+% % 
+% Quality issues in the data come about due to the need for re-calibration, debris blockages resulting in monomodal run-off value increases without rainfall, complications from weir blockages paired with rainfall, false positives, impossible sub-zero values, evapotranspiration, considerations for annual intentional pond drains, and signal noise.
+% % 
+% Currently, quality assurance is conducted manually via the Visual~FoxPro interactive visual interface.
+% Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
+% % 
+% % Past attempts at quality assurance using stochastic methods have failed, as past teams have attempted to automate it with stochastic methods but concluded it to be resilient against automation.
+% Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
+% %
 
 % \pagebreak
 
@@ -270,6 +279,14 @@ Past attempts at automated quality assurance have failed due to the failure mode
 %     \label{fig_map}
 % \end{figure}
 
+\begin{figure}[!hbt]
+    \centering
+    \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
+    \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+    \label{fig_map}
+\end{figure}
+
 % \begin{figure}[hbt!]
 %     \centering
 %     \includegraphics[width=.6\textwidth]{figures/lutz_weir_wide.jpg}
@@ -287,37 +304,43 @@ Past attempts at automated quality assurance have failed due to the failure mode
 % Given that the project is still in its early stages, a literature review will first need to be conducted to identify comparable machine learning approaches for quality assurance of temporal data.
 % Table~\ref{tab_dol}
 % Fortunately, 
-All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository online repository with \texttt{CC BY 4.0} licensing.\autocite{srdrRepo}
-Relevant data will first need to be uniformly coded and united into a cohesive set in order to conduct relevant analyses.
-% Include a table as shown. For this and all tables you do not want to repeat the information in the table – that’s what the table is for.  Rather you should introduce the table and point out anything significant. Something like “Table 1 shows the preliminary division of responsibilities among the team members.  Since the User Interface for this product is quite complex, we have divided it among multiple team members as listed.”
-
 
 An outline of anticipated project responsibilities is provided in Table~\ref{tab_dol}.
+Relevant data sets are available on the Smithsonian~Research~Data~Repository with \texttt{CC~BY~4.0}~licenses.\autocite{srdrRepo}.
+% All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository online repository with \texttt{CC BY 4.0} licensing.\autocite{srdrRepo}
+% Relevant data will first need to be uniformly coded and united into a cohesive set in order to conduct relevant analyses.
+% Include a table as shown. For this and all tables you do not want to repeat the information in the table – that’s what the table is for.  Rather you should introduce the table and point out anything significant. Something like “Table 1 shows the preliminary division of responsibilities among the team members.  Since the User Interface for this product is quite complex, we have divided it among multiple team members as listed.”
 % 
-Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
-Project work will be conducted remotely, with regular advisor check-ins via teleconference meetings.
+% 
+% An outline of anticipated project responsibilities is provided in Table~\ref{tab_dol}.
+% 
+% Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
+Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
+Project work will be conducted remotely, with regular advisor check-ins via teleconference.
 
-By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
-Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
-Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
-Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
+The goals by the end of the project are to have a system for multiclass classification to flag periods of time with failure mode(s), and models to correct flagged data points.
+% By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
+% Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
+% Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
+% Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
+At least two failure modes are expected to be addressed.
 Measured success of the models can determine which failure modes are the most difficult to accurately repair.
 
-\pagebreak
+% \pagebreak
 
-\begin{figure}[!h!tp]
+% \begin{figure}[!h!tp]
 % \begin{figure}[hbt!]
-    \centering
-    \fbox{\includegraphics[width=.85\textwidth]{figures/map_bci_soil.jpg}}
-    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
-    % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
-    \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
-    \label{fig_map}
-\end{figure}
+%     \centering
+%     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
+%     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
+%     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
+%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+%     \label{fig_map}
+% \end{figure}
 
-\begin{table}[!h!bp]
-% \begin{table}[htbp]
+% \begin{table}[!h!bp]
+\begin{table}[htbp]
     \centering
     \begin{tabular}{ll}
         \toprule
@@ -358,12 +381,14 @@ Measured success of the models can determine which failure modes are the most di
 
 
 % 
-In hydrology, machine learning (ML) has been used for predictive runoff modelling,\autocite{mohammadi2021} modelling agricultural drought,\autocite{houmma2022}, MORE EXAMPLES.
+% In hydrology, machine learning (ML) has been used for predictive runoff modelling,\autocite{mohammadi2021} modelling agricultural drought,\autocite{houmma2022}, MORE EXAMPLES.
+Machine learning (ML) has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
+% In hydrology, machine learning (ML) has been used for predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
 % Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
 % 
 % \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 % 
-In the field of remote sensing and geospatial analysis, recurrent neural networks---especially long short-term memory---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+In the field of remote sensing and geospatial analysis, recurrent~neural~networks~(RNNs)---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
 % 
 In environmental ML, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
 % Data leakage issues are another consideration in environmental ML, and can stem from improper missing data management techniques.\autocite{zhu2023}
@@ -371,15 +396,17 @@ In environmental ML, improper missing data management techniques can also worsen
 % 
 % Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
 According to Paton, ML algorithms have yet to be applied to singular catchment run-off data quality assurance.
+Previously, stochastic methods were attempted for automation of the Lutz Catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
 % However, what makes the Lutz Catchment data unique is th
-Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
+% Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
+Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
 
 External variables of rainfall and soil moisture content are necessary for a well-informed model.
 In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 % The inclusion of additional variables is also expected to improve the models, as \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
-
-Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-Previously, stochastic methods were attempted for automation of the Lutz Catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
+% 
+Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
+% Previously, stochastic methods were attempted for automation of the Lutz Catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
 
 % In the context of bioinformatics, \citean{kane2022} uses NN workflows for multiclass classification while avoiding data leakage, compensating for missing values, and reducing dimensionality.
 % NN workflows are used in bioinformatics for multiclass classification
@@ -392,14 +419,17 @@ Previously, stochastic methods were attempted for automation of the Lutz Catchme
 
 \subsection*{User insights}
 % User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users of your research output and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
-The target user for these models will be hydrology researchers analyzing temporal weir and environmental data in parallel.
-However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on run-off data at other weirs around the world and could render final correction models unsuitable for other weirs.
+
+% The target user for these models will be hydrology researchers analyzing temporal weir and environmental data in parallel.
+% However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on run-off data at other weirs around the world and could render final correction models unsuitable for other weirs.
 Visual~FoxPro is currently the only software used by Paton to manipulate the data.
 While the interface is sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation. Furthermore, it is not currently set up to automatically detect problematic portions of the data.
-
-Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
-
 Because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
+
+% Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
+% % 
+
+\pagebreak
 
 \section{Research Project Deliverables}\label{sec_deliv}
 % This section describes the scope and features of the _analysis_ created by the _project_. It is what the project will PRODUCE. You should write a draft version of these but this is what your mentor will help you with especially. This is often the breakdown of what will and will not be considered a passing project so make this detailed!
@@ -411,15 +441,28 @@ Because data monitoring is ongoing, new data must be regularly checked for occur
 % Final Presentation Format
 % How will your final project be submitted? Will it culminate in a paper with introduction, methods, and results section and at least 5 peer reviewed citations, that is <10 pages long and has at least two informative graphics? Will it culminate in an RShiny application that is also available on GitHub?
 
-The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
-A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
+The final project will be submitted in the form of a GitHub repository containing code that is relevant, readable, and thoroughly annotated to maximize accessibility and reproducibility.
+In addition to code files, a written report with background information, methods/approach, and final model performance statistics \& visualizations will also be created.
+% A written report with model performance statistics \& visualizations.
+
+% The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
+% A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
 
 \custsubsection{What Analysis Is Being Run?}
 % Once the data is in, what analyses exactly should be run? E.G. what type of neural network is being run, what type of correlation analysis is being run, etc.
 
 \subsubsection*{Classification of Failure Mode}
-Upon a period being flagged as containing a failure mode, it will need to be classified.
-A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
+
+The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
+A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
+
+% Seasonal autoregressive integrated moving average (seasonal ARIMA [SARIMA]) can be used to analyze time series data that have seasonal patterns by combining seasonal autoregressive (SAR), seasonal differencing (SI), and seasonal moving average (SMA) terms.
+
+Periods of time in the data can be flagged as containing particular ``failure modes'', as explained in Table~\ref{tab_fm}.
+To flag data points, supervised classification can utilize rolling statistics and the external environmental variables (which provide some seasonal insights).
+Gradient boosted trees or LSTM can be used, but more literature review and exploratory data analysis will be conducted first prior to finalizing which model(s) to utilize.
+% Upon a period being flagged as containing a failure mode, it will need to be classified.
+% A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 
 \begin{table}[htbp]
     \centering
@@ -445,7 +488,7 @@ A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 \subsubsection*{Quality Assurance on Periods of Failure}
 
 % Feature~\hyperref[subsec_class]{2}
-Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred. This will likely involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply flattened.
+Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred. This will likely involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply ``flattened'' to the level of adjacent data points.
 
 \custsubsection{What Accuracy Is Expected?}
 % Sometimes models don't perform super well. If you're running a model, do you expect 100% accuracy? 65% accuracy across multiple outputs? An R2 of .6? What happens if the model isn't very accurate?
@@ -466,7 +509,7 @@ If correction models do not work, it will still valuable information as it provi
 % This is only for projects that require data scraping – what will happen if your data is not scrapable? How will you salvage your project?
 
 
-\section{Project Timeline \& Gannt Chart}\label{sec_time}
+\section{Project Timeline \& Gantt Chart}\label{sec_time}
 
 % In this section, you will list the major deliverables and decision points of the project. You must establish early in the project how you are going to approach the project and get the work done. You will track your work over time using the Gannt Chart and will continually update and submit the chart in weekly check-ins.
 % Milestones from the course schedule are pre-populated in the table. You will need to add the dates for the current semester. You will need to add your project specific objectives and deadlines.
@@ -483,6 +526,8 @@ If correction models do not work, it will still valuable information as it provi
 % Full function testing complete
 % Full feature demonstration
 % The Project Manager should ensure that the milestones and SOW are reviewed constantly by team members, your D2 mentors your advisor, and the sponsor. 
+
+A tentative schedule of major project milestones is provided in Table~\ref{tab_milestone}, while a detailed Gantt~chart draft is shown in Figure~\ref{fig_gantt}. It is anticipated that integrating the model in combination with managing computational performance will take the greatest amount of time for the project.
 
 \begin{table}[!htbp]
     \centering
@@ -515,9 +560,10 @@ If correction models do not work, it will still valuable information as it provi
 
 % A Gannt chart is a visual representation of the project timeline linked to a schedule with task ownership and dependencies. A Gannt chart is a critical tool in product management. Refer to the Gannt Chart Module on D2L for instructions and resources to complete your Gannt chart.  
 
-\pagebreak
+% \pagebreak
 
-\begin{figure}[!htbp]
+\begin{figure}[!hp]
+% \begin{figure}[!htbp]
     \centering
     % \fbox{\includegraphics[angle=90,width=0.8\linewidth,trim={0 3cm 0 3cm}]{figures/gantt_chart.pdf}}
     \fbox{\includegraphics[angle=90,height=0.8\paperheight,trim={0 3cm 0 3.5cm}]{figures/gantt_chart.pdf}}
@@ -599,7 +645,10 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
 
 \begin{table}[htbp]
     \centering
-    \begin{tabular}{llcl}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabular}{lll@{\hskip .55in}l}
+    % \begin{tabular}{lll@{\hskip 1.25in}l}
+        \toprule
         \toprule
         Approver Name & Title & Signature & Date \\
         \midrule
@@ -607,11 +656,14 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
         % All team members must sign the SOW & Team Member & . & . \\
         % . & Team Member & . & . \\
         % . & Team Member & . & . \\
-        Gillian McGinnis & Project Manager & . & 09/23/25 \\
+        Gillian McGinnis & Project Manager & \includegraphics[width=0.2\textwidth]{figures/signature.png} & 09/22/25 \\
         \midrule
-        Sriram Iyengar & Advisor & . &   \\
+        Sriram Iyengar & Primary Advisor &   &   \\
         \midrule
-        Nitika Sharma & Instructor & . &   \\
+        Steven Paton & Data Advisor &   &   \\
+        \midrule
+        Nitika Sharma & Course Instructor &   &   \\
+        \bottomrule
         \bottomrule
     \end{tabular}
     % \caption{Milestone Schedule}
@@ -638,7 +690,7 @@ This document is based upon and supersedes the \emph{<PRD title> Version X.X. De
         \secrefboth{sec_es} & Gillian McGinnis & \# \\
         \secrefboth{sec_lit} & \ditto & \# \\
         \secrefboth{sec_deliv} & \ditto & \# \\
-        \secrefboth{sec_time} & \ditto & . \\
+        \secrefboth{sec_time} & \ditto & N/A \\
         \secrefboth{sec_ethics} & \ditto & N/A \\
         % \ & \ditto & N/A \\
         \bottomrule
