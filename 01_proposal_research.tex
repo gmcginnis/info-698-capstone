@@ -119,7 +119,7 @@
         % \vspace*{250px}
         \vspace*{2cm}
         \Huge
-        Machine Learning Algorithm Development for Quality Assurance\\of Lutz Catchment Run-Off Data
+        Machine Learning Algorithm Development for Quality Assurance\\of Lutz Catchment Runoff Data
         
         \bigskip
 
@@ -151,7 +151,7 @@
 % \end{titlepage}
 
 % \begin{titlepage}
-%     \title{Machine Learning Algorithm Development for Quality Assurance\\of Lutz Catchment Run-Off Data}
+%     \title{Machine Learning Algorithm Development for Quality Assurance\\of Lutz~catchment Runoff Data}
 %     \author{Gillian McGinnis, Project Manager}
 %     % \date{}
 
@@ -192,6 +192,9 @@
                 % 1.0 & First draft complete, submitted for \hyperref[tab_approvals]{signatures} & 09/22/25 \\
                 1.0 & First draft complete & 09/22/25 \\
                 \texttt{ " } & Submitted for \hyperref[tab_approvals]{signatures} & 09/23/25 \\
+                2.0 & Additional \hyperref[fig_map_island]{map}; expanded \secref{sec_lit} with BCI info; rephrased portions of \secref{sec_es}, \secref{sec_deliv}; typo fix & 09/23/25 \\
+                \texttt{ " } & Resubmitted for \hyperref[tab_approvals]{signatures} & 09/23/25 \\
+                % 2.0 & Expanded catchment information; updated \hyperref[fig_map]{map} & 09/23/25 \\
                 \bottomrule
             \end{tabular}
         \end{table}
@@ -229,46 +232,42 @@
 % The executive summary is a short review of the important aspects of the project.  It is very similar to the elevator pitch, but it is slightly longer with more detail. This section should be about 3 paragraphs and about ¾ of a page.
 
 % 1st paragraph - Introduce your project - What is your research project and its key features? (“Our product [is a high efficiency controller/web-based application/wireless smart sensor/….] that [displays/computes/transforms/…] [temperature data/DC current/] into [easy to read graphs/control signals/wireless data] while [lowering cost/improving response time/achieving high efficiency/].
-The primary goal of this project is to create models that can automate quality assurance of temporal run-off data from the Lutz~Catchment of Barro~Colorado~Island, Panama (Figure~\ref{fig_map}).
-% The algorithms will conduct quality assurance of temporal run-off data from the Lutz~Weir of Barro~Colorado~Island, Panama.
+The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(BCI), Republic~of~Panama (Figure~\ref{fig_map_island}).
+% The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
 This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
 % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
 Rainfall and soil moisture measurement data will be integrated to produce a more well-informed model.
 % Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
 
 % 2nd paragraph - Explain why the project is needed, what problem it is solving. If current solutions to the problem exists explain how your solution is better and unique. Some context is needed here but only enough to establish “Why?” product will benefit the user.) If it is an internal project, state why it is important. This may be to facilitate learning, but hopefully it also has a tie to some greater good for society. Find credible sources and cite them in a footnote. Don’t say “everyone knows flooding is an issue…” research and say, “according to <insert credible reference, peer reviewed paper, gov’t agency, etc> flooding in 2019 caused $32M in damages in Acme County, our product will aid in the detection….”
-% The Lutz~Weir (Figure~\ref{fig_weir}) is located on the northeast slope of Barro~Colorado~Island, Panama, and has been collecting run-off data since January 1, 1972.
+% The Lutz~Weir (Figure~\ref{fig_weir}) is located on the northeast slope of Barro~Colorado~Island, Panama, and has been collecting runoff data since January 1, 1972.
 % The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figures~\ref{fig_map},~\ref{fig_weir}).
 % The Lutz~Weir is located on the northeast slope of Barro~Colorado~Island, Panama (Figure~\ref{fig_map}).
 
-\begin{figure}[!hbt]
-    \centering
-    \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-    % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-    \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{stri2025}}
-    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
-    \label{fig_map}
-\end{figure}
-
-Run-off data has been electronically collected from the weir since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
-% The weir has been electronically collecting run-off data since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
-Quality issues in the data come about due to environmental factors, sensor issues, and calibration requirements.
+% Runoff data has been electronically collected from the weir since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
+% Runoff data has been electronically collected from the weir since 1989 in five~minute intervals, resulting in millions of data points with more added every day.
+Runoff data has been continually collected from the weir since 1972, at first through hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours, and electronically measured every five~minutes since 1989.
+% The weir has been electronically collecting runoff data since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
+% Quality issues in the data come about due to environmental factors, sensor issues, and calibration requirements.
+Quality issues in the data come about due to environmental factors (such as partial blockages of the outflow channel), sensor failures, and calibration issues, to name a few.
 % Currently, quality assurance is conducted manually in Visual~FoxPro interactive interface.
-Currently, quality assurance is conducted manually in Visual~FoxPro.
-Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
+% Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
+Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro to allow for visual inspection and correction of the data.
+% Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
+Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable to inaccessibility.
 % Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 Past attempts at automated quality assurance using traditional stochastic methods have failed.
 
 % % LONGER
-% The weir has been electronically collecting run-off data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
-% % It has been collecting run-off data since January 1, 1972, with frequency of measurements ranging from three~minutes to three~hours.
+% The weir has been electronically collecting runoff data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
+% % It has been collecting runoff data since January 1, 1972, with frequency of measurements ranging from three~minutes to three~hours.
 % % Until July 19, 1989, water level was recorded on paper charts, which have since been digitized.
 % % Frequency of measurements range from three~minutes to three~hours.
-% % In addition to rainfall measurements from Clearing station 170~m north of the weir, the run-off data contains millions of records over time.
+% % In addition to rainfall measurements from Clearing station 170~m north of the weir, the runoff data contains millions of records over time.
 % The set contains millions of data points, with more added as the sensor continues to record measurements.
 % % Millions of data points are currently present in the set, with more added as the sensor continues to record measurements.
 % % 
-% Quality issues in the data come about due to the need for re-calibration, debris blockages resulting in monomodal run-off value increases without rainfall, complications from weir blockages paired with rainfall, false positives, impossible sub-zero values, evapotranspiration, considerations for annual intentional pond drains, and signal noise.
+% Quality issues in the data come about due to the need for re-calibration, debris blockages resulting in monomodal runoff value increases without rainfall, complications from weir blockages paired with rainfall, false positives, impossible sub-zero values, evapotranspiration, considerations for annual intentional pond drains, and signal noise.
 % % 
 % Currently, quality assurance is conducted manually via the Visual~FoxPro interactive visual interface.
 % Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
@@ -276,8 +275,6 @@ Past attempts at automated quality assurance using traditional stochastic method
 % % Past attempts at quality assurance using stochastic methods have failed, as past teams have attempted to automate it with stochastic methods but concluded it to be resilient against automation.
 % Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 % %
-
-% \pagebreak
 
 % \begin{figure}[hbt!]
 %     \centering
@@ -294,7 +291,7 @@ Past attempts at automated quality assurance using traditional stochastic method
 %     \fbox{\includegraphics[width=.5\textwidth]{figures/map_bci_soil.jpg}}
 %     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
 %     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
-%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map}
 % \end{figure}
@@ -302,7 +299,7 @@ Past attempts at automated quality assurance using traditional stochastic method
 % \begin{figure}[!hbt]
 %     \centering
 %     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map}
 % \end{figure}
@@ -335,7 +332,7 @@ Relevant data sets are available on the Smithsonian~Research~Data~Repository wit
 % An outline of anticipated project responsibilities is provided in Table~\ref{tab_dol}.
 % 
 % Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
-Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
+Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute~(STRI)---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 Project work will be conducted remotely, with regular advisor check-ins via teleconference.
 
 The goals by the end of the project are to have a system for multiclass classification to flag periods of time with failure mode(s), and models to correct flagged data points.
@@ -343,7 +340,11 @@ The goals by the end of the project are to have a system for multiclass classifi
 % Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
 % Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
 % Although not all failure modes may be able to be successfully addressed (for instance, there is only one major incident of signal noise), at least two should be addressed.
-Measured success of the models can determine which failure modes are the most difficult to accurately repair.
+% Measured success of the models can determine which failure modes are the most difficult to accurately repair.
+% Measured success of the models can determine which failure modes are the most difficult to accurately repair.
+Measured success of the models can provide information into the feasibility of applying machine learning (ML) models in the context of micro-catchment runoff data quality assurance, as well as identify the most significant difficulties which can be addressed in future refinements of the models.
+%  as well as identify the most significant difficulties to be applied for future refinements of the end product model(s).
+%  explore the feasibility of applying current AI models in the context of quality assurance of micro-catchment runoff data, as well as to identify the most significant difficulties to this approach so that they may be worked on in future refinements of the end product model(s).
 To maintain a feasibility \& realistic goal for the semester, it is anticipated that accurate correction models can be made for at least two failure modes.
 % It is anticipated that at least two failure modes
 % At least two failure modes are expected to be addressed.
@@ -358,10 +359,12 @@ To maintain a feasibility \& realistic goal for the semester, it is anticipated 
 %     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
 %     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, in relation to Panama City.~\parencite{stri2025}}
 %     % \caption{The Clearing (``\textit{El~Claro}'') on Barro~Colorado~Island, Panama, where the Lutz~Weir is located.~\parencite{stri2025}}
-%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map}
 % \end{figure}
+
+\bigskip
 
 % \begin{table}[!h!bp]
 \begin{table}[htbp]
@@ -386,6 +389,31 @@ To maintain a feasibility \& realistic goal for the semester, it is anticipated 
     \label{tab_dol}
 \end{table}
 
+\pagebreak
+
+% \vspace*{\fill}
+% \begin{figure}[!p]
+\begin{figure}[!hbt]
+    \centering
+    \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_ca.jpg}}
+    % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+    \caption{The location of BCI, Republic~of~Panama, showing the locations of the Lutz~catchment, weir, and tower.\autocite{mapPC}}
+    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+    \label{fig_map_island}
+\end{figure}
+% \vspace*{\fill}
+
+% \begin{figure}[!h]
+% \begin{figure}[!hbt]
+%     \centering
+%     \fbox{\includegraphics[width=.54\textwidth]{figures/map_bci_soil.jpg}}
+%     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+%     \label{fig_map}
+% \end{figure}
+
 % By the end of the project, it is anticipated that a model to flag and classify ranges of time containing a failure mode will be possible.
 % Ideally, the model will also be able to flag periods with multiple/simultaneous failure modes.
 % Additionally, models will be created to attempt quality assurance corrections on flagged time periods.
@@ -408,13 +436,13 @@ To maintain a feasibility \& realistic goal for the semester, it is anticipated 
 
 % 
 % In hydrology, machine learning (ML) has been used for predictive runoff modelling,\autocite{mohammadi2021} modelling agricultural drought,\autocite{houmma2022}, MORE EXAMPLES.
-Machine learning (ML) has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
+ML has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
 % In hydrology, machine learning (ML) has been used for predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
 % Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
 % 
 % \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 % 
-Rainfall run-off data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
+Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
 In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
 % 
 In environmental ML, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
@@ -422,18 +450,40 @@ In environmental ML, improper missing data management techniques can also worsen
 
 % 
 % Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-According to Paton, ML algorithms have yet to be applied to singular catchment run-off data quality~assurance.
-Previously, stochastic methods were attempted for automation of the Lutz Catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
-% However, what makes the Lutz Catchment data unique is th
-% Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
-Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data as well as inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
+% According to Paton, ML algorithms have yet to be applied to singular catchment runoff data quality~assurance.
+
+The Lutz~catchment (Figure~\ref{fig_map}) is a 9.73~ha area located in the secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
+% BCI is located in the middle of the largest lake in the Republic of Panama.
+% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on Barro Colorado Island (BCI). BCI is a 15~km2 island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
+BCI is operated by STRI, a branch of the Smithsonian~Institution.\autocite{stri2025}
+% BCI is one of the most intensely studied tropical rainforests in the world.
+Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
+% Data from this catchment provide critical information concerning the hydrological balance of BCI.
+
+% According to Paton, there have been few---if any---attempts to apply ML algorithms to singular catchment runoff data quality~assurance.
+% Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
+% % However, what makes the Lutz~catchment data unique is th
+% % Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
+% Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data as well as inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
 
 External variables of rainfall and soil moisture content are necessary for a well-informed model.
 In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
+
+% \bigbreak
+
+% \begin{figure}[!hbt]
+%     \centering
+%     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
+%     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+%     \label{fig_map}
+% \end{figure}
 % The inclusion of additional variables is also expected to improve the models, as \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 % 
 % Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-% Previously, stochastic methods were attempted for automation of the Lutz Catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
+% Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
 
 % In the context of bioinformatics, \citean{kane2022} uses NN workflows for multiclass classification while avoiding data leakage, compensating for missing values, and reducing dimensionality.
 % NN workflows are used in bioinformatics for multiclass classification
@@ -443,20 +493,41 @@ In the context of modelling expected droughts, \citean{houmma2022} highlights ho
 % Literature review to show and explain common misunderstandings of ML in environmental research publications.
 % Examples from environmental literature of different missing data management (MDM) techniques, including removal, imputation, and replacement (p. 17674). Data leakage issues that can stem from improper MDM are also addressed (p. 17678)
 
+% \pagebreak
 
 \subsection*{User insights}
 % User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users of your research output and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
 
 % The target user for these models will be hydrology researchers analyzing temporal weir and environmental data in parallel.
-% However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on run-off data at other weirs around the world and could render final correction models unsuitable for other weirs.
+% However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on runoff data at other weirs around the world and could render final correction models unsuitable for other weirs.
 Paton currently uses Visual~FoxPro to manipulate the data.
 % Visual~FoxPro is currently the only software used by Paton to manipulate the data.
 While the interface has been sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation.
-Furthermore, it is not currently set up to automatically detect problematic portions of the data.
-Additionally, because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
+Furthermore, current quality assurance methods rely on subjective decisions by the individual analyzing the data, meaning that results are potentially biased to some unknown degree.\autocite{mapPC}
+% Quality assurance requires some subjective decisions by the person analyzing the data using the VFP system (Paton so far been the only one involved in this activity) meaning that the results are potentially biased to some, unknown degree.
+Additionally, it is not currently set up to automatically detect problematic portions of the data.
+Because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
 
 % Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
 % % 
+
+According to Paton, there have been few---if any---attempts to apply ML algorithms to singular catchment runoff data quality~assurance.
+Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
+% However, what makes the Lutz~catchment data unique is th
+% Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
+Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data as well as inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
+
+\pagebreak
+
+\begin{figure}[!hbt]
+    \centering
+    \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_soil.jpg}}
+    % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+    % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+    \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+    % \caption{The location of Barro~Colorado~Island in Panama CITE.}
+    \label{fig_map}
+\end{figure}
 
 \pagebreak
 
@@ -466,7 +537,7 @@ Additionally, because data monitoring is ongoing, new data must be regularly che
 % The key objective of the next section is to address the following itels: 
 \renewcommand{\thesubsection}{\bf{}}
 \setcounter{subsection}{1}
-\custsubsection{Final Presentation Fromat}
+\custsubsection{Final Presentation Format}
 % Final Presentation Format
 % How will your final project be submitted? Will it culminate in a paper with introduction, methods, and results section and at least 5 peer reviewed citations, that is <10 pages long and has at least two informative graphics? Will it culminate in an RShiny application that is also available on GitHub?
 
@@ -494,6 +565,10 @@ Gradient boosted trees or LSTM can be used, but more literature review and explo
 % Upon a period being flagged as containing a failure mode, it will need to be classified.
 % A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 
+% \bigskip
+% \bigskip
+
+% \vspace*{\fill}
 \begin{table}[htbp]
     % \small
     \centering
@@ -508,7 +583,8 @@ Gradient boosted trees or LSTM can be used, but more literature review and explo
         Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable.\\
         Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix.\\
         % \midrule
-        Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
+        % Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
+        Blockage & Debris blocks the weir's `V', resulting in gradual increases in water level, and later abrupt decreases following blockage removal. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
         % Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
         % Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
         % Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
@@ -517,11 +593,15 @@ Gradient boosted trees or LSTM can be used, but more literature review and explo
     \caption{Overview of Weir Failure Modes\autocite{hydroPC}}
     \label{tab_fm}
 \end{table}
+% \vspace*{\fill}
+
+% \pagebreak
 
 \subsubsection*{Quality Assurance on Periods of Failure}
 
 % Feature~\hyperref[subsec_class]{2}
-Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred.
+% Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred.
+Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had one of the above-mentioned failure modes not occurred.
 This will involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply ``flattened'' to the level of adjacent data points using a simple linear regression model.
 
 \custsubsection{What Accuracy Is Expected?}
@@ -529,6 +609,7 @@ This will involve creation of multiple separate models, as the method in which t
 
 Accuracy for certain failure mode classifications are expected to be high---for instance, ``sub-zero'' values are simple to flag. Others, such as ``spikes'', are also expected to be easily found.
 Accuracy for multiple failure modes may be more difficult, especially in the dry season when there are non-erroneous fluctuations in flow caused by evapotranspiration.
+Multiple, large rainfall events also pose particular challenges, as well as overlapping failure modes (e.g., simultaneous blockage and calibration problems).
 
 Similarly, correction models for simpler failure modes are expected to be highly accurate and precise, since they are often simple linear gap-fills.
 Corrections for the failure mode of a blockage in combination with a rain event may have reasonable accuracy but lower precision.
@@ -537,12 +618,16 @@ Corrections for the failure mode of a blockage in combination with a rain event 
 % Sometimes analyses don't work. Is a null result acceptable, or do you need to do work to circumvent that?
 
 If the error type categorization has poor performance or is unable to consistently perform, and the needs of the correction models become more pressing as the semester continues, the data set does include the manually-flagged error types.
+The results of the ML-assisted corrections will be compared against the results of the manual~corrections to data not included in the training sets.
+Large deviations from the expected values will be considered ``failures''.\autocite{mapPC}
 If the correction models do not work, it will still provide valuable insights into which failure modes are most difficult to automate or most ``resistant'' to certain algorithms.
 
 % \custsubsection{What if the Data Isn't Available?}
 % This is only for projects that require data scraping – what will happen if your data is not scrapable? How will you salvage your project?
-\bigbreak
-\bigbreak
+% \bigbreak
+% \bigbreak
+
+\pagebreak
 
 \section{Project Timeline \& Gantt Chart}\label{sec_time}
 
@@ -565,7 +650,10 @@ If the correction models do not work, it will still provide valuable insights in
 A tentative schedule of major project milestones is provided in Table~\ref{tab_milestone}, while a detailed Gantt~chart draft is shown in Figure~\ref{fig_gantt}. It is anticipated that integrating the correction models in combination with managing computational performance requirements will take the greatest amount of time for the project.
 
 % \bigbreak
+\bigskip
+\bigskip
 
+% \vspace*{\fill}
 % \begin{table}[!h!bp]
 \begin{table}[!htbp]
     \centering
@@ -596,6 +684,7 @@ A tentative schedule of major project milestones is provided in Table~\ref{tab_m
     \caption{Milestone Schedule}
     \label{tab_milestone}
 \end{table}
+% \vspace*{\fill}
 
 % A Gannt chart is a visual representation of the project timeline linked to a schedule with task ownership and dependencies. A Gannt chart is a critical tool in product management. Refer to the Gannt Chart Module on D2L for instructions and resources to complete your Gannt chart.  
 
@@ -679,9 +768,10 @@ A tentative schedule of major project milestones is provided in Table~\ref{tab_m
 % <Keep the language below>
 
 
-The signatures of the people below indicate an understanding of the purpose and content of this document by those signing it. By signing this document, you indicate that you approve of the proposed project outlined in this Statement of Work, the division of work, the Ground Rules and that the next steps may be taken to create a Product Specification and proceed with the project.
+% The signatures of the people below indicate an understanding of the purpose and content of this document by those signing it. By signing this document, you indicate that you approve of the proposed project outlined in this Statement of Work, the division of work, the Ground Rules and that the next steps may be taken to create a Product Specification and proceed with the project.
 % This document is based upon and supersedes the \emph{<PRD title> Version X.X. Deviations}, (versus clarifications), from the PDR have been clearly noted. For any requirements not listed in this SOW, the PRD requirements shall remain in effect.
-This document is based upon and supersedes the preliminary draft Version 0.5. Deviations, (versus clarifications), from the PDR have been clearly noted. For any requirements not listed in this SOW, the PRD requirements shall remain in effect.
+% This document is based upon and supersedes the preliminary draft Version 0.5. Deviations, (versus clarifications), from the PDR have been clearly noted. For any requirements not listed in this SOW, the PRD requirements shall remain in effect.
+This document is based upon and supersedes the ``First Draft'' Version 1.0. Deviations, (versus clarifications), from the PDR have been clearly noted. For any requirements not listed in this SOW, the PRD requirements shall remain in effect.
 
 \begin{table}[htbp]
     \centering
@@ -696,7 +786,7 @@ This document is based upon and supersedes the preliminary draft Version 0.5. De
         % All team members must sign the SOW & Team Member & . & . \\
         % . & Team Member & . & . \\
         % . & Team Member & . & . \\
-        Gillian McGinnis & Project Manager & \includegraphics[width=0.2\textwidth]{figures/signature.png} & 09/22/25 \\
+        Gillian McGinnis & Project Manager & \includegraphics[width=0.2\textwidth]{figures/signature.png} & 09/23/25 \\
         \midrule
         Sriram Iyengar & Primary Advisor &   &   \\
         \midrule
@@ -730,9 +820,9 @@ This document is based upon and supersedes the preliminary draft Version 0.5. De
         \toprule
          & Section & Author & Word Count \\
         \midrule
-        \secrefboth{sec_es} & Gillian McGinnis & 323 \\
-        \secrefboth{sec_lit} & \ditto & 308 \\
-        \secrefboth{sec_deliv} & \ditto & 387 \\
+        \secrefboth{sec_es} & Gillian McGinnis & 389 \\
+        \secrefboth{sec_lit} & \ditto & 408 \\
+        \secrefboth{sec_deliv} & \ditto & 491 \\
         \secrefboth{sec_time} & \ditto & N/A \\
         \secrefboth{sec_ethics} & \ditto & N/A \\
         % \ & \ditto & N/A \\
