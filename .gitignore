@@ -1,0 +1,35 @@
+# __pycache__/
+
+# Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.synctex.gz
+*.run.xml
+*.fdb_latexmk
+
+# Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+
+# OS-specific generated files
+.DS_Store
+.Rproj.user
+*.Rproj
+
+# Other items
+figures/signature.png
+figures/signatures.png
+code/drafts/*
