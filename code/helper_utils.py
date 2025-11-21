@@ -12,3 +12,8 @@ def get_path(input_filename, input_parent = "data"):
     """
     path_data = os.path.abspath(os.path.join('..', input_parent, input_filename))
     return path_data
+
+
+def model_path(input_name):
+    mod_loc = "models/"+input_name+".joblib"
+    return get_path(mod_loc, 'outputs')
