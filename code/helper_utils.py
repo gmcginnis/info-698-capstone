@@ -32,14 +32,19 @@ def model_path(input_name):
 #         !pip install package
 #         import package
 
-def apply_model(input_set, input_model, input_window, input_threshold, input_return="adj"):
+def apply_model(input_set, input_model, input_return = "adj", input_window=None, input_threshold=None):
 
     pred_y_proba = input_model.predict_proba(input_set)[:,1]
 
     if input_return == "proba":
         return pred_y_proba
-
-    pred_y_wt = medfilt(pred_y_proba, kernel_size = input_window)
+    if input_window is None or input_threshold is None:
+        return print("Error: please change return type or set window & threshold.")
+    
+    if input_window != 1:
+        pred_y_wt = medfilt(pred_y_proba, kernel_size = input_window)
+    else:
+        pred_y_wt = pred_y_proba
     pred_y_wt = (pred_y_wt >= input_threshold).astype(np.int32)
 
     if input_return=="adj":
@@ -51,15 +56,15 @@ def apply_model(input_set, input_model, input_window, input_threshold, input_ret
         pred_y_none = (pred_y_proba >= 0.5).astype(np.int32)
 
         # Best window, default threshold
-        pred_y_w = medfilt(pred_y_proba, kernel_size=input_window)
+        if input_window != 1:
+            pred_y_w = medfilt(pred_y_proba, kernel_size=input_window)
+        else:
+            pred_y_w = pred_y_proba
         pred_y_w = (pred_y_w >= 0.5).astype(np.int32)
 
         # No window, best threshold
         pred_y_t = (pred_y_proba >= input_threshold).astype(np.int32)
 
-        # # Best window, best threshold
-        # pred_y_wt = medfilt(pred_y_proba, kernel_size = input_window)
-        # pred_y_wt = (pred_y_wt >= input_threshold).astype(np.int32)
         return pred_y_none, pred_y_w, pred_y_t, pred_y_wt
 
 
