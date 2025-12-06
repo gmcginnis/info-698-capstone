@@ -38,6 +38,7 @@ def apply_model(input_set, input_model, input_return = "adj", input_window=None,
 
     if input_return == "proba":
         return pred_y_proba
+    
     if input_window is None or input_threshold is None:
         return print("Error: please change return type or set window & threshold.")
     
