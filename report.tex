@@ -489,9 +489,9 @@ These took the form of day of the year, month of the year, hour of the day, and 
 
 Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
 This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
-Thus, an 80/20 train/test split was conducted on the data.
-
-For the obstruction failure mode, this resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
+Thus, an 80/20 train/test split was conducted on the data. %
+% 
+% For the obstruction failure mode, this resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 The sets were also separated into feature variables ($X$) and the target variable ($y$, in this case the obstruction failure mode flag).
 % An 80/20 train/test split was conducted on the data.
 % Time-series data should not be randomly split like typical \textit{k}-fold cross-validation.
@@ -510,9 +510,11 @@ A visual overview of this initial 80/20 split and methodology for splits in subs
 
 To reduce high-dimensionality, avoid overfitting, and improve processing time \& internal memory, highly-correlated features were removed.
 This was conducted by using an existing function to compute the pairwise Pearson correlation between all features in the $X$ training set, and removing one of those in pairs in which correlation was calculated as greater than 0.97.
-In the context of the obstruction failure mode model, there were 31 features removed.%
+% In the context of the obstruction failure mode model, there were 31 features removed.%
+% \footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
+
 % \footnote{\verb|ffill_eventsum_ra_rain, decay-0.1_eventsum_ra_rain, raw_ro_rollsum_2, raw_ro_rollsum_3, raw_ro_rollsum_6, raw_ro_rollsum_12, raw_ro_change, ra_rain_change, raw_ro_lag2, raw_ro_lag4, raw_ro_lag6, raw_ro_lag8, ra_rain_rollsum_36_lag3, ra_rain_rollsum_36_lag6, ra_rain_rollsum_72_lag3, ra_rain_rollsum_72_lag6, daysince_2.0_shallow, daysince_4.0_shallow, daysince_5.0_shallow, daysince_9.0_shallow, daysince_10.0_shallow, daysince_1.0_deep, daysince_2.0_deep, daysince_3.0_deep, daysince_4.0_deep, daysince_5.0_deep, daysince_6.0_deep, daysince_7.0_deep, daysince_8.0_deep, daysince_9.0_deep, daysince_10.0_deep|}
-\footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
+
 % \begin{verbatim}
 %     ffill_eventsum_ra_rain, decay-0.1_eventsum_ra_rain, raw_ro_rollsum_2, raw_ro_rollsum_3, raw_ro_rollsum_6, raw_ro_rollsum_12, raw_ro_change, ra_rain_change, raw_ro_lag2, raw_ro_lag4, raw_ro_lag6, raw_ro_lag8, ra_rain_rollsum_36_lag3, ra_rain_rollsum_36_lag6, ra_rain_rollsum_72_lag3, ra_rain_rollsum_72_lag6, daysince_2.0_shallow, daysince_4.0_shallow, daysince_5.0_shallow, daysince_9.0_shallow, daysince_10.0_shallow, daysince_1.0_deep, daysince_2.0_deep, daysince_3.0_deep, daysince_4.0_deep, daysince_5.0_deep, daysince_6.0_deep, daysince_7.0_deep, daysince_8.0_deep, daysince_9.0_deep, daysince_10.0_deep
 % \end{verbatim}
@@ -535,30 +537,30 @@ The set was then evaluated across the five expanding-window splits, wherein the 
 The performance metric for all rounds was the area under the precision-recall curve (AUC~PR).\footnote{In this context, AUC~PR is the better metric compared to receiver operating characteristic area under the curve (ROC~AUC) since it is better-suited for imbalanced classes and places more emphasis on positive cases, and is superior to $F_1$ since it considers the full range of classification thresholds.}
 The specific set of hyperparameters and boosting rounds found to yield the highest AUC~PR score across all cross-validation folds were then selected as the options for the model.
 
-The resulting best hyperparameters are provided in Table~\ref{tab_xgbparams}.
+% The resulting best hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
-\begin{table}[htbp]
-    % \small
-    \centering
-    \rowcolors{2}{white}{gray!20}
-    \renewcommand{\arraystretch}{1.23}
-    \begin{tabular}{l p{0.35\textwidth} r}
-        \toprule
-        Parameter & Purpose & Tuned value \\
-        \midrule
-        \textit{n} estimators & Number of trees & 122 \\
-        Learning rate & Impact of new trees & 0.102 \\
-        Max depth & Maximum depth of individual trees & 3 \\
-        Subsample & Random subset of training rows when building each tree & 0.646 \\
-        Column subsample by tree & Random subset of features when building each tree & 0.709 \\
-        Scale positive weight & Handles class imbalance & 11 \\
-        Gamma & Minimum loss reduction to split & 0.128 \\
-        Alpha & L1 regularization value & 0.936 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
-    \label{tab_xgbparams}
-\end{table}
+% \begin{table}[htbp]
+%     % \small
+%     \centering
+%     \rowcolors{2}{white}{gray!20}
+%     \renewcommand{\arraystretch}{1.23}
+%     \begin{tabular}{l p{0.35\textwidth} r}
+%         \toprule
+%         Parameter & Purpose & Tuned value \\
+%         \midrule
+%         \textit{n} estimators & Number of trees & 122 \\
+%         Learning rate & Impact of new trees & 0.102 \\
+%         Max depth & Maximum depth of individual trees & 3 \\
+%         Subsample & Random subset of training rows when building each tree & 0.646 \\
+%         Column subsample by tree & Random subset of features when building each tree & 0.709 \\
+%         Scale positive weight & Handles class imbalance & 11 \\
+%         Gamma & Minimum loss reduction to split & 0.128 \\
+%         Alpha & L1 regularization value & 0.936 \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
+%     \label{tab_xgbparams}
+% \end{table}
 
 
 
@@ -611,30 +613,32 @@ Smoothing can improve predictions by preventing standalone points that differ fr
 % Windowing can help smooth predictions by preventing standalone points that differ from their neighbors (e.g., having a sequence of True interrupted by one False, or vice-versa, both of which are unlikely in this context due to how weir blockages occur).
 Median windowing is often used for image analysis, but is effective at removing outliers or interruptions in the data while maintaining edges.
 
-By default, a threshold of 0.5 is selected in binary classification for categorizing a point as ``True'' or ``False''.
+By default, a threshold of $0.5$ is selected in binary classification for categorizing a point as ``True'' or ``False''.
 However, in practice a model more or less sensitive to ``True'' may make final results more useful.
 These measures were found by finding the combination of median window size and threshold that maximizes the $F_1$ score.\footnote{$F_1$ balances considerations for both precision and accuracy.}
 
 Median windows from 1 (no windowing) through 35 were tested with 100 thresholds ranging from 0.01 through 0.99.
-Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
+% Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 
 \subsubsection*{Removing marginal gains}
 % Remembering Occam's Razor... marginal gains in $F_1$ can result in over-fitting (such as applying large smoothing windows for an $F_1$ gain of, for instance, 0.0003).
 % The changes in $F_1$ differed so little from one median window to another, another
-Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process (such as applying large smoothing windows for an $F_1$ gain of only 0.0003 in the OOF set).
+% Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process (such as applying large smoothing windows for an $F_1$ gain of only 0.0003 in the OOF set).
+Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process.\footnote{For example, applying a large smoothing window for an $F_1$ gain of only 0.0003 in the OOF set may have diminishing returns.}
 % Thus, prior to finalizing post-hoc parameters, window/threshold combinations with an $F_1$ 99\% similar to the ``best'' $F_1$ were selected, and the final combination with the smallest window was selected.
 % 
-Thus, the window/threshold combination with the smallest median window and an $F_1$ 99\% similar to the ``best'' $F_1$ was selected; the resulting values were no windowing and a threshold of 0.317.
+% Thus, the window/threshold combination with the smallest median window and an $F_1$ 99\% similar to the ``best'' $F_1$ was selected; the resulting values were no windowing and a threshold of 0.317.
+Thus, the window/threshold combination with the smallest median window and an $F_1$ 99\% similar to the ``best'' $F_1$ was selected.
 
-The results of threshold and $F_1$ score for all median windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
+% The results of threshold and $F_1$ score for all median windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
 
-\begin{figure}[hbt!]
-    \centering
-    \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
-    % \includegraphics{outputs/figures/oof_tune.png}
-    \caption{$F_1$ vs threshold size for all windows on OOF set.}
-    \label{fig_oof_tune}
-\end{figure}
+% \begin{figure}[hbt!]
+%     \centering
+%     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
+%     % \includegraphics{outputs/figures/oof_tune.png}
+%     \caption{$F_1$ vs threshold size for all windows on OOF set.}
+%     \label{fig_oof_tune}
+% \end{figure}
 
 
 \subsection*{9) Fit tuned XGBoost model to entire training set}
@@ -645,8 +649,107 @@ Prior to analyzing performance, the tuned XGBoost model with optimal parameters 
 \subsection*{10) Predict on the test set}
 
 Finally, the fitted model was used to predict the values on the test set (i.e., the held-out 20\% of the data).
-The resulting precision-recall curve (showing performance across different thresholds) is shown in Figure~\ref{fig_final_prcurve}.
+% The resulting precision-recall curve (showing performance across different thresholds) is shown in Figure~\ref{fig_final_prcurve}.
 The outputs were stored as predicted probabilities in order to test the different threshold performances.
+
+% \begin{figure}[hbt!]
+%     \centering
+%     \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
+%     % \includegraphics{outputs/figures/oof_tune.png}
+%     \caption{Precision-recall curve of the test set with average precision (AP) values.}
+%     \label{fig_final_prcurve}
+% \end{figure}
+%     \item Predict on the test set
+
+
+%     \item Analyze results (with and without post-hoc parameters)
+\subsection*{11) Analyze results (with and without post-hoc parameters)}
+
+To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
+% The results are reported in Table~\ref{tab_metrics}.
+
+% \begin{table}[htb!]
+%     % \small
+%     \centering
+%     \rowcolors{2}{white}{gray!20}
+%     \renewcommand{\arraystretch}{1.23}
+%     \begin{tabular}{r r | r r r r}
+%         \toprule
+%         Smoothing window & Threshold & Accuracy & Precision & Recall & $F_1$ \\
+%         \midrule
+%         - & 0.5 & 0.667 & 0.253 & 0.686 & 0.370 \\
+%         29 & 0.5 & 0.669 & 0.255 & 0.686 & 0.371 \\
+%         29 & 0.307 & 0.509 & 0.204 & 0.845 & 0.329 \\
+%         - & 0.317 & 0.518 & 0.206 & 0.838 & 0.331 \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Performance metrics of the final model at different smoothing and thresholds.}
+%     \label{tab_metrics}
+% \end{table}
+
+
+\pagebreak
+
+\section{Results}
+
+% Annotated code, data files, and project reports can be found in the project's GitHub repository.\footnote{Project repository: \url{https://github.com/gmcginnis/info-698-capstone}.}
+
+% Performance metrics information here.
+
+% \subsection{Highly-correlated features}
+
+Applying the correlation threshold of 0.97 resulted in the removal of 31 features from the feature dataset ($X$).%
+% In the context of the obstruction failure mode model, there were 31 features removed.%
+\footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
+
+% \subsection{Split}
+
+For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
+
+% \subsection{XGBoost hyperparameters}
+
+The resulting tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
+
+\begin{table}[htbp]
+    % \small
+    \centering
+    \rowcolors{2}{white}{gray!20}
+    \renewcommand{\arraystretch}{1.23}
+    \begin{tabular}{l p{0.35\textwidth} r}
+        \toprule
+        Parameter & Purpose & Tuned value \\
+        \midrule
+        \textit{n} estimators & Number of trees & 122 \\
+        Learning rate & Impact of new trees & 0.102 \\
+        Max depth & Maximum depth of individual trees & 3 \\
+        Subsample & Random subset of training rows when building each tree & 0.646 \\
+        Column subsample by tree & Random subset of features when building each tree & 0.709 \\
+        Scale positive weight & Handles class imbalance & 11 \\
+        Gamma & Minimum loss reduction to split & 0.128 \\
+        Alpha & L1 regularization value & 0.936 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
+    \label{tab_xgbparams}
+\end{table}
+
+% \subsection{Post-hoc parameters}
+
+After applying the best hyperparameters and fitting to get OOF predictions, the best post-hoc parameters initially selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
+After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
+The results of threshold and $F_1$ score for all median windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
+    % \includegraphics{outputs/figures/oof_tune.png}
+    \caption{$F_1$ vs threshold size for all windows on OOF set.}
+    \label{fig_oof_tune}
+\end{figure}
+
+% \subsection{Fitted model}
+
+The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
 
 \begin{figure}[hbt!]
     \centering
@@ -655,14 +758,10 @@ The outputs were stored as predicted probabilities in order to test the differen
     \caption{Precision-recall curve of the test set with average precision (AP) values.}
     \label{fig_final_prcurve}
 \end{figure}
-%     \item Predict on the test set
 
+% \subsection{Test set metrics}
 
-%     \item Analyze results (with and without post-hoc parameters)
-\subsection*{11) Analyze results (with and without post-hoc parameters)}
-
-To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
-The results are reported in Table~\ref{tab_metrics}.
+The resulting metrics of the test set with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
 
 \begin{table}[htb!]
     % \small
@@ -682,15 +781,6 @@ The results are reported in Table~\ref{tab_metrics}.
     \caption{Performance metrics of the final model at different smoothing and thresholds.}
     \label{tab_metrics}
 \end{table}
-
-
-\pagebreak
-
-\section{Results}
-
-% Annotated code, data files, and project reports can be found in the project's GitHub repository.\footnote{Project repository: \url{https://github.com/gmcginnis/info-698-capstone}.}
-
-% Performance metrics information here.
 
 
 
