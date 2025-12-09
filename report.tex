@@ -58,6 +58,39 @@
     long=Barro~Colorado~Island
 }
 
+\DeclareAcronym{stri}{
+    short=STRI,
+    long=Smithsonian Tropical Research Institute
+}
+
+\DeclareAcronym{vfp}{
+    short=VFP,
+    long=Visual~FoxPro
+}
+
+\DeclareAcronym{lstm}{
+    short=LSTM,
+    long=Long Short-Term Memory
+}
+
+\DeclareAcronym{xgb}{
+    short=XGBoost,
+    long=Extreme Gradient Boosting
+}
+
+\DeclareAcronym{oof}{
+    short=OOF,
+    long=out-of-fold
+}
+
+\DeclareAcronym{iid}{
+    % short=iid,
+    short=\textit{iid},
+    long = independently \& identically distributed,
+    sort = iid
+    % format = \itshape
+}
+
 % URL and hyperlink settings
 % \usepackage[dvipsnames]{xcolor}
 \usepackage[table, dvipsnames]{xcolor}
@@ -130,18 +163,18 @@
 % % \setlength{\cftsecnumwidth}{2em}
 
 
-% Custom commands for new section titles to TOC
-\newcommand{\custsubsection}[1]{%
-    \subsection*{\thesubsection {#1}} %
-    \addcontentsline{toc}{subsection}{\protect\numberline{}{\thesubsection #1}} %
-    \addtocounter{subsection}{1}
-}
+% % Custom commands for new section titles to TOC
+% \newcommand{\subsection}[1]{%
+%     \subsection*{\thesubsection {#1}} %
+%     \addcontentsline{toc}{subsection}{\protect\numberline{}{\thesubsection #1}} %
+%     \addtocounter{subsection}{1}
+% }
 
-\newcommand{\custsubsubsection}[1]{%
-    \subsubsection*{\thesubsubsection {#1}} %
-    \addcontentsline{toc}{subsubsection}{\protect\numberline{}{\thesubsubsection #1}} %
-    \addtocounter{subsubsection}{1}
-}
+% \newcommand{\subsubsection}[1]{%
+%     \subsubsection*{\thesubsubsection {#1}} %
+%     \addcontentsline{toc}{subsubsection}{\protect\numberline{}{\thesubsubsection #1}} %
+%     \addtocounter{subsubsection}{1}
+% }
 
 % Section numbering
 % \newcommand{\secref}[1]{\S\ref{#1}}
@@ -227,61 +260,80 @@
 
 \listoftables
 
-\printacronyms
+% \section*{List of Acronyms}
+% \begingroup
+%     \setlength{\leftskip}{2em}
+%     \printacronyms[template=tabular, heading=none]
+% \endgroup
+
+\printacronyms[name={List of Acronyms}, template=tabular]
+% \printacronyms[name={List of Abbreviations}]
 
 \thispagestyle{empty}
 \pagebreak
 \pagenumbering{arabic}
 
 % Abstract, Introduction, Methods, Results, Discussion/Conclusions
-\section*{Abstract}
-\addcontentsline{toc}{section}{Abstract}
+% \section*{Abstract}
+% \addcontentsline{toc}{section}{Abstract}
+\begin{abstract}
+    % The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(\ac{bci}) on the Republic~of~Panama.
+    The long-term goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of \acl{bci} on the Republic~of~Panama.
+    % The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
+    This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
+    % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
+    Rainfall and soil moisture measurement data will be integrated to produce a more well-informed model.
+    % Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
+    % 
+    The optimized \ac{xgb} model for classifying the presence of weir obstructions achieved a recall of 0.838 and precision of 0.206 after threshold optimization, indicating high ability to flag actual blockage events with the tradeoff of flagging many non-problematic data points.
+    % 
+    Future work will continue to improve on the obstruction model, as well as create detection models for other failure modes and conduct quality assurance on the runoff values accordingly.
 
-% The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(BCI) on the Republic~of~Panama.
-The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of \ac{bci} on the Republic~of~Panama.
-% The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
-This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
-% This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
-Rainfall and soil moisture measurement data will be integrated to produce a more well-informed model.
-% Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
+\end{abstract}
 
 % \pagebreak
 
 \section{Introduction}\label{sec_es}
 
-The Lutz~catchment (Figure~\ref{map_bcilutz}) is a 9.73~ha area located in 100-year-old, secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
-% BCI is located in the middle of the largest lake in the Republic of Panama.
-% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
-BCI is operated by the Smithsonian Tropical Research Institute~(STRI), a branch of the Smithsonian~Institution.\autocite{stri2025}
-% BCI is one of the most intensely studied tropical rainforests in the world.
-Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
-% Data from this catchment provide critical information concerning the hydrological balance of BCI.
+Runoff data has been continually collected from the Lutz~weir (Figure~\ref{pic_weir}) since 1972, making it one of the longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
+The weir is located in the Lutz~catchment, a 9.73~ha area located in 100-year-old, secondary low land tropical rainforest on \acf{bci}, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama (Figure~\ref{map_bcilutz}).\autocite{mapPC}
+% \ac{bci} is located in the middle of the largest lake in the Republic of Panama.
+% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on \ac{bci}, a 15~km\textsuperscript{2} island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
+\ac{bci} is operated by the \ac{stri}, a branch of the Smithsonian~Institution.\autocite{stri2025}
+% \ac{bci} is one of the most intensely studied tropical rainforests in the world.
+% Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
+% Data from this catchment provide critical information concerning the hydrological balance of \ac{bci}.
 
 % \subsection{Background}
 
 % Runoff data has been electronically collected from the weir since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
 % Runoff data has been electronically collected from the weir since 1989 in five~minute intervals, resulting in millions of data points with more added every day.
-Runoff data has been continually collected from the weir since 1972, at first through hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours, and electronically measured every five~minutes since mid-1989 (Figure~\ref{pic_weir}).
-% The set contains millions of data points, with more added as the sensor continues to record measurements.
-In addition, rainfall measurements have been recorded at the Clearing station 170~m north of the weir.
-Soil moisture measurements have been taken weekly from 10 sampling sites within the catchment at two~depths each (Figure~\ref{map_soil}).
+
+% Runoff data was continually collected in hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours, and electronically measured every five~minutes since mid-1989.\autocite{hydroPC}
+% Runoff data prior to mid-1989 was collected through hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours.
+% Electronic sensors have reported values every five~minutes since mid-1989.\autocite{hydroPC}
+At first, hand-written records (which have since been digitized) recorded runoff in intervals ranging from three~minutes to three~hours, but since mid-1989, runoff values have been electronically measured every five~minutes.\autocite{hydroPC}
+% Runoff data has been continually collected since 1972, at first through hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours, and electronically measured every five~minutes since mid-1989.\autocite{hydroPC}
+The time series dataset contains millions of data points, with more data continuously added as the sensor continues to record new measurements.
+In addition, rainfall measurements have been recorded at the Clearing~station 170~m north of the weir.
+Soil moisture measurements have been taken weekly from 10 sampling sites within the catchment at two~depths each (Figure~\ref{map_soil}).\autocite{hydroPC}
 % These data sets are available on the Smithsonian~Research~Data~Repository with \texttt{CC~BY~4.0}~licenses.\autocite{srdrRepo}
 % All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
-% Steven~Paton---director of the Physical Monitoring Program at the STRI---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
+% Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 
 
 % The weir has been electronically collecting runoff data since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
 Quality issues in the runoff data come about due to environmental factors (such as partial blockages of the outflow channel), sensor failures, and calibration issues, to name a few.
 % Currently, quality assurance is conducted manually in Visual~FoxPro interactive interface.
-% Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
-Currently, quality assurance is conducted manually using a custom written program in Visual~FoxPro~(VFP), a popular data management program from the 2000s.
+% Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(\ac{vfp}) to allow for visual inspection and correction of the data.
+Currently, quality assurance is conducted manually using a custom written program in \ac{vfp}, a popular data management program from the 2000s.
 This program permits the visual inspection and correction of the data, a critical feature for manual quality assurance of micro-catchment data.
-% Currently, Steven~Paton---director of the Physical Monitoring Program at the STRI---conducts quality assurance manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
-% Steven~Paton---director of the Physical Monitoring Program at the STRI---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
+% Currently, Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---conducts quality assurance manually using a customized program in Visual~FoxPro~(\ac{vfp}) to allow for visual inspection and correction of the data.
+% Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 % Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
-However, not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of VFP leaves it vulnerable to future inaccessibility as it may eventually no longer be supported.
+However, not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of \ac{vfp} leaves it vulnerable to future inaccessibility as it may eventually no longer be supported.
 Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
-Because quality assurance requires some subjective decisions by the individual analyzing the data using the VFP system, the results are potentially biased to some, unknown degree.
+Because quality assurance requires some subjective decisions by the individual analyzing the data using the \ac{vfp} system, the results are potentially biased to some, unknown degree.\autocite{mapPC}
 
 % % % LONGER
 % The weir has been electronically collecting runoff data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
@@ -300,27 +352,30 @@ Because quality assurance requires some subjective decisions by the individual a
 % % Past attempts at quality assurance using stochastic methods have failed, as past teams have attempted to automate it with stochastic methods but concluded it to be resilient against automation.
 % Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 % %
-\pagebreak
-
-\begin{figure}[hbt!]
-    \centering
-    \fbox{\includegraphics[width=.6\textwidth]{figures/larsen2021figs_bci.jpg}}
-    \caption[Map showing the~Lutz~Catchment on Barro~Colorado~Island in the~Republic~of~Panama]{Map highlighting the location of the~Lutz~Catchment on Barro~Colorado~Island in the~Republic~of~Panama.\autocite{larsen2021figs}}
-    \label{map_bcilutz}
-\end{figure}
-
-\begin{figure}[!hbt]
-    \centering
-    \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-    \caption[Fine-scale topographic map of the Lutz~catchment sampling sites]{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
-    \label{map_soil}
-\end{figure}
 
 \begin{figure}[hbt!]
     \centering
     \includegraphics[width=.6\textwidth]{figures/larsen2021figs_setup.jpg}
     \caption[Photograph of the Lutz~Weir]{A photograph of the Lutz~Weir, including the electronic sensor measuring runoff.\autocite{larsen2021figs}}
     \label{pic_weir}
+\end{figure}
+
+% \pagebreak
+
+\begin{figure}[hbt!]
+    \centering
+    \fbox{\includegraphics[width=.6\textwidth]{figures/larsen2021figs_bci.jpg}}
+    \caption[Map showing the~Lutz~catchment on \acl{bci} in the~Republic~of~Panama]{The location of the~Lutz~catchment on \acf{bci} in the~Republic~of~Panama.\autocite{larsen2021figs}}
+    \label{map_bcilutz}
+\end{figure}
+
+% \smallbreak}
+
+\begin{figure}[!hbt]
+    \centering
+    \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
+    \caption[Fine-scale topographic map of the Lutz~catchment sampling sites]{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+    \label{map_soil}
 \end{figure}
 
 \pagebreak
@@ -330,7 +385,7 @@ Because quality assurance requires some subjective decisions by the individual a
 % Relevant data will first need to be uniformly coded and united into a cohesive set in order to conduct relevant analyses.
 % 
 % Steven~Paton---director of the Physical Monitoring Program at the Smithsonian~Tropical~Research~Institute---will be the primary contact regarding background information of the data, knowledge of exceptional data point ranges (such as extenuating circumstances, e.g., a tree fall damaging equipment), and any hydrological questions that come about.
-% Steven~Paton---director of the Physical Monitoring Program at the STRI---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
+% Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 % Project work will be conducted remotely, with regular advisor check-ins via teleconference.
 
 % The goals by the end of the project are to have a system for multiclass classification to flag periods of time with failure mode(s), and models to correct flagged data points.
@@ -361,7 +416,7 @@ Because quality assurance requires some subjective decisions by the individual a
 %     \centering
 %     \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_ca.jpg}}
 %     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-%     \caption{The location of BCI, Republic~of~Panama, showing the locations of the Lutz~catchment, weir, and tower.\autocite{mapPC}}
+%     \caption{The location of \ac{bci}, Republic~of~Panama, showing the locations of the Lutz~catchment, weir, and tower.\autocite{mapPC}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map_island}
 % \end{figure}
@@ -450,7 +505,7 @@ Examples of each failure mode can be found in APPENDIX CITE.
 
 Machine learning has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
 Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-% In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+% In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(\ac{lstm})---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
 % 
 In environmental machine learning, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
 
@@ -488,20 +543,21 @@ External variables of rainfall and soil moisture content are necessary for a wel
 Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
 In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 
-Despite time series data not being independently \& identically distributed (\textit{iid}), statistical time-series problems can still use binary classification.\autocite{ryabko2012}
+% Despite time series data not being independently \& identically distributed (\textit{iid}), statistical time-series problems can still use binary classification.\autocite{ryabko2012}
+Despite time series data not being \ac{iid}, statistical time-series problems can still use binary classification.\autocite{ryabko2012}
 For example, in hydrology \citean{hudnurkar2022} applied binary classification to rainfall time series, categorizing ``rain'' or ``not rain''.
 
 Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the existing number of identifiable failure modes, it is unnecessary for the primary goal.
-Support vector machines (SVMs) were also ruled out because they are better for small-to-medium preprocessed regular data, and do not work well for time-series sequences.\autocite{li2018}
+Support vector machines were also ruled out because they are better for small-to-medium preprocessed regular data, and do not work well for time-series sequences.\autocite{li2018}
 % Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the scope of the project and existing number of identifiable failure modes, it is unlikely to be necessary for this analysis.
 % 
 % Because failure modes are not temporally dependent (e.g., there is not a consistent sensor failure at regular time intervals), other time series models should not be used.
 
-In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
-% Although long short-term memory (LSTM) (a type of recurrent neural network) are good for identifying and learning temporal dependency patterns \& sequences, it requires clean \& regular data, and scalability is limited.\autocite{dritsas2025}
+In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially \ac{lstm}---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+% Although long short-term memory (\ac{lstm}) (a type of recurrent neural network) are good for identifying and learning temporal dependency patterns \& sequences, it requires clean \& regular data, and scalability is limited.\autocite{dritsas2025}
 Non-continuous nature of other variables may also prevent meaningful pattern detection, meaning that it may struggle with the differing granularity of input variables for detecting obstructions.
-LSTM models are also sensitive to noisy data, and may result in less accurate predictions.\autocite{baek2023}
-Furthermore, LSTM are difficult to interpret, and would thus have resulted in a black box issue as to why a particular failure mode flag was triggered since feature importance is unclear.\autocite{jakubowski2021}
+\ac{lstm} models are also sensitive to noisy data, and may result in less accurate predictions.\autocite{baek2023}
+Furthermore, \ac{lstm} are difficult to interpret, and would thus have resulted in a black box issue as to why a particular failure mode flag was triggered since feature importance is unclear.\autocite{jakubowski2021}
 
 % Ultimately, XGBoost was selected as the first model to try with the obstruction model.
 Boosting uses many weak learning models to sequentially boost its performance such that the final model is a strong learner.\autocite{murphy2022}
@@ -509,9 +565,9 @@ Boosting uses many weak learning models to sequentially boost its performance su
 Gradient tree boosting uses simple \& shallow decision trees as weak learners, finding good terminal nodes using standard regression tree learning on the residuals then resolving for the weights of each leaf by minimizing the loss function.\autocite{murphy2022}
 % 
 It is optimized for large datasets and is made even faster with parallel processing.\autocite{chen2016}
-Extreme gradient boosting (XGBoost) adds a regularizer, utilizes a second-order loss approximation, can sample features internally, and scales better.\autocites{murphy2022}{chen2016}
+\acf{xgb} adds a regularizer, utilizes a second-order loss approximation, can sample features internally, and scales better.\autocites{murphy2022}{chen2016}
 % Extreme gradient boosting (XGBoost) extends beyond gradient boosted trees by adding a regularizer, utilizing second-order loss approximation, internal feature sampling, and scales better.\autocites{murphy2022}{chen2016}
-XGBoost has been used for time series anomaly classification in quality assurance in the manufacturing sector.\autocite{mellah2022}
+\ac{xgb} has been used for time series anomaly classification in quality assurance in the manufacturing sector.\autocite{mellah2022}
 % It also handles class imbalance better (as is the case with the failure mode flags).
 Importantly, it does not require perfectly clean or consistent data---thus, it can handle missing values and noise.\autocite{chen2016}
 However, it requires careful hyperparameter tuning and explicit feature inputs since it does not ``learn'' temporal trends.
@@ -594,8 +650,9 @@ Ultimately, XGBoost was selected as the first model to try with the obstruction 
 % Number of instances of each failure mode in each set must be representative enough
 % Certain failure modes are rare or have no occurrences for long periods of time.
 
-Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split, and must instead remain continuous whenever possible.
-This is because time-series data is not \textit{iid}, so random splits would cause data leakage.
+Unlike other applications of train/test splits in machine learning, time-series data in this context should not be randomly split, and must instead remain continuous whenever possible.
+% This is because time-series data is not \textit{iid}, so random splits would cause data leakage.
+This is because time-series data is not \ac{iid}, so random splits would cause data leakage.
 % 
 One consideration when making a train/test split is that real-world variables causing inconsistencies in the data or different concentrations of error instances make a simple split difficult define without careful pre-processing.
 
@@ -638,7 +695,7 @@ Annotated code, data files, and project reports can be found in the project's Gi
 %     \item Conduct train/test split % accidentally reversed in poster
 %     \item Remove highly-correlated features % accidentally reversed in poster
 %     \item Tune XGBoost hyperparameters
-%     \item Fit to get out-of-fold (OOF) predictions
+%     \item Fit to get out-of-fold (\ac{oof}) predictions
 %     \item Tune post-hoc smoothing parameters
 %     \item Fit tuned XGBoost model to entire training set
 %     \item Predict on the test set
@@ -657,13 +714,14 @@ Annotated code, data files, and project reports can be found in the project's Gi
 % Conduct Train/Test split (80:20)
 % Tune XGBoost hyperparameters
 % 	(w/ PR-AUC—good for imbalanced classes)
-% Fit to get out-of-fold predictions (OOF)
+% Fit to get out-of-fold predictions (\ac{oof})
 % Tune post-hoc smoothing parameters w/ $F_1$
 % 	(median-windowing & classification threshold)
 % Fit tuned XGBoost model to entire training set
 % Predict on the test set (the held-out 20%)
 % Analyze results (w/ & w/o post-hoc params.)
 
+% \subsection{Data Preparation}
 % \subsection{\thesection.1 Import data}
 % \subsection*{1) Import data}
 \subsection{Data import}
@@ -701,7 +759,7 @@ There were some discrepancies in records between the shallow and deep soil moist
 Although the ``deep'' set is for depths of 30-40~cm, some entires from 0-10~cm were included.
 Most of these values matched those in the ``shallow'' (1-10~cm) data based on timestamp and sample site number, however there were a few instances where the reported values differed.
 It was ultimately decided that those mismatched values ($n=11$) could safely be eliminated from the ``deep'' set.
-Although this issue did not remove a significant amount of entries when compared to the resulting totals ($n=11,489$), it had not been found previously and thus made a substantive contribution to the STRI set.
+Although this issue did not remove a significant amount of entries when compared to the resulting totals ($n=11,489$), it had not been found previously and thus made a substantive contribution to the \ac{stri} set.
 
 Additionally, a few ``shallow'' samples with non-standard location numbers were removed ($n=3$).\footnote{Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
 % Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution.\footnote{This was because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
@@ -854,15 +912,15 @@ The specific set of hyperparameters and boosting rounds found to yield the highe
 % XGBoost information here.
 
 
-% \subsection*{7) Fit to get out-of-fold (OOF) predictions}
+% \subsection*{7) Fit to get out-of-fold (\ac{oof}) predictions}
 \subsection{Out-of-Fold Predictions}
-%     \item Fit to get out-of-fold (OOF) predictions
+%     \item Fit to get out-of-fold (\ac{oof}) predictions
 
-% Out-of-fold (OOF) predictions are used be used to tune smoothing and thresholding parameters. To do this, the model with tuned hyperparameters will predict each sliding window set from before. This reflects the real-world performance of the model as it can fit to more data.
+% Out-of-fold (\ac{oof}) predictions are used be used to tune smoothing and thresholding parameters. To do this, the model with tuned hyperparameters will predict each sliding window set from before. This reflects the real-world performance of the model as it can fit to more data.
 
-For further post-hoc tuning, out-of-fold (OOF) predictions were collected using the same expanding-window splits as in hyperparameter tuning, fitting to each fold's ``training'' set and storing the predicted probability values on the window's ``test'' set (Figure~\ref{fig_methods_split}).
+For further post-hoc tuning, \ac{oof} predictions were collected using the same expanding-window splits as in hyperparameter tuning, fitting to each fold's ``training'' set and storing the predicted probability values on the window's ``test'' set (Figure~\ref{fig_methods_split}).
 
-% Once tuned, post-hoc parameters---specifically, median-smoothing windows and the classification threshold---were tuned using OOF predictions.
+% Once tuned, post-hoc parameters---specifically, median-smoothing windows and the classification threshold---were tuned using \ac{oof} predictions.
 % These predictions use the same expanding-window splits as in hyperparameter tuning, fitting to each fold's ``training'' set and storing the predicted probability values on the window's ``test'' set (Figure~\ref{fig_methods_split}).
 % Smoothing & Thresholding
 
@@ -884,8 +942,8 @@ Median windows from 1 (no windowing) through 35 were tested with 100 thresholds 
 \subsubsection*{Removing marginal gains}
 % Remembering Occam's Razor... marginal gains in $F_1$ can result in over-fitting (such as applying large smoothing windows for an $F_1$ gain of, for instance, 0.0003).
 % The changes in $F_1$ differed so little from one median window to another, another
-% Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process (such as applying large smoothing windows for an $F_1$ gain of only 0.0003 in the OOF set).
-Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process.\footnote{For example, applying a large smoothing window for an $F_1$ gain of only 0.0003 in the OOF set may have diminishing returns.}
+% Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process (such as applying large smoothing windows for an $F_1$ gain of only 0.0003 in the \ac{oof} set).
+Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process.\footnote{For example, applying a large smoothing window for an $F_1$ gain of only 0.0003 in the \ac{oof} set may have diminishing returns.}
 % Thus, prior to finalizing post-hoc parameters, window/threshold combinations with an $F_1$ 99\% similar to the ``best'' $F_1$ were selected, and the final combination with the smallest window was selected.
 % 
 % Thus, the window/threshold combination with the smallest median window and an $F_1$ 99\% similar to the ``best'' $F_1$ was selected; the resulting values were no windowing and a threshold of 0.317.
@@ -897,7 +955,7 @@ Thus, the window/threshold combination with the smallest median window and an $F
 %     \centering
 %     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
 %     % \includegraphics{outputs/figures/oof_tune.png}
-%     \caption{$F_1$ vs threshold size for all windows on OOF set.}
+%     \caption{$F_1$ vs threshold size for all windows on \ac{oof} set.}
 %     \label{fig_oof_tune}
 % \end{figure}
 
@@ -1054,7 +1112,7 @@ The tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
 % \subsection{Post-hoc parameters}
 
-After applying the best hyperparameters and fitting to get OOF predictions, the best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
+After applying the best hyperparameters and fitting to get \ac{oof} predictions, the best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
 The results of threshold and $F_1$ score for all smoothing windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
 
@@ -1062,7 +1120,7 @@ The results of threshold and $F_1$ score for all smoothing windows are shown in 
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption[Performance of different classificaiton thresholds on out-of-fold data]{$F_1$ vs classification threshold for all windows on OOF set.}
+    \caption[Performance of different classificaiton thresholds on out-of-fold data]{$F_1$ vs classification threshold for all windows on \ac{oof} set.}
     \label{fig_oof_tune}
 \end{figure}
 
@@ -1194,7 +1252,7 @@ Although all data was relatively uniform in its available state, filtering for t
 % Fortunately, this will reduce the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
 Fortunately, this will reduce the preparation required for future analysis of other failure modes.
 
-Communication with the expert data contact at STRI was not possible the majority of October and November due to the federal government shutdown.
+Communication with the expert data contact at \ac{stri} was not possible the majority of October and November due to the federal government shutdown.
 This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
 % This did result in some data selection ``executive decisions'' since clarifications were not possible.
 
@@ -1265,7 +1323,7 @@ ML has been used in hydrology for applications such as predictive runoff modelli
 % \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 % 
 Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(\ac{lstm})---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
 % 
 In environmental ML, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
 % Data leakage issues are another consideration in environmental ML, and can stem from improper missing data management techniques.\autocite{zhu2023}
@@ -1274,13 +1332,13 @@ In environmental ML, improper missing data management techniques can also worsen
 % Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
 % According to Paton, ML algorithms have yet to be applied to singular catchment runoff data quality~assurance.
 
-The Lutz~catchment (Figure~\ref{fig_map}) is a 9.73~ha area located in the secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
-% BCI is located in the middle of the largest lake in the Republic of Panama.
-% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on Barro Colorado Island (BCI). BCI is a 15~km2 island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
-BCI is operated by STRI, a branch of the Smithsonian~Institution.\autocite{stri2025}
-% BCI is one of the most intensely studied tropical rainforests in the world.
+The Lutz~catchment (Figure~\ref{fig_map}) is a 9.73~ha area located in the secondary low land tropical rainforest on \ac{bci}, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
+% \ac{bci} is located in the middle of the largest lake in the Republic of Panama.
+% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on Barro Colorado Island (\ac{bci}). \ac{bci} is a 15~km2 island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
+\ac{bci} is operated by \ac{stri}, a branch of the Smithsonian~Institution.\autocite{stri2025}
+% \ac{bci} is one of the most intensely studied tropical rainforests in the world.
 Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
-% Data from this catchment provide critical information concerning the hydrological balance of BCI.
+% Data from this catchment provide critical information concerning the hydrological balance of \ac{bci}.
 
 % According to Paton, there have been few---if any---attempts to apply ML algorithms to singular catchment runoff data quality~assurance.
 % Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
@@ -1326,7 +1384,7 @@ Paton currently uses Visual~FoxPro to manipulate the data.
 % Visual~FoxPro is currently the only software used by Paton to manipulate the data.
 While the interface has been sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation.
 Furthermore, current quality assurance methods rely on subjective decisions by the individual analyzing the data, meaning that results are potentially biased to some unknown degree.\autocite{mapPC}
-% Quality assurance requires some subjective decisions by the person analyzing the data using the VFP system (Paton so far been the only one involved in this activity) meaning that the results are potentially biased to some, unknown degree.
+% Quality assurance requires some subjective decisions by the person analyzing the data using the \ac{vfp} system (Paton so far been the only one involved in this activity) meaning that the results are potentially biased to some, unknown degree.
 Additionally, it is not currently set up to automatically detect problematic portions of the data.
 Because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
 
@@ -1357,9 +1415,9 @@ Although water flow is a complex phenomenon, it is anticipated that the quantity
 % This section describes the scope and features of the _analysis_ created by the _project_. It is what the project will PRODUCE. You should write a draft version of these but this is what your mentor will help you with especially. This is often the breakdown of what will and will not be considered a passing project so make this detailed!
 
 % The key objective of the next section is to address the following itels: 
-\renewcommand{\thesubsection}{\bf{}}
-\setcounter{subsection}{1}
-\custsubsection{Final Presentation Format}
+% \renewcommand{\thesubsection}{\bf{}}
+% \setcounter{subsection}{1}
+\subsection{Final Presentation Format}
 % Final Presentation Format
 % How will your final project be submitted? Will it culminate in a paper with introduction, methods, and results section and at least 5 peer reviewed citations, that is <10 pages long and has at least two informative graphics? Will it culminate in an RShiny application that is also available on GitHub?
 
@@ -1370,7 +1428,7 @@ In addition to code files, a written report with background information, methods
 % The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
 % A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
 
-\custsubsection{What Analysis Is Being Run?}
+\subsection{What Analysis Is Being Run?}
 % Once the data is in, what analyses exactly should be run? E.G. what type of neural network is being run, what type of correlation analysis is being run, etc.
 
 \subsubsection*{Classification of Failure Mode}
@@ -1383,7 +1441,7 @@ A challenge for this feature is that some failures occur in extremely short inte
 
 % Periods of time in the data can be flagged as containing particular ``failure modes'', as explained in Table~\ref{tab_fm}.
 To flag data points, supervised classification can utilize rolling statistics and the external environmental variables (which provide some seasonal insights).
-Gradient boosted trees or LSTM can be used, but more literature review and exploratory data analysis will need to be conducted prior to finalizing which model(s) to utilize.
+Gradient boosted trees or \ac{lstm} can be used, but more literature review and exploratory data analysis will need to be conducted prior to finalizing which model(s) to utilize.
 % Upon a period being flagged as containing a failure mode, it will need to be classified.
 % A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
 
@@ -1426,7 +1484,7 @@ Gradient boosted trees or LSTM can be used, but more literature review and explo
 Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had one of the above-mentioned failure modes not occurred.
 This will involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply ``flattened'' to the level of adjacent data points using a simple linear regression model.
 
-\custsubsection{What Accuracy Is Expected?}
+\subsection{What Accuracy Is Expected?}
 % Sometimes models don't perform super well. If you're running a model, do you expect 100% accuracy? 65% accuracy across multiple outputs? An R2 of .6? What happens if the model isn't very accurate?
 
 Accuracy for certain failure mode classifications are expected to be high---for instance, ``sub-zero'' values are simple to flag. Others, such as ``spikes'', are also expected to be easily found.
@@ -1436,7 +1494,7 @@ Multiple, large rainfall events also pose particular challenges, as well as over
 Similarly, correction models for simpler failure modes are expected to be highly accurate and precise, since they are often simple linear gap-fills.
 Corrections for the failure mode of a blockage in combination with a rain event may have reasonable accuracy but lower precision.
 
-\custsubsection{What if the Analysis doesn't work?}
+\subsection{What if the Analysis doesn't work?}
 % Sometimes analyses don't work. Is a null result acceptable, or do you need to do work to circumvent that?
 
 If the error type categorization has poor performance or is unable to consistently perform, and the needs of the correction models become more pressing as the semester continues, the data set does include the manually-flagged error types.
@@ -1444,7 +1502,7 @@ The results of the ML-assisted corrections will be compared against the results 
 Large deviations from the expected values will be considered ``failures''.\autocite{mapPC}
 If the correction models do not work, it will still provide valuable insights into which failure modes are most difficult to automate or most ``resistant'' to certain algorithms.
 
-% \custsubsection{What if the Data Isn't Available?}
+% \subsection{What if the Data Isn't Available?}
 % This is only for projects that require data scraping – what will happen if your data is not scrapable? How will you salvage your project?
 % \bigbreak
 % \bigbreak
@@ -1452,16 +1510,21 @@ If the correction models do not work, it will still provide valuable insights in
 \pagebreak
 
 \appendix
-\section{Appendix}\label{sec_appendix}
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
 
-
-\setcounter{subsection}{1}
-\renewcommand{\thesubsection}{\Alph{subsection}.\hspace{1em}}
-\custsubsection{Failure Mode Examples}
-
+% \setcounter{subsection}{1}
+% \renewcommand{\thesubsection}{\Alph{subsection}.\hspace{1em}}
+% \subsection{Failure Mode Examples}
+\setcounter{section}{1}
+\renewcommand{\thesubsection}{\thesection}
+\subsection{Failure Mode Examples}\label{sec_appendix}
+% \renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\thefigure}{\thesubsection\arabic{figure}}
+\setcounter{figure}{0}
 % \setcounter{subsubsection}{1}
 % \renewcommand{\thesubsubsection}{\arabic{subsubsection} )\hspace{1em}}
-% \custsubsubsection{Obstruction}
+% \subsubsection{Obstruction}
 
 \begin{figure}[hbtp!]
     \centering
@@ -1471,7 +1534,7 @@ If the correction models do not work, it will still provide valuable insights in
     \label{fig_ex_block}
 \end{figure}
 
-% \custsubsubsection{Spike}
+% \subsubsection{Spike}
 
 \begin{figure}[hbtp!]
     \centering
@@ -1517,7 +1580,8 @@ If the correction models do not work, it will still provide valuable insights in
 % \end{itemize}
 
 \pagebreak
-\custsubsection{Ground Rules}
+\setcounter{section}{2}
+\subsection{Challenges}
 % How the team will conduct the business of completing this project. What are the expectations and ground rules the team will agree to? How will you conduct discussions, manage dissenting views, and make decisions? How will you hold each other accountable for completing this project? Each team member must sign the Approvals section below indicating their acknowledgement of these Ground Rules. Do not remove items from this list, but you may add items to this list.
 
 Text.
