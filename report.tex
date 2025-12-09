@@ -317,10 +317,10 @@
     % The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
     This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
     % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
-    Rainfall and soil moisture measurement data will be integrated to produce a more well-informed model.
+    Rainfall and soil moisture measurement data were integrated to produce a more well-informed model.
     % Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
     % 
-    The optimized \ac{xgb} model for classifying the presence of weir obstructions achieved a recall of 0.838 and precision of 0.206 after threshold optimization, indicating high ability to flag actual blockage events with the tradeoff of flagging many non-problematic data points.
+    The optimized \ac{xgb} model for classifying the presence of obstructions in runoff data achieved a recall of 0.838 and precision of 0.206 after threshold optimization, indicating high ability to flag actual blockage events with the tradeoff of flagging many non-problematic data points.
     % 
     Future work will continue to improve on the obstruction model, as well as create detection models for other failure modes and conduct quality assurance on the runoff values accordingly.
 
@@ -329,6 +329,8 @@
 % \pagebreak
 
 \section{Introduction}\label{sec_es}
+
+\subsection{Background}
 
 Runoff data has been continually collected from the Lutz~weir (Figure~\ref{pic_weir}) since 1972, making it one of the longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
 The weir is located in the Lutz~catchment, a 9.73~ha area located in 100-year-old, secondary low land tropical rainforest on \acf{bci}, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama (Figure~\ref{map_bcilutz}).\autocite{mapPC}
@@ -349,7 +351,7 @@ The weir is located in the Lutz~catchment, a 9.73~ha area located in 100-year-ol
 % Electronic sensors have reported values every five~minutes since mid-1989.\autocite{hydroPC}
 At first, hand-written records (which have since been digitized) recorded runoff in intervals ranging from three~minutes to three~hours, but since mid-1989, runoff values have been electronically measured every five~minutes.\autocite{hydroPC}
 % Runoff data has been continually collected since 1972, at first through hand-written records (which have since been digitized) in intervals ranging from three~minutes to three~hours, and electronically measured every five~minutes since mid-1989.\autocite{hydroPC}
-The time series dataset contains millions of data points, with more data continuously added as the sensor continues to record new measurements.
+The time series dataset contains millions of data points, with more continuously added as the sensor continues to record new measurements.
 In addition, rainfall measurements have been recorded at the Clearing~station 170~m north of the weir.
 Soil moisture measurements have been taken weekly from 10 sampling sites within the catchment at two~depths each (Figure~\ref{map_soil}).\autocite{hydroPC}
 % These data sets are available on the Smithsonian~Research~Data~Repository with \texttt{CC~BY~4.0}~licenses.\autocite{srdrRepo}
@@ -361,14 +363,14 @@ Soil moisture measurements have been taken weekly from 10 sampling sites within 
 Quality issues in the runoff data come about due to environmental factors (such as partial blockages of the outflow channel), sensor failures, and calibration issues, to name a few.
 % Currently, quality assurance is conducted manually in Visual~FoxPro interactive interface.
 % Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(\ac{vfp}) to allow for visual inspection and correction of the data.
-Currently, quality assurance is conducted manually using a custom written program in \ac{vfp}, a popular data management program from the 2000s.
+Currently, quality assurance is conducted manually using a custom written program in \ac{vfp}, a data management program from the 2000s.
 This program permits the visual inspection and correction of the data, a critical feature for manual quality assurance of micro-catchment data.
 % Currently, Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---conducts quality assurance manually using a customized program in Visual~FoxPro~(\ac{vfp}) to allow for visual inspection and correction of the data.
 % Steven~Paton---director of the Physical Monitoring Program at the \ac{stri}---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 % Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
 However, not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of \ac{vfp} leaves it vulnerable to future inaccessibility as it may eventually no longer be supported.
-Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 Because quality assurance requires some subjective decisions by the individual analyzing the data using the \ac{vfp} system, the results are potentially biased to some, unknown degree.\autocite{mapPC}
+Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
 
 % % % LONGER
 % The weir has been electronically collecting runoff data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
@@ -465,7 +467,7 @@ Because quality assurance requires some subjective decisions by the individual a
 % There are five major failure modes flagged in the data set: obstruction, spike, calibration, weir cleaning, and signal noise.
 Periods of time in the data are flagged as containing ``failure modes'', as explained in Table~\ref{tab_fmtypes}.
 Some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
-One long-term goal of this project is to create systems to determine where there are readings containing a particular failure mode.
+One long-term goal of the project is to create systems to determine where there are readings containing a particular failure mode.
 % This also requires the system to determine the time range in which a failure mode is occurring.
 % A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
 Examples of each failure mode can be found in Appendix~\ref{apx_fm}.
@@ -544,10 +546,10 @@ Rainfall runoff data collected by citizen scientists in Ethiopia has been visual
 % 
 In environmental machine learning, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
 
-Initially, a multi-class classification model was considered to flag points containing failure modes.
+Initially, a multi-class classification model was considered for flagging points containing failure modes.
 However, not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
 % Multiple different binary models can be constructed, as each failure mode has differing indicators and variable influences (e.g., a “spike” only depends on the raw value itself, “calibration” depends on the raw value versus the calibration point, and “obstruction” can be influenced from the raw value, rainfall, and soil moisture).
-Thus, individual models can be constructed based on failure mode and input variables in order to minimize the complexity of each.
+Thus, individual models can be constructed based on failure mode and input variables in order to minimize the complexity of each model.
 
 \begin{table}[htbp]
     % \small
@@ -575,7 +577,7 @@ Thus, individual models can be constructed based on failure mode and input varia
 
 \pagebreak
 
-Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
+Obstructions are the most difficult failure mode to detect and correct (in-part because they require the most variable considerations), and thus were selected as the first failure mode to construct a model for.
 External variables of rainfall and soil moisture content are necessary for a well-informed model.
 Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
 In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
@@ -584,7 +586,7 @@ In the context of modelling expected droughts, \citean{houmma2022} highlights ho
 Despite time series data not being \ac{iid}, statistical time-series problems can still use binary classification.\autocite{ryabko2012}
 For example, in hydrology \citean{hudnurkar2022} applied binary classification to rainfall time series, categorizing ``rain'' or ``not rain''.
 
-Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the existing number of identifiable failure modes, it is unnecessary for the primary goal.
+Unsupervised anomaly detection (such as isolation forest) would be useful in flagging any unobserved or new failure modes, however given the existing number of explicitly identified failure modes, it is unnecessary for the primary goal.
 Support vector machines were also ruled out because they are better for small-to-medium preprocessed regular data, and do not work well for time-series sequences.\autocite{li2018}
 % Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the scope of the project and existing number of identifiable failure modes, it is unlikely to be necessary for this analysis.
 % 
@@ -693,7 +695,7 @@ This is because time-series data is not \ac{iid}, so random splits would cause d
 % 
 One consideration when making a train/test split is that real-world variables causing inconsistencies in the data or different concentrations of error instances make a simple split difficult define without careful pre-processing.
 
-Time series analyses also use ``window'' splits, which involve training on a window of time, validating on an immediately proceeding window, and repeating as necessary.
+Time series analyses can use ``window'' splits for cross-validation, which involve training on a window of time, validating on an immediately proceeding window, and repeating as necessary.
 This approach is beneficial for tuning hyperparameters, as it can indicate model stability over time and reflects real-world implementation.
 % \cite[Figure~1]{chu1995}
 
@@ -765,20 +767,20 @@ Annotated code, data files, and project reports can be found in the project's Gi
 % \subsubsection{Data import}
 \subsubsection{Importing}
 
-All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
+All data sets are readily available in the form of \texttt{.csv} files, and are regularly updated on the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
 % The data is in four files, relating to runoff, rain, shallow-depth soil moisture
-In their raw form, the data were stored in five individual data sets: runoff measurements (including raw and adjusted measurements), rain measurements, weir calibration values, shallow-depth soil moisture measurements, and deep-depth soil moisture measurements.
+In their raw form, the data were stored in five individual data sets: runoff measurements (including raw and manually-adjusted values), rain measurements, weir calibration values, shallow-depth soil moisture measurements, and deep-depth soil moisture measurements.
 
 % \subsection*{2) Prepare data}
 % \subsection{Data preparation}
 \subsubsection{Wrangling}
 
-In order to conduct model analyses, data first had to be uniformly coded and united into cohesive sets.
+In order to conduct model analyses, data first had to be uniformly coded and united into a cohesive set.
 % 
 % 
 % 
 % \subsubsection{Date Selections}
-Because electronic monitoring did not begin until mid-1989, values that relied on digitization of manually-collected charts were first removed from the runoff datasets.
+Because electronic monitoring did not begin until mid-1989, values that relied on this digitization of manually-collected charts were first removed from the runoff datasets.
 Occasional sensor failures also resulted in modern records relying on these manual fallbacks, so those values were also removed.
 The largest of these failures was a window beginning in January~2013 when the sensor failed and there was no backup until a different one was installed in August~2014.
 Because these values relied on the manually-collected chart resource, they were also removed prior to modelling.
@@ -786,21 +788,21 @@ Because these values relied on the manually-collected chart resource, they were 
 Some entries were lacking in a data source flag, so those which were between chart-reliant values were also removed.
 
 Soil data was not collected from late~February through late~December~2020 due to the COVID-19 pandemic.
-Because the obstruction failure mode detection depends on these values (due to differences in how they appear in drier seasons versus wetter seasons), this window of time was also removed from the data prior to model creation.
+Because the obstruction failure mode detection depends on these values (due to differences in how they appear in the dry season versus the wet seasons), this window of time was also removed from the data prior to model creation.
 
 Data points which were both marked as ``missing'' and had reported raw runoff values of $-999.0$ were also removed
 Other gaps of missing values occur and should be addressed.\footnote{This also differs from instances of gap fills.}
-In the manually-adjusted results, the levels of such points had been set to $0.0$, but because there were so few instances of them in the filtered data set, they were removed for obstruction analysis ($n=12$).
+In the manually-adjusted results, the levels of such points had been set to $0.0$, but because there were so few instances of them in the filtered data set ($n=12$), they were removed for obstruction analysis.
 
 % \subsubsection{Soil Moisture Abnormalities}
 % \subsubsection*{Soil moisture abnormalities}
 \paragraph{Soil moisture abnormalities}
 
 There were some discrepancies in records between the shallow and deep soil moisture data sets.
-Although the ``deep'' set is for depths of 30-40~cm, some entires from 0-10~cm were included.
+Although the ``deep'' set is for depths of 30-40~cm, some entries from 0-10~cm were included.
 Most of these values matched those in the ``shallow'' (1-10~cm) data based on timestamp and sample site number, however there were a few instances where the reported values differed.
 It was ultimately decided that those mismatched values ($n=11$) could safely be eliminated from the ``deep'' set.
-Although this issue did not remove a significant amount of entries when compared to the resulting totals ($n=11,489$), it had not been found previously and thus made a substantive contribution to the \ac{stri} set.
+Although this issue did not remove a significant amount of entries when compared to the resulting totals ($n=11,489$), it was an error that had not been found previously, and thus made a substantive contribution to the \ac{stri} set.
 
 Additionally, a few ``shallow'' samples with non-standard location numbers were removed ($n=3$).\footnote{Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
 % Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution.\footnote{This was because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
@@ -826,17 +828,17 @@ These consisted of: obstruction, spike, gap~fill (often related to sub-zero fail
 
 Because \ac{xgb} models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
 These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff 10 minutes prior).
-In the context of obstruction detection, rolling statistics included the sum and standard deviation of runoff values in windows spanning 10~minutes~(min), 15~min, 20~min, 25~min, 30~min, 1~hour~(hr), 3~hr, 6~hr, 12~hr, and 24~hr prior to the data point, and rainfall values in windows spanning 10~min, 30~min, 1~hr, 3~hr, and 6~hr prior.
+In the context of obstruction detection, rolling statistics included the sum and standard deviation of runoff values in windows spanning 10~min, 15~min, 20~min, 25~min, 30~min, 1~hr, 3~hr, 6~hr, 12~hr, and 24~hr prior to the data point, and rainfall values in windows spanning 10~min, 30~min, 1~hr, 3~hr, and 6~hr prior.
 Every other runoff value from 5~min through 3~hr prior were added as lag features, as were the lags for every aforementioned rain rolling sum features from 15~min, 30~min, 1~hr, 2~hr, and 3~hr prior.
 
 Temporal distances from events were also calculated and saved as features.
 This included minutes since a rainfall occurred, minutes since a calibration point was taken, and days since a soil moisture sample was taken.
-Change from the immediately preceding runoff measurement and rain measurement were also added as features, as was a feature which calculated the cumulative value for any rain ``events'' (e.g., the cumulative sum for a continuous rain lasting 30~minutes).
-A decay feature was also added for this cumulative rain feature, which duplicated the cumulative rain but added values forward weighted by an exponential decay value.
+Change from the immediately preceding runoff measurement and rain measurement were also added as features, as was a feature which calculated the cumulative value for any rain ``events'' (e.g., the cumulative sum for a continuous rain lasting 30~min).
+A decay feature was also added for this cumulative rain feature, which duplicated the cumulative rain and continued the values forward weighted by an exponential decay value.
 The decay rate was set to -0.1, but would benefit from expert insight for a more precise value to better represent actual flow decay behavior.
 
 Features to represent seasonality and time-of-day considerations were also added.
-These took the form of day of the year, month of the year, hour of the day, and minute of the the hour, each transformed with sine and cosine to allow the model to be based on the cyclical patterns of time rather than abrupt distances.\footnote{For example, the numeric value for the day of the year of December~31 (365) is `far' from that of January~01 (001), but in reality they are very near}.
+These took the form of day of the year, month of the year, hour of the day, and minute of the hour, each transformed with sine and cosine to allow the model to be based on the cyclical patterns of time rather than abrupt distances.\footnote{For example, the numeric value for the day of the year of December~31 (365) is `far' from that of January~01 (001), but in reality they are very near.}
 % Additional features were
 
 %     \item Conduct train/test split
@@ -846,7 +848,7 @@ These took the form of day of the year, month of the year, hour of the day, and 
 
 % Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
 % This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
-An initial 80/20 train/test split was conducted on the data.
+An initial 80/20 train/test split was conducted on the chronologically-ordered data.
 % Thus, an 80/20 train/test split was conducted on the data. %
 % 
 % For the obstruction failure mode, this resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
@@ -869,7 +871,7 @@ A visual overview of this initial 80/20 split and methodology for splits in subs
 \subsubsection{Feature selection}
 
 To reduce high-dimensionality, avoid overfitting, and improve processing time \& internal memory, highly-correlated features were removed.
-This was conducted by using an existing function to compute the pairwise Pearson correlation between all features in the $X$ training set, and removing one of those in pairs in which correlation was calculated as greater than 0.97.
+This was conducted by using an existing function to compute the pairwise Pearson correlation between all features in the $X$ training set, and removing one of those in the pairs in which the calculated correlation was greater than 0.97.
 % In the context of the obstruction failure mode model, there were 31 features removed.%
 % \footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
 
@@ -897,7 +899,7 @@ Because the data is mostly high-resolution, a larger window width is permissible
 % For 50 iterations, for each of the five expanding-window splits,
 In each of 50 iterations, a unique and randomly-selected combination of hyperparameters was selected from predefined distributions.
 The set was then evaluated across the five expanding-window splits, wherein the model was trained on the subset and used an internal validation set for early stopping to determine the optimal number of boosting ``rounds'' necessary before performance degrades or has diminishing returns.
-The performance metric for all rounds was the \ac{aucpr}.\footnote{In this context, \ac{aucpr} is the better metric compared to \acf{rocauc} since it is better-suited for imbalanced classes and places more emphasis on positive cases, and is superior to $F_1$ since it considers the full range of classification thresholds.}
+The performance metric for the individual rounds was the \ac{aucpr}.\footnote{In this context, \ac{aucpr} is the better metric compared to \acf{rocauc} since it is better-suited for imbalanced classes and places more emphasis on positive cases, and is superior to $F_1$ since it considers the full range of classification thresholds.}
 The specific set of hyperparameters and boosting rounds found to yield the highest \ac{aucpr} score across all cross-validation folds were then selected as the options for the model.
 
 % The resulting best hyperparameters are provided in Table~\ref{tab_xgbparams}.
@@ -973,17 +975,17 @@ For further post-hoc tuning, \ac{oof} predictions were collected using the same 
 
 % \subsection*{8) Tune post-hoc smoothing parameters}
 % \subsection{Tuning Post-Hoc Parameters}
-\subsection{Tuning post-hoc parameters}
+\subsubsection{Tuning post-hoc parameters}
 %     \item Tune post-hoc smoothing parameters
 
-Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{e.g., having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
+Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{For exmaple, having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
 % Windowing can help smooth predictions by preventing standalone points that differ from their neighbors (e.g., having a sequence of True interrupted by one False, or vice-versa, both of which are unlikely in this context due to how weir blockages occur).
-Median windowing is often used for image analysis, but is effective at removing outliers or interruptions in the data while maintaining edges.
+Median windowing is often used for image analysis,\autocite{rezaee2021} but is effective at removing outliers or interruptions in the data while maintaining edges.\autocite{kaminsky2025}
 
 By default, a threshold of $0.5$ is selected in binary classification for categorizing a point as ``True'' or ``False''.
-However, in practice a model more or less sensitive to ``True'' may make final results more useful.
+However, in practice a model that is more or less sensitive to ``True'' may make final results more useful.
 These measures were found by finding the combination of median window size and threshold that maximizes the $F_1$ score.\footnote{$F_1$ balances considerations for both precision and accuracy.}
-
+% 
 Applying smoothing via median windows of sizes from 1 (no smoothing) through~35 were tested with 100~thresholds ranging from 0.01~through~0.99.
 % Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 
@@ -1011,17 +1013,17 @@ Thus, the window/threshold combination with the smallest median window and an $F
 
 % \subsection*{9) Fit tuned \ac{xgb} model to entire training set}
 % \subsection{Fitting Tuned Model}
-\subsection{Testing Model}
+\subsection{Model Testing}
 \subsubsection{Fitting tuned model}
 
-Prior to analyzing performance, the tuned \ac{xgb} model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the data) (Figure~\ref{fig_methods_split}).
+Prior to analyzing performance, the tuned \ac{xgb} model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the full dataset) (Figure~\ref{fig_methods_split}).
 %     \item Fit tuned \ac{xgb} model to entire training set
 
 % \subsection*{10) Predict on the test set}
 % \subsection{Test Set Prediction}
 \subsubsection{Test set prediction}
 
-Finally, the fitted model was used to predict the values on the test set (i.e., the held-out 20\% of the data).
+Finally, the fitted model was used to predict the values on the test set (i.e., the held-out 20\% of the full dataset).
 % The resulting precision-recall curve (showing performance across different thresholds) is shown in Figure~\ref{fig_final_prcurve}.
 The outputs were stored as predicted probabilities in order to test the different threshold performances.
 
@@ -1040,7 +1042,7 @@ The outputs were stored as predicted probabilities in order to test the differen
 % \subsection{Analyze Results}
 \subsubsection{Performance analysis}
 
-To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
+To quantify performance improvement with and without the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
 
 In binary classification, the predicted values are compared to the actual values of $y$.
 True~positives~(TP) are instances where the model-predicted value and the actual value are both ``True''.
@@ -1139,7 +1141,8 @@ This resulted in a total of 108 input features ($X$).
 % 
 % \subsection{Split}
 % 
-For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
+The initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).\footnote{Both sets are not perfrectly continous frequencies of 5~min due to gaps from occasional sensor failure, blips, and missing values. However, as previously mentioned, \ac{xgb} can handle incomplete feature sets.}
+% For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 
 % \subsection{\ac{xgb} hyperparameters}
 
@@ -1170,9 +1173,10 @@ The tuned \ac{xgb} hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
 % \subsection{Post-hoc parameters}
 \pagebreak
-After applying the best hyperparameters and fitting to get \ac{oof} predictions, the best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
-After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
+After applying the best hyperparameters and fitting to get \ac{oof} predictions, thresholds at different window sizes were tested and scored.
 The results of threshold and $F_1$ score for all smoothing windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
+The best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
+After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
 
 \begin{figure}[hbtp!]
     \centering
@@ -1188,7 +1192,8 @@ The results of threshold and $F_1$ score for all smoothing windows are shown in 
 % \subsection{Fitted model}
 
 The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
-After being fitted on the full training set and predicting the held-out test set, the resulting metrics of model performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+% After being fitted on the full training set and predicting the held-out test set, the resulting metrics of model performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+The metrics of model performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
 % The resulting precision-recall curve of the predicted probabilities of the fitted model on the test set is shown in Figure~\ref{fig_final_prcurve}.
 % The resulting precision-recall curve after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}, and the resulting metrics of the performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
 % A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
@@ -1271,11 +1276,11 @@ A reflection on some of the challenges faced over the course of the project can 
 
 \subsection{Interpretation of Results}
 
-Based on Figure~\ref{fig_oof_tune}, it can be concluded that threshold tuning significantly improved model performance, however window smoothing appeared ineffective.
-The test results in Table~\ref{tab_metrics} show that threshold tuning greatly improved recall but at the detriment of other metrics: high recall indicates that the tuned-threshold model can successfully identify most true instances of obstructions, however low precision indicates that many data points were erroneously flagged as being obstructions.
+Based on Figure~\ref{fig_oof_tune}, it can be concluded that threshold tuning significantly improved model performance, but window smoothing appeared ineffective.
+The test results in Table~\ref{tab_metrics} show that threshold tuning greatly improved recall but at the detriment of other metrics: high recall indicates that the tuned-threshold model can successfully identify most true instances of obstructions, however the low precision indicates that many data points were erroneously flagged as being obstructions.
 % This was further proven by the test results in Table~\ref{tab_metrics}, since all metrics improved .
 % 
-The threshold selected from the absolute best smoothing window (i.e., before marginal gains filtering) had a slightly higher recall than the final selected threshold.
+The threshold selected from the absolute best smoothing window (i.e., prior to marginal gains filtering) had a slightly higher recall than the final selected threshold.
 
 % \subsection{Limitations}
 
@@ -1287,19 +1292,21 @@ The threshold selected from the absolute best smoothing window (i.e., before mar
 From Figure~\ref{fig_ts_accuracy}, model accuracy seems to improve when there are fewer actual instances of obstructions.
 The jagged accuracy line indicates that the current model will perform inconsistently on time periods with differing concentrations of obstruction events.
 % However, the matching of peaks in mid-2018 and late 2024 to early 2025 seem to indicate that performance improved with greater instances of actual blco
-The performance example in Figure~\ref{fig_performance_ex} shows that the model successfully highlighted much of the obstruction events, however struggled to maintain a smooth window to indicate the full range of the failure mode.
+The performance example in Figure~\ref{fig_performance_ex} shows that the model successfully highlighted much of the obstruction events, but struggled to maintain a smooth window to indicate the full range of the failure mode.
 % Although smoothing with median windowing did not quantifiably improve performance, it is possible that other smothing 
 % The highlighted window in the afternoon of July 2 does follow the pattern of other obstruction instances (due to not having a rain event to cause the increase), however not all non-rain increases are indicative of a blockage.\footnote{Such as periods of of evapotranspiration.}
 
 % Regarding the tuned \ac{xgb} hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
-It is possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
 % An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially ``due to the fact that there are few important features in [the] dataset'' and that it would instead benefit to greedily select from all features.
 An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
+Thus, it is possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
 % Given that features were already reduced using pairwise correlation filtering, 
 More advanced feature selection prior to modelling may remove the need for column subsampling, thus potentially improving the model by simplifying it and reducing dimensionality further.
 % \begin{quote}
 %     “In this [classification] experiment, we also [found that] column subsamples gives slightly worse performance than using all the features. This could due to the fact that there are few important features in this dataset and we can benefit from greedily select from all the features.” (Chen, 792)
 % \end{quote}
+% 
+Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is also possible that other failure modes are impeding model performance.
 
 % \subsection{Limitations}
 
@@ -1311,7 +1318,7 @@ More advanced feature selection prior to modelling may remove the need for colum
 % \section{Future Work}
 
 Fitting large-parameter models usually require very large training datasets to obtain satisfactory results.
-However, model performance usually do not scale linearly with the size of the training set; rather, after initial rapid improvements with increasing train set size, they reach often a point of diminishing returns.\autocite{phaseiiPC}
+However, model performances usually do not scale linearly with the size of the training set; rather, after initial rapid improvements with increasing train set size, they often reach a point of diminishing returns.\autocite{phaseiiPC}
 The point where diminishing returns has been reached will be a combination of the model accuracy required, the nature of the model and the data being used, and the cost of refitting the model with new data.
 % The performance value of retraining the model as new data becomes available should be measured.
 Thus, it is proposed that the existing model be retrained with smaller subsets of the original training data, allowing performance of the resulting fits to be compared to a model based on the full training set in order to quantify how quickly the model improves with increasing training set size.\autocite{phaseiiPC}
@@ -1323,11 +1330,11 @@ The model only relied on look-behind features to avoid data leakage and reflect 
 This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
 It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
 % 
-Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes impede model performance.
+% Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes impede model performance.
 
-
-Future work will improve on the model for obstruction detection, and create other models for the other failure modes.
+Future work will also improve on the model for obstruction detection, and create other models for the other failure modes.
 It is likely that different classification algorithms may have to be considered for other failure mode detection models, so further research will be necessary.
+
 
 % Improvements to feature engineering for the \ac{xgb} model based on expert input would likely benefit the model performance.
 % The model only relied on look-behind features to avoid data leakage and reflect performance of a ``live'' model.
@@ -1337,9 +1344,9 @@ It is likely that different classification algorithms may have to be considered 
 % % 
 % Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
 
-Additionally, other models are expected to be constructed in order to correct the raw runoff values during windows of failure modes to the appropriate adjusted values.
+Additionally, other models are expected to be constructed in order to correct the actual raw runoff values during windows of failure modes to the appropriate adjusted values.
 If failure mode flagging models continue to have poor performance in regards to precision, it may be necessary to create a system to apply such correction models only to manually-confirmed windows of time, since modifying accurate data harms data quality \& integrity.
-However, failure mode flagging models with good recall may still be successsfully utilized as a ``first-pass'' alert system for initial quality assurance checks.
+However, failure mode flagging models with good recall may still be able to be successfully utilized as a ``first-pass'' alert system for initial quality assurance checks.
 
 % Director of the Physical Monitoring Program at \ac{stri} Steven Paton also adds:
 % \begin{quotation}
