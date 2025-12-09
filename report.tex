@@ -60,7 +60,7 @@
 
 \DeclareAcronym{stri}{
     short=STRI,
-    long=Smithsonian Tropical Research Institute
+    long=Smithsonian~Tropical~Research~Institute
 }
 
 \DeclareAcronym{vfp}{
@@ -70,39 +70,60 @@
 
 \DeclareAcronym{lstm}{
     short=LSTM,
-    long=Long Short-Term Memory
+    long=Long~Short\nobreak-Term~Memory
 }
 
 \DeclareAcronym{xgb}{
     short=XGBoost,
-    long=Extreme Gradient Boosting
+    long=Extreme~Gradient~Boosting
 }
 
 \DeclareAcronym{oof}{
     short=OOF,
-    long=out-of-fold
+    long=out\nobreak-of\nobreak-fold
 }
 
 \DeclareAcronym{iid}{
     short = \textit{iid},
-    long = independently \& identically distributed,
+    long = independently~\&~identically~distributed,
     sort = iid
 }
 
     
 \DeclareAcronym{aucpr}{
     short = AUC~PR,
-    long = area under the precision-recall curve
+    long = area~under the precision\nobreak-recall~curve
 }
 
 \DeclareAcronym{rocauc}{
     short = ROC~AUC,
-    long = receiver operating characteristic area under the curve
+    long = receiver~operating~characteristic area~under~the~curve
 }
 
 \DeclareAcronym{ap}{
     short = AP,
-    long = average precision
+    long = average~precision
+}
+
+
+\DeclareAcronym{tp}{
+    short = TP,
+    long = true~positive(s)
+}
+
+\DeclareAcronym{tn}{
+    short = TN,
+    long = true~negative(s)
+}
+
+\DeclareAcronym{fp}{
+    short = FP,
+    long = false~positive(s)
+}
+
+\DeclareAcronym{fn}{
+    short = FN,
+    long = false~negative(s)
 }
 
 % URL and hyperlink settings
@@ -280,7 +301,7 @@
 %     \printacronyms[template=tabular, heading=none]
 % \endgroup
 
-\printacronyms[name={List of Acronyms}, template=tabular]
+\printacronyms[name={List of Acronyms}, template=tabular, display=all]
 % \printacronyms[name={List of Abbreviations}]
 
 \thispagestyle{empty}
@@ -388,7 +409,7 @@ Because quality assurance requires some subjective decisions by the individual a
 \begin{figure}[!hbt]
     \centering
     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-    \caption[Fine-scale topographic map of the Lutz~catchment sampling sites]{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+    \caption[Fine-scale topographic map of the Lutz~catchment sampling sites]{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
     \label{map_soil}
 \end{figure}
 
@@ -429,7 +450,7 @@ Because quality assurance requires some subjective decisions by the individual a
 % \begin{figure}[!hbt]
 %     \centering
 %     \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_ca.jpg}}
-%     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{The locations of the weir and tower in relation to the 10 soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
 %     \caption{The location of \ac{bci}, Republic~of~Panama, showing the locations of the Lutz~catchment, weir, and tower.\autocite{mapPC}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map_island}
@@ -804,7 +825,7 @@ These consisted of: obstruction, spike, gap~fill (often related to sub-zero fail
 \subsubsection{Feature engineering}
 
 Because \ac{xgb} models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
-These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff ten minutes prior).
+These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff 10 minutes prior).
 In the context of obstruction detection, rolling statistics included the sum and standard deviation of runoff values in windows spanning 10~minutes~(min), 15~min, 20~min, 25~min, 30~min, 1~hour~(hr), 3~hr, 6~hr, 12~hr, and 24~hr prior to the data point, and rainfall values in windows spanning 10~min, 30~min, 1~hr, 3~hr, and 6~hr prior.
 Every other runoff value from 5~min through 3~hr prior were added as lag features, as were the lags for every aforementioned rain rolling sum features from 15~min, 30~min, 1~hr, 2~hr, and 3~hr prior.
 
@@ -864,7 +885,7 @@ This was conducted by using an existing function to compute the pairwise Pearson
 %     \item Tune \ac{xgb} hyperparameters
 % \subsection*{6) Tune \ac{xgb} hyperparameters}
 % \subsection{\ac{xgb} Hyperparameter Tuning}
-\subsubsection{\ac{xgb} hyperparameter tuning}
+\subsubsection{Hyperparameter tuning}
 
 % To tune the \ac{xgb} hyperparameters, the training data was further split into five expanding
 % \ac{xgb} requires careful hyperparameter tuning.
@@ -963,7 +984,7 @@ By default, a threshold of $0.5$ is selected in binary classification for catego
 However, in practice a model more or less sensitive to ``True'' may make final results more useful.
 These measures were found by finding the combination of median window size and threshold that maximizes the $F_1$ score.\footnote{$F_1$ balances considerations for both precision and accuracy.}
 
-Median windows from 1 (no windowing) through 35 were tested with 100 thresholds ranging from 0.01 through 0.99.
+Applying smoothing via median windows of sizes from 1 (no smoothing) through~35 were tested with 100~thresholds ranging from 0.01~through~0.99.
 % Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 
 % \subsubsection*{Removing marginal gains}
@@ -1027,6 +1048,8 @@ True~negatives~(TN) are when the prediction and actual value are both ``False''.
 False~positives~(FP) are instances where the model incorrectly predicts ``True'', while the actual value is ``False''.\footnote{This is analogous to a false alarm.}
 False~negatives~(FN) are when the model predicts incorrectly ``False'', as the actual value is ``True''.
 
+\pagebreak
+% \noindent
 Four metrics utilizing these values were used to evaluate model performance:
 
 \noindent
@@ -1038,7 +1061,8 @@ Accuracy\footnote{This metric can be misleading on data with imbalanced classes.
     \textnormal{accuracy} = \frac{\truepos + \trueneg}{\truepos + \trueneg + \falseneg + \falsepos}
     \label{eq_accuracy}
 \end{equation}
-% 
+
+\noindent
 % Precision (Equation~\ref{eq_precision}) measures the proportion of ``True'' predictions that were correct.
 Precision measures the proportion of ``True'' predictions that were correct:
 % Out of the positive predictions made, how many were correct?
@@ -1046,14 +1070,16 @@ Precision measures the proportion of ``True'' predictions that were correct:
     \textnormal{precision} = \frac{\truepos}{\truepos + \falsepos}
     \label{eq_precision}
 \end{equation}
-% 
+
+\noindent
 % Recall (Equation~\ref{eq_recall}) measures the fraction of actual ``True'' values that the model correctly identified.
 Recall measures the fraction of actual ``True'' values that the model correctly identified:
 \begin{equation}
     \textnormal{recall} = \frac{\truepos}{\truepos + \falseneg}
     \label{eq_recall}
 \end{equation}
-% 
+
+\noindent
 % $F_1$ (Equation~\ref{eq_fone}) is a measure that combines precision \& recall.
 $F_1$ is a measure that combines precision \& recall:
 \begin{equation}
@@ -1094,7 +1120,7 @@ A time series of runoff and soil moisture samples of the complete data set used 
     \centering
     % \fbox{\includegraphics[width=.95\textwidth]{outputs/figures/ts_month_rosoil.png}}
     \includegraphics[width=\textwidth]{outputs/figures/ts_month_rosoil.png}
-    \caption[Time series of monthly average runoff and soil moisture values]{Time series showing monthly averages of raw \& adjusted runoff and soil moisture values.}
+    \caption[Time series of monthly average runoff and soil moisture values]{Time series showing monthly averages of raw (green) \& adjusted (red) runoff and soil moisture values (pink \& purple for shallow \& deep, respectively).}
     \label{fig_ts_month_rosoil}
 \end{figure}
 
@@ -1104,11 +1130,11 @@ A time series of runoff and soil moisture samples of the complete data set used 
 
 % \subsection{Highly-correlated features}
 
-The original dataset had 22~features.\footnote{These included raw runoff, rain, and 20 soil~moisture measurements (as there were ten total sites at two depths each).}
-In total, 117 additional features were added via feature engineering.
-Applying the correlation threshold of 0.97 resulted in the removal of 31 features from the feature dataset.%
+The original dataset had 22~features.\footnote{These included raw runoff, rain, and 20~soil~moisture measurements (as there were 10~total sites at two depths each).}
+In total, 117~additional~features were added via feature engineering.
+Applying the correlation threshold~of~0.97 resulted in the removal of 31~features from the feature dataset.%
 % In the context of the obstruction failure mode model, there were 31 features removed.%
-\footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
+\footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since shallow soil samples 2~thru~10 \& days since deep~samples 1~thru~10 (thus, leaving ``days since shallow sample 1'' in the set).}
 This resulted in a total of 108 input features ($X$).
 % 
 % \subsection{Split}
@@ -1143,35 +1169,42 @@ The tuned \ac{xgb} hyperparameters are provided in Table~\ref{tab_xgbparams}.
 \end{table}
 
 % \subsection{Post-hoc parameters}
-
+\pagebreak
 After applying the best hyperparameters and fitting to get \ac{oof} predictions, the best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
 The results of threshold and $F_1$ score for all smoothing windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
 
 \begin{figure}[hbtp!]
     \centering
-    \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
+    % \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
+    \includegraphics[width=.85\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
     \caption[Performance of different classificaiton thresholds on \acl{oof} data]{$F_1$ vs classification threshold for all windows on \acl{oof} set.}
     \label{fig_oof_tune}
 \end{figure}
 
+\pagebreak
+
 % \subsection{Fitted model}
 
-% The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
-The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}, and the resulting metrics of the performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
-
-\begin{figure}[hbtp!]
-    \centering
-    \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
-    % \includegraphics{outputs/figures/oof_tune.png}
-    \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with \acf{ap} values.}
-    \label{fig_final_prcurve}
-\end{figure}
+The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
+After being fitted on the full training set and predicting the held-out test set, the resulting metrics of model performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+% The resulting precision-recall curve of the predicted probabilities of the fitted model on the test set is shown in Figure~\ref{fig_final_prcurve}.
+% The resulting precision-recall curve after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}, and the resulting metrics of the performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+% A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
+% An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
 
 % \subsection{Test set metrics}
 
 % The resulting metrics of the test set with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=.85\textwidth]{outputs/figures/final_prcurve.png}
+    % \includegraphics{outputs/figures/oof_tune.png}
+    \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with \acf{ap} values.}
+    \label{fig_final_prcurve}
+\end{figure}
 
 \begin{table}[htb!]
     % \small
@@ -1195,10 +1228,20 @@ The resulting precision-recall curve of the model after being fitted on the full
     \label{tab_metrics}
 \end{table}
 
-\pagebreak
+% \begin{figure}[hbtp!]
+%     \centering
+%     \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
+%     % \includegraphics{outputs/figures/oof_tune.png}
+%     \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with \acf{ap} values.}
+%     \label{fig_final_prcurve}
+% \end{figure}
 
+\pagebreak
 A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
 An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
+
+% A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
+% An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
 
 \begin{figure}[hbtp!]
     \centering
@@ -1221,21 +1264,25 @@ An example of model performance in detecting blockages is shown in Figure~\ref{f
 
 \pagebreak
 
-\section{Discussion}
+% \section{Discussion}
+\section{Discussion and Future Work}
 
-Based on Figure~\ref{fig_oof_tune}, it was be concluded that threshold tuning significantly improved model performanc, however window smoothing appeared ineffective.
-The test results in Table~\ref{tab_metrics} show that threshold tuning greatly improved recall but at the detriment of other metrics:
+A reflection on some of the challenges faced over the course of the project can be found in Appendix~\ref{apx_challenges}.
+
+\subsection{Interpretation of Results}
+
+Based on Figure~\ref{fig_oof_tune}, it can be concluded that threshold tuning significantly improved model performance, however window smoothing appeared ineffective.
+The test results in Table~\ref{tab_metrics} show that threshold tuning greatly improved recall but at the detriment of other metrics: high recall indicates that the tuned-threshold model can successfully identify most true instances of obstructions, however low precision indicates that many data points were erroneously flagged as being obstructions.
 % This was further proven by the test results in Table~\ref{tab_metrics}, since all metrics improved .
-high recall indicates that the tuned-threshold model can successfully identify most true instances of obstructions, however low precision indicates that many data points were erroneously flagged as being obstructions.
 % 
-The threshold selected at the absolute best (i.e., before marginal gains filtering) smoothing window had a slightly higher recall than the final threshold.
+The threshold selected from the absolute best smoothing window (i.e., before marginal gains filtering) had a slightly higher recall than the final selected threshold.
 
 % \subsection{Limitations}
 
-The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
-This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
-% 
-Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
+% The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
+% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+% % 
+% Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
 
 From Figure~\ref{fig_ts_accuracy}, model accuracy seems to improve when there are fewer actual instances of obstructions.
 The jagged accuracy line indicates that the current model will perform inconsistently on time periods with differing concentrations of obstruction events.
@@ -1245,34 +1292,70 @@ The performance example in Figure~\ref{fig_performance_ex} shows that the model 
 % The highlighted window in the afternoon of July 2 does follow the pattern of other obstruction instances (due to not having a rain event to cause the increase), however not all non-rain increases are indicative of a blockage.\footnote{Such as periods of of evapotranspiration.}
 
 % Regarding the tuned \ac{xgb} hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
-It is also possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
+It is possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
 % An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially ``due to the fact that there are few important features in [the] dataset'' and that it would instead benefit to greedily select from all features.
 An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
+% Given that features were already reduced using pairwise correlation filtering, 
+More advanced feature selection prior to modelling may remove the need for column subsampling, thus potentially improving the model by simplifying it and reducing dimensionality further.
 % \begin{quote}
 %     “In this [classification] experiment, we also [found that] column subsamples gives slightly worse performance than using all the features. This could due to the fact that there are few important features in this dataset and we can benefit from greedily select from all the features.” (Chen, 792)
 % \end{quote}
 
+% \subsection{Limitations}
 
-\pagebreak
+\subsection{Future Work}
 
-\section{Future Work}
+
+% \pagebreak
+
+% \section{Future Work}
+
+Fitting large-parameter models usually require very large training datasets to obtain satisfactory results.
+However, model performance usually do not scale linearly with the size of the training set; rather, after initial rapid improvements with increasing train set size, they reach often a point of diminishing returns.\autocite{phaseiiPC}
+The point where diminishing returns has been reached will be a combination of the model accuracy required, the nature of the model and the data being used, and the cost of refitting the model with new data.
+% The performance value of retraining the model as new data becomes available should be measured.
+Thus, it is proposed that the existing model be retrained with smaller subsets of the original training data, allowing performance of the resulting fits to be compared to a model based on the full training set in order to quantify how quickly the model improves with increasing training set size.\autocite{phaseiiPC}
+This will inform on how frequently the model might need to be updated (if at all) with additional data as it comes in in order to appreciably improve the results.\autocite{phaseiiPC}
+
+Improvements to feature engineering for the \ac{xgb} model based on expert input would likely benefit the model performance.
+The model only relied on look-behind features to avoid data leakage and reflect performance of a ``live'' model.
+% The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
+This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
+% 
+Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes impede model performance.
+
 
 Future work will improve on the model for obstruction detection, and create other models for the other failure modes.
 It is likely that different classification algorithms may have to be considered for other failure mode detection models, so further research will be necessary.
+
+% Improvements to feature engineering for the \ac{xgb} model based on expert input would likely benefit the model performance.
+% The model only relied on look-behind features to avoid data leakage and reflect performance of a ``live'' model.
+% % The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
+% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+% It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
+% % 
+% Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
 
 Additionally, other models are expected to be constructed in order to correct the raw runoff values during windows of failure modes to the appropriate adjusted values.
 If failure mode flagging models continue to have poor performance in regards to precision, it may be necessary to create a system to apply such correction models only to manually-confirmed windows of time, since modifying accurate data harms data quality \& integrity.
 However, failure mode flagging models with good recall may still be successsfully utilized as a ``first-pass'' alert system for initial quality assurance checks.
 
-Paton writes:
-\begin{quotation}
-    Fitting multi-parameter models, particularly those involving large numbers of parameters, usually require very large training datasets to obtain satisfactory results. However, model accuracy (however that may be scored) usually do not scale linearly with the size of the training set. Rather, after initial rapid improvements with increasing train set size, they reach often a point of diminishing returns. The point where diminishing returns has been reached will be a combination of the model accuracy required, the nature of the model and the data being used, and the cost of refitting the model with new data.
+% Director of the Physical Monitoring Program at \ac{stri} Steven Paton also adds:
+% \begin{quotation}
+%     Fitting multi-parameter models, particularly those involving large numbers of parameters, usually require very large training datasets to obtain satisfactory results.
+%     However, model accuracy (however that may be scored) usually do not scale linearly with the size of the training set.
+%     Rather, after initial rapid improvements with increasing train set size, they reach often a point of diminishing returns.
+%     The point where diminishing returns has been reached will be a combination of the model accuracy required, the nature of the model and the data being used, and the cost of refitting the model with new data.
 
-    In the case of the current project in which we are attempting to automate the search for data errors in a very complex hydrological data set, we wish to know the value (in terms of increased accuracy and precision) of retraining the model as new data become available. We propose that the model be trained with subsets of the original training data (eg. 95\%, 90\%, 80\%, 66\% and 50\%). The resulting models will be evaluated against the model based on 100\% of the training set in order to explore how quickly the model improves with increasing training set size. This will inform us on how frequently the model might be updated (if at all) with additional data in order to appreciably improve the results.\autocite{phaseiiPC}
-\end{quotation}
+%     In the case of the current project in which we are attempting to automate the search for data errors in a very complex hydrological data set, we wish to know the value (in terms of increased accuracy and precision) of retraining the model as new data become available.
+%     We propose that the model be trained with subsets of the original training data (eg. 95\%, 90\%, 80\%, 66\% and 50\%).
+%     The resulting models will be evaluated against the model based on 100\% of the training set in order to explore how quickly the model improves with increasing training set size.
+%     This will inform us on how frequently the model might be updated (if at all) with additional data in order to appreciably improve the results.\autocite{phaseiiPC}
+% \end{quotation}
 
 
-A reflection on some of the challenges faced over the course of this project can be found in Appendix~\ref{apx_challenges}.
+% A reflection on some of the challenges faced over the course of the project can be found in Appendix~\ref{apx_challenges}.
 
 \pagebreak
 \pagebreak
@@ -1343,9 +1426,9 @@ In the context of modelling expected droughts, \citean{houmma2022} highlights ho
 % \begin{figure}[!hbt]
 %     \centering
 %     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-%     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
-%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     % \caption{The locations of the weir and tower in relation to the 10 soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
+%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map}
 % \end{figure}
@@ -1391,9 +1474,9 @@ Although water flow is a complex phenomenon, it is anticipated that the quantity
 % \begin{figure}[!hbt]
 %     \centering
 %     \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_soil.jpg}}
-%     % \caption{The locations of the weir and tower in relation to the ten soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
-%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+%     % \caption{The locations of the weir and tower in relation to the 10 soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
+%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
+%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
 %     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
 %     \label{fig_map}
 % \end{figure}
