@@ -577,10 +577,10 @@ Thus, individual models can be constructed based on failure mode and input varia
 
 \pagebreak
 
-Obstructions are the most difficult failure mode to detect and correct (in-part because they require the most variable considerations), and thus were selected as the first failure mode to construct a model for.
+Obstructions are the most difficult failure mode to detect and correct (in-part because they require the most variable considerations) and thus were selected as the first failure mode to construct a model for.
 External variables of rainfall and soil moisture content are necessary for a well-informed model.
 Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
-In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
+In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modellable.
 
 % Despite time series data not being independently \& identically distributed (\textit{iid}), statistical time-series problems can still use binary classification.\autocite{ryabko2012}
 Despite time series data not being \ac{iid}, statistical time-series problems can still use binary classification.\autocite{ryabko2012}
@@ -595,7 +595,7 @@ Support vector machines were also ruled out because they are better for small-to
 In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially \ac{lstm}---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
 % Although long short-term memory (\ac{lstm}) (a type of recurrent neural network) are good for identifying and learning temporal dependency patterns \& sequences, it requires clean \& regular data, and scalability is limited.\autocite{dritsas2025}
 Non-continuous nature of other variables may also prevent meaningful pattern detection, meaning that it may struggle with the differing granularity of input variables for detecting obstructions.
-\ac{lstm} models are also sensitive to noisy data, and may result in less accurate predictions.\autocite{baek2023}
+\ac{lstm} models are also sensitive to noisy data and may result in less accurate predictions.\autocite{baek2023}
 Furthermore, \ac{lstm} are difficult to interpret, and would thus have resulted in a black box issue as to why a particular failure mode flag was triggered since feature importance is unclear.\autocite{jakubowski2021}
 
 % Ultimately, \ac{xgb} was selected as the first model to try with the obstruction model.
@@ -802,7 +802,7 @@ There were some discrepancies in records between the shallow and deep soil moist
 Although the ``deep'' set is for depths of 30-40~cm, some entries from 0-10~cm were included.
 Most of these values matched those in the ``shallow'' (1-10~cm) data based on timestamp and sample site number, however there were a few instances where the reported values differed.
 It was ultimately decided that those mismatched values ($n=11$) could safely be eliminated from the ``deep'' set.
-Although this issue did not remove a significant amount of entries when compared to the resulting totals ($n=11,489$), it was an error that had not been found previously, and thus made a substantive contribution to the \ac{stri} set.
+Although this issue did not remove a significant number of entries when compared to the resulting totals ($n=11,489$), it was an error that had not been found previously, and thus made a substantive contribution to the \ac{stri} set.
 
 Additionally, a few ``shallow'' samples with non-standard location numbers were removed ($n=3$).\footnote{Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
 % Although it was possible that a minor mis-coding caused this issue, it was not possible at the time of discovery to verify the solution.\footnote{This was because the primary data contact was unavailable for the majority of the project duration due to the federal government shutdown.}
@@ -815,7 +815,7 @@ Duplicated entries were also removed, as were those flagged as being ``bad'' or 
 
 The failure modes were originally encoded in singular string entries.
 Some data points have multiple failure modes, and some entries contained duplicated flags.
-For analysis, a series of boolean variables were created to represent these.
+For analysis, a series of Boolean variables were created to represent these.
 These consisted of: obstruction, spike, gap~fill (often related to sub-zero failure mode), weir~cleaning (also related to sub-zero), spike, and calibration.
 
 
@@ -978,7 +978,7 @@ For further post-hoc tuning, \ac{oof} predictions were collected using the same 
 \subsubsection{Tuning post-hoc parameters}
 %     \item Tune post-hoc smoothing parameters
 
-Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{For exmaple, having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
+Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{For example, having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
 % Windowing can help smooth predictions by preventing standalone points that differ from their neighbors (e.g., having a sequence of True interrupted by one False, or vice-versa, both of which are unlikely in this context due to how weir blockages occur).
 Median windowing is often used for image analysis,\autocite{rezaee2021} but is effective at removing outliers or interruptions in the data while maintaining edges.\autocite{kaminsky2025}
 
@@ -1141,7 +1141,7 @@ This resulted in a total of 108 input features ($X$).
 % 
 % \subsection{Split}
 % 
-The initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).\footnote{Both sets are not perfrectly continous frequencies of 5~min due to gaps from occasional sensor failure, blips, and missing values. However, as previously mentioned, \ac{xgb} can handle incomplete feature sets.}
+The initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).\footnote{Both sets are not perfectly continuous frequencies of 5~min due to gaps from occasional sensor failure, blips, and missing values. However, as previously mentioned, \ac{xgb} can handle incomplete feature sets.}
 % For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 
 % \subsection{\ac{xgb} hyperparameters}
@@ -1183,7 +1183,7 @@ After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resul
     % \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
     \includegraphics[width=.85\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption[Performance of different classificaiton thresholds on \acl{oof} data]{$F_1$ vs classification threshold for all windows on \acl{oof} set.}
+    \caption[Performance of different classification thresholds on \acl{oof} data]{$F_1$ vs classification threshold for all windows on \acl{oof} set.}
     \label{fig_oof_tune}
 \end{figure}
 
@@ -1285,7 +1285,7 @@ The threshold selected from the absolute best smoothing window (i.e., prior to m
 % \subsection{Limitations}
 
 % The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
-% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep drop-off in runoff values followed by a calibration point can indicate the end of a blockage.}
 % % 
 % Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
 
@@ -1298,7 +1298,7 @@ The performance example in Figure~\ref{fig_performance_ex} shows that the model 
 
 % Regarding the tuned \ac{xgb} hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
 % An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially ``due to the fact that there are few important features in [the] dataset'' and that it would instead benefit to greedily select from all features.
-An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
+An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potentially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
 Thus, it is possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
 % Given that features were already reduced using pairwise correlation filtering, 
 More advanced feature selection prior to modelling may remove the need for column subsampling, thus potentially improving the model by simplifying it and reducing dimensionality further.
@@ -1327,7 +1327,7 @@ This will inform on how frequently the model might need to be updated (if at all
 Improvements to feature engineering for the \ac{xgb} model based on expert input would likely benefit the model performance.
 The model only relied on look-behind features to avoid data leakage and reflect performance of a ``live'' model.
 % The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
-This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep drop-off in runoff values followed by a calibration point can indicate the end of a blockage.}
 It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
 % 
 % Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes impede model performance.
@@ -1339,7 +1339,7 @@ It is likely that different classification algorithms may have to be considered 
 % Improvements to feature engineering for the \ac{xgb} model based on expert input would likely benefit the model performance.
 % The model only relied on look-behind features to avoid data leakage and reflect performance of a ``live'' model.
 % % The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
-% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+% This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep drop-off in runoff values followed by a calibration point can indicate the end of a blockage.}
 % It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
 % % 
 % Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
@@ -1448,7 +1448,7 @@ This did, however, provide the opportunity for more thoughtful data selection de
 
 Computational power also proved a challenge, as there were more than 4.17~million data points (each with their own associated datetime-stamp) collectively in the imported sets.
 Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
-Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
+Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize parallel processing.
 
 Although only one failure mode was able to be addressed in the duration of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
 
