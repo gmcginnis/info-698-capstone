@@ -12,6 +12,9 @@
 % Symbols - for check marks
 \usepackage{amssymb}
 
+% Equations
+\usepackage{amsmath}
+
 % Document boarders
 \usepackage{geometry}
 \geometry{
@@ -28,6 +31,9 @@
 
 % Spacing out footnotes
 \setlength{\footnotesep}{0.75\baselineskip}
+
+% Put footnotes on bottom of page
+\usepackage[bottom]{footmisc}
 
 % % Use alpha for footnotes
 % \renewcommand*\thefootnote{\alph{footnote}}
@@ -120,8 +126,17 @@
 
 \newcommand{\ditto}{\multicolumn{1}{c}{\texttt{"}}}
 
-\begin{document}
+% Define custom commands for metrics and labels
+% \newcommand{\acc}{\textnormal{accuracy}}
+% \newcommand{\prec}{\textnormal{precision}}
+\newcommand{\truepos}{\textnormal{TP}}
+\newcommand{\trueneg}{\textnormal{TN}}
+\newcommand{\falseneg}{\textnormal{FN}}
+\newcommand{\falsepos}{\textnormal{FP}}
 
+
+\begin{document}
+\thispagestyle{empty}
 \begin{titlepage}
     \begin{center}
         % \vspace*{250px}
@@ -172,14 +187,21 @@
 
     \end{center}
 \end{titlepage}
-
+% \thispagestyle{empty}
 
 
 
 
 \tableofcontents
 
+% \thispagestyle{empty}
 \pagebreak
+% \listoffigures
+
+% \listoftables
+% \thispagestyle{empty}
+% \pagebreak
+% \pagenumbering{arabic}
 
 % Abstract, Introduction, Methods, Results, Discussion/Conclusions
 \section*{Abstract}
@@ -191,6 +213,8 @@ This will remove the need for manual data corrections, which not only use the va
 % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
 Rainfall and soil moisture measurement data will be integrated to produce a more well-informed model.
 % Other variables---such as rainfall and soil moisture measurements---can be integrated to produce a more well-informed model.
+
+% \pagebreak
 
 \section{Introduction}\label{sec_es}
 
@@ -295,7 +319,7 @@ Past attempts at automated quality assurance have failed due to the failure mode
 % It is exp
 
 
-\pagebreak
+% \pagebreak
 
 % % \vspace*{\fill}
 % % \begin{figure}[!p]
@@ -310,7 +334,7 @@ Past attempts at automated quality assurance have failed due to the failure mode
 % % \vspace*{\fill}
 
 
-\subsection{Background}
+% \subsection{Background}
 
 \subsection{Failure Modes}
 
@@ -342,7 +366,38 @@ One long-term goal of this project is to create systems to determine where there
 \end{table}
 
 Examples of each failure mode can be found in APPENDIX CITE.
-Not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
+% Not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
+% Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
+% Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
+
+% \begin{table}[htbp]
+%     % \small
+%     \centering
+%     \rowcolors{2}{white}{gray!20}
+%     \renewcommand{\arraystretch}{1.23}
+%     \begin{tabular}{l | c c c c}
+%         \toprule
+%         Failure mode & Raw runoff & Rainfall & Calibration & Soil moisture \\
+%         \midrule
+%         Obstruction & \checkmark & \checkmark & \checkmark & \checkmark \\
+%         Spike & \checkmark & & & \\
+%         Calibration & \checkmark & & \checkmark & \\
+%         Sub-zero & \checkmark & & & \\
+%         Signal noise & \checkmark & & & \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Variables that can influence each failure mode\autocite{hydroPC}}
+%     \label{tab_fmvars}
+% \end{table}
+
+
+\subsection{Model}
+
+Initially, a multi-class classification model was considered to flag points containing failure modes.
+However, not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
+% Multiple different binary models can be constructed, as each failure mode has differing indicators and variable influences (e.g., a “spike” only depends on the raw value itself, “calibration” depends on the raw value versus the calibration point, and “obstruction” can be influenced from the raw value, rainfall, and soil moisture).
+Thus, individual models can be constructed based on failure mode and input variables in order to minimize the complexity of each.
+
 Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
 Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
 
@@ -366,6 +421,132 @@ Additionally, the calibration variable can have mixed success, since an obstruct
     \label{tab_fmvars}
 \end{table}
 
+Despite time series data not being independently \& identically distributed (\textit{iid}), statistical time-series problems can still use binary classification.\autocite{ryabko2012}
+For example, in hydrology \citean{hudnurkar2022} applied binary classification to rainfall time series, categorizing ``rain'' or ``not rain''.
+
+Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the existing number of identifiable failure modes, it is unnecessary for the primary goal.
+Support vector machines (SVMs) were also ruled out because they are better for small-to-medium preprocessed regular data, and do not work well for time-series sequences.\autocite{li2018}
+% Unsupervised anomaly detection (such as isolation forest) would be useful to flag any unobserved or new failure modes, however given the scope of the project and existing number of identifiable failure modes, it is unlikely to be necessary for this analysis.
+% 
+% Because failure modes are not temporally dependent (e.g., there is not a consistent sensor failure at regular time intervals), other time series models should not be used.
+
+In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+% Although long short-term memory (LSTM) (a type of recurrent neural network) are good for identifying and learning temporal dependency patterns \& sequences, it requires clean \& regular data, and scalability is limited.\autocite{dritsas2025}
+Non-continuous nature of other variables may also prevent meaningful pattern detection, meaning that it may struggle with the differing granularity of input variables for detecting obstructions.
+LSTM models are also sensitive to noisy data, and may result in less accurate predictions.\autocite{baek2023}
+Furthermore, LSTM are difficult to interpret, and would thus have resulted in a black box issue as to why a particular failure mode flag was triggered since feature importance is unclear.\autocite{jakubowski2021}
+
+% Ultimately, XGBoost was selected as the first model to try with the obstruction model.
+Boosting uses many weak learning models to sequentially boost its performance such that the final model is a strong learner.\autocite{murphy2022}
+% 
+Gradient tree boosting uses simple \& shallow decision trees as weak learners, finding good terminal nodes using standard regression tree learning on the residuals then resolving for the weights of each leaf by minimizing the loss function.\autocite{murphy2022}
+% 
+It is optimized for large datasets and is made even faster with parallel processing.\autocite{chen2016}
+Extreme gradient boosting (XGBoost) adds a regularizer, utilizes a second-order loss approximation, can sample features internally, and scales better.\autocites{murphy2022}{chen2016}
+% Extreme gradient boosting (XGBoost) extends beyond gradient boosted trees by adding a regularizer, utilizing second-order loss approximation, internal feature sampling, and scales better.\autocites{murphy2022}{chen2016}
+XGBoost has been used for time series anomaly classification in quality assurance in the manufacturing sector.\autocite{mellah2022}
+% It also handles class imbalance better (as is the case with the failure mode flags).
+Importantly, it does not require perfectly clean or consistent data---thus, it can handle missing values and noise.\autocite{chen2016}
+However, it requires careful hyperparameter tuning and explicit feature inputs since it does not ``learn'' temporal trends.
+Ultimately, XGBoost was selected as the first model to try with the obstruction model.
+
+% chen2016, 
+% murphy2022
+% xgbdoc2025
+
+% “How does it go from sample(s) to a model?”
+% ➢ Gradient tree boosting involves iteratively adding weak learners (shallow & simple
+% decision trees), using gradient descent to minimize the prediction error.
+% ➢ New trees will try to improve on the shortcomings of the previous ones (i.e., minimize
+% loss).
+% ➢ The final model is an ensemble, which sums up the predictions from all the individual
+% trees.
+% “What is XGBoost actually doing?”
+% ➢ Compared to standard gradient tree boosting, XGBoost adds a regularizer, utilizes a
+% second-order loss approximation, can sample features internally, and scales better.
+% “Is XGBoost using random bootstrap? If so, how does it extract the bootstrap?”
+% ➢ Gradient boosted trees do not use bootstrapping.
+% ➢ Gradient boosted trees can use (random, without replacement) subsampling.
+% ➢ In XGBoost the subsampling ratio can be specified, as can the ratios for subsampling by
+% tree, level, or node.
+% ○ All default to 1 unless specified (i.e., no subsampling; uses the entirety of the
+% input data).
+% ○ This sampling defaults to uniform random, but a gradient-based sampling
+% method can be used (meaning that instances that are not performing as well are
+% more likely to be selected for training), but requires a GPU.
+% ○ Column subsampling performance varies by problem, and may actually worsen
+% performance for classification tasks.
+
+% “Specific to our data?”
+% ➢ *See “Our data” under “Examples” section
+
+
+% Pros:
+% Optimized for large datasets and is faster w/ parallel processing
+% Has better accuracy (esp. on large datasets) and predictive performance
+% Handles class imbalance better
+% SHAP can be implemented to improve model interpretation (see LTSM below)
+% Does not require perfectly “clean”/consistent data (i.e., can handle missing values, noise, etc.)
+
+% Cons:
+% Requires careful hyperparameter tuning.
+% Requires explicit feature inputs (i.e., does not learn temporal trends—would need the specific values given [e.g., “rolling mean”, “change in runoff since 2 hr ago”, etc.])
+% Is susceptible to overfitting.
+% No built-in temporal memory (however, is often used for time-series forecasting/prediction)
+
+
+% Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
+% Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
+
+% \begin{table}[htbp]
+%     % \small
+%     \centering
+%     \rowcolors{2}{white}{gray!20}
+%     \renewcommand{\arraystretch}{1.23}
+%     \begin{tabular}{l | c c c c}
+%         \toprule
+%         Failure mode & Raw runoff & Rainfall & Calibration & Soil moisture \\
+%         \midrule
+%         Obstruction & \checkmark & \checkmark & \checkmark & \checkmark \\
+%         Spike & \checkmark & & & \\
+%         Calibration & \checkmark & & \checkmark & \\
+%         Sub-zero & \checkmark & & & \\
+%         Signal noise & \checkmark & & & \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Variables that can influence each failure mode\autocite{hydroPC}}
+%     \label{tab_fmvars}
+% \end{table}
+
+\subsection{Data splitting}
+
+% chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
+% Things to keep in mind:
+% Cannot randomly or selectively split—periods of time must remain continuous wherever possible.
+% Time series is not iid (independent & identically distributed); random splits cause data leakage
+% Number of instances of each failure mode in each set must be representative enough
+% Certain failure modes are rare or have no occurrences for long periods of time.
+
+Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split, and must instead remain continuous whenever possible.
+This is because time-series data is not \textit{iid}, so random splits would cause data leakage.
+% 
+One consideration when making a train/test split is that real-world variables causing inconsistencies in the data or different concentrations of error instances make a simple split difficult define without careful pre-processing.
+
+Time series analyses also use ``window'' splits, which involve training on a window of time, validating on an immediately proceeding window, and repeating as necessary.
+This approach is beneficial for tuning hyperparameters, as it can indicate model stability over time and reflects real-world implementation.
+% \cite[Figure~1]{chu1995}
+
+\begin{figure}[hbt!]
+    \centering
+    \fbox{\includegraphics[width=.5\textwidth]{figures/chu1995.png}}
+    % \caption{Different time series segmentation techniques (\citeauthor{chu1995}, \citeyear{chu1995}, Figure~1.\autocite{chu1995}).}
+    \caption{Different time series segmentation techniques.\autocite{chu1995}}
+    \label{fig_chu1995}
+\end{figure}
+
+% \autocite{chu1995}
+
+
 
 \pagebreak
 
@@ -374,6 +555,9 @@ Additionally, the calibration variable can have mixed success, since an obstruct
 % All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
 Analyses were conducted in Python and compiled in Jupyter~Notebooks.
 Annotated code, data files, and project reports can be found in the project's GitHub repository.\footnote{Project repository: \url{https://github.com/gmcginnis/info-698-capstone}.}
+
+Prior to analysis, a significant amount of background research was conducted to determine an appropriate model and methodology for the time-series binary classification.
+
 % 
 % For the obstruction failure mode flagging model, the following approach was used:
 % 
@@ -487,9 +671,10 @@ These took the form of day of the year, month of the year, hour of the day, and 
 %     \item Conduct train/test split
 \subsection*{4) Conduct train/test split}
 
-Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
-This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
-Thus, an 80/20 train/test split was conducted on the data. %
+% Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
+% This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
+An initial 80/20 train/test split was conducted on the data.
+% Thus, an 80/20 train/test split was conducted on the data. %
 % 
 % For the obstruction failure mode, this resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 The sets were also separated into feature variables ($X$) and the target variable ($y$, in this case the obstruction failure mode flag).
@@ -501,7 +686,7 @@ A visual overview of this initial 80/20 split and methodology for splits in subs
 \begin{figure}[hbt!]
     \centering
     \fbox{\includegraphics[width=.5\textwidth]{figures/methods_split.png}}
-    \caption{Visual overview of splitting techniques used in the analysis.}
+    \caption{Visual representation of splitting techniques used in the analysis.}
     \label{fig_methods_split}
 \end{figure}
 
@@ -527,9 +712,10 @@ This was conducted by using an existing function to compute the pairwise Pearson
 
 % To tune the XGBoost hyperparameters, the training data was further split into five expanding
 % XGBoost requires careful hyperparameter tuning.
-To tune XGBoost hyperparameters and test model stability, an expanding window cross-validation approach was used (Figure~\ref{fig_methods_split}).
+To tune XGBoost hyperparameters, an expanding window cross-validation (Figure~\ref{fig_chu1995}.1b) approach was used.
 This is similar to how a model would act once deployed, as it would only gain more data over time.
-Five splits on the training data were conducted, with the internal ``training'' set expanding with each fold.
+Five splits on the training data were conducted, with the internal ``training'' set expanding with each fold (Figure~\ref{fig_methods_split}).
+Because the data is mostly high-resolution, a larger window width is permissible.\autocite{ranjan2021}
 
 % For 50 iterations, for each of the five expanding-window splits,
 In each of 50 iterations, a unique and randomly-selected combination of hyperparameters was selected from predefined distributions.
@@ -666,6 +852,48 @@ The outputs were stored as predicted probabilities in order to test the differen
 \subsection*{11) Analyze results (with and without post-hoc parameters)}
 
 To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
+
+In binary classification, the predicted values are compared to the actual values of $y$.
+True~positives~(TP) are instances where the model-predicted value and the actual value are both ``True''.
+True~negatives~(TN) are when the prediction and actual value are both ``False''.
+False~positives~(FP) are instances where the model incorrectly predicts ``True'', while the actual value is ``False''.\footnote{This is analogous to a false alarm.}
+False~negatives~(FN) are when the model predicts incorrectly ``False'', as the actual value is ``True''.
+
+Four metrics utilizing these values were used to evaluate model performance:
+
+\noindent
+% Accuracy (Equation~\ref{eq_accuracy}) quantifies the proportion of correct predictions---however, this metric can be misleading on data with imbalanced classes and thus should be considered a less important performance measurement.\footnote{This metric can be misleading on data with imbalanced classes. For example, if 90\% of a data set's true values are ``False'', a model that always predicts ``False'' is still 90\% accurate.}
+Accuracy\footnote{This metric can be misleading on data with imbalanced classes. For example, if 90\% of a data set's true values are ``False'', a model that always predicts ``False'' is still 90\% accurate.} quantifies the proportion of correct predictions:
+% Out of all the predictions made, how many were correct?
+% Metric can be misleading on data w/ imbalanced classes
+\begin{equation}
+    \textnormal{accuracy} = \frac{\truepos + \trueneg}{\truepos + \trueneg + \falseneg + \falsepos}
+    \label{eq_accuracy}
+\end{equation}
+% 
+% Precision (Equation~\ref{eq_precision}) measures the proportion of ``True'' predictions that were correct.
+Precision measures the proportion of ``True'' predictions that were correct:
+% Out of the positive predictions made, how many were correct?
+\begin{equation}
+    \textnormal{precision} = \frac{\truepos}{\truepos + \falsepos}
+    \label{eq_precision}
+\end{equation}
+% 
+% Recall (Equation~\ref{eq_recall}) measures the fraction of actual ``True'' values that the model correctly identified.
+Recall measures the fraction of actual ``True'' values that the model correctly identified:
+\begin{equation}
+    \textnormal{recall} = \frac{\truepos}{\truepos + \falseneg}
+    \label{eq_recall}
+\end{equation}
+% 
+% $F_1$ (Equation~\ref{eq_fone}) is a measure that combines precision \& recall.
+$F_1$ is a measure that combines precision \& recall:
+\begin{equation}
+    F_1 = 2\times\frac{\textnormal{precision}\times\textnormal{recall}}{\textnormal{precision} + \textnormal{recall}}
+    \label{eq_fone}
+\end{equation}
+
+
 % The results are reported in Table~\ref{tab_metrics}.
 
 % \begin{table}[htb!]
@@ -701,14 +929,14 @@ To quantify performance improvement using the tuned threshold, results were calc
 Applying the correlation threshold of 0.97 resulted in the removal of 31 features from the feature dataset ($X$).%
 % In the context of the obstruction failure mode model, there were 31 features removed.%
 \footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
-
+% 
 % \subsection{Split}
-
+% 
 For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 
 % \subsection{XGBoost hyperparameters}
 
-The resulting tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
+The tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
 \begin{table}[htbp]
     % \small
@@ -735,11 +963,11 @@ The resulting tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbpa
 
 % \subsection{Post-hoc parameters}
 
-After applying the best hyperparameters and fitting to get OOF predictions, the best post-hoc parameters initially selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
+After applying the best hyperparameters and fitting to get OOF predictions, the best post-hoc parameters initially selected were a smoothing windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 After controlling for marginal gains (i.e., 99\% similarity in $F_1$), the resulting values were no windowing and with a threshold of 0.317.
-The results of threshold and $F_1$ score for all median windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
+The results of threshold and $F_1$ score for all smoothing windows are shown in Figure~\ref{fig_oof_tune}.\footnote{All 30 windows reported extremely similar $F_1$ score curves as the classification threshold was adjusted, making it difficult to visually distinguish them individually in the graphic.}
 
-\begin{figure}[hbt!]
+\begin{figure}[hbtp!]
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
@@ -749,9 +977,10 @@ The results of threshold and $F_1$ score for all median windows are shown in Fig
 
 % \subsection{Fitted model}
 
-The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
+% The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}.
+The resulting precision-recall curve of the model after being fitted on the full training set and predicting probabilities of the held-out test set is shown in Figure~\ref{fig_final_prcurve}, and the resulting metrics of the performance with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
 
-\begin{figure}[hbt!]
+\begin{figure}[hbtp!]
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
     % \includegraphics{outputs/figures/oof_tune.png}
@@ -761,20 +990,23 @@ The resulting precision-recall curve of the model after being fitted on the full
 
 % \subsection{Test set metrics}
 
-The resulting metrics of the test set with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
+% The resulting metrics of the test set with different post-hoc parameters are reported in Table~\ref{tab_metrics}.
 
 \begin{table}[htb!]
     % \small
     \centering
-    \rowcolors{2}{white}{gray!20}
+    % \rowcolors{2}{white}{gray!20}
     \renewcommand{\arraystretch}{1.23}
     \begin{tabular}{r r | r r r r}
         \toprule
         Smoothing window & Threshold & Accuracy & Precision & Recall & $F_1$ \\
         \midrule
-        - & 0.5 & 0.667 & 0.253 & 0.686 & 0.370 \\
-        29 & 0.5 & 0.669 & 0.255 & 0.686 & 0.371 \\
+        \midrule
+        - & 0.500 & 0.667 & 0.253 & 0.686 & 0.370 \\
+        \midrule
+        29 & 0.500 & 0.669 & 0.255 & 0.686 & 0.371 \\
         29 & 0.307 & 0.509 & 0.204 & 0.845 & 0.329 \\
+        \midrule
         - & 0.317 & 0.518 & 0.206 & 0.838 & 0.331 \\
         \bottomrule
     \end{tabular}
