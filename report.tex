@@ -945,9 +945,12 @@ A time series of runoff and soil moisture samples of the complete data set used 
 
 % \subsection{Highly-correlated features}
 
-Applying the correlation threshold of 0.97 resulted in the removal of 31 features from the feature dataset ($X$).%
+The original dataset had 22~features.\footnote{These included raw runoff, rain, and 20 soil~moisture measurements (as there were ten total sites at two depths each).}
+In total, 117 additional features were added via feature engineering.
+Applying the correlation threshold of 0.97 resulted in the removal of 31 features from the feature dataset.%
 % In the context of the obstruction failure mode model, there were 31 features removed.%
 \footnote{These included: a forward-fill of the cumulative rain events; the cumulative rain event with extended decay; the runoff rolling sums of 10~min, 15~min, 30~min, \& 1~hr; the differences in runoff value \& rain from the previous entry; the runoff values from 10~min, 20~min, 30~min, \& 40~min prior; the 15~min \& 30~min lagged values of 3~hr \& 6~hr rolling sums of rain; days since soil shallow samples 2 thru 10 \& days since deep samples 1 thru 10 (thus, leaving ``days since shallow sample 1'' in the set).}
+This resulted in a total of 108 input features ($X$).
 % 
 % \subsection{Split}
 % 
@@ -1079,24 +1082,55 @@ The performance example in Figure~\ref{fig_performance_ex} shows that the model 
 % Although smoothing with median windowing did not quantifiably improve performance, it is possible that other smothing 
 % The highlighted window in the afternoon of July 2 does follow the pattern of other obstruction instances (due to not having a rain event to cause the increase), however not all non-rain increases are indicative of a blockage.\footnote{Such as periods of of evapotranspiration.}
 
+% Regarding the tuned XGBoost hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
+It is also possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
+% An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially ``due to the fact that there are few important features in [the] dataset'' and that it would instead benefit to greedily select from all features.
+An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
+% \begin{quote}
+%     “In this [classification] experiment, we also [found that] column subsamples gives slightly worse performance than using all the features. This could due to the fact that there are few important features in this dataset and we can benefit from greedily select from all the features.” (Chen, 792)
+% \end{quote}
+
+
+\pagebreak
+
+\section{Future Work}
+
+Future work will improve on the model for obstruction detection, and create other models for the other failure modes.
+It is likely that different classification algorithms may have to be considered for other failure mode detection models, so further research will be necessary.
+
+Additionally, other models are expected to be constructed in order to correct the raw runoff values during windows of failure modes to the appropriate adjusted values.
+If failure mode flagging models continue to have poor performance in regards to precision, it may be necessary to create a system to apply such correction models only to manually-confirmed windows of time, since modifying accurate data harms data quality \& integrity.
+However, failure mode flagging models with good recall may still be successsfully utilized as a ``first-pass'' alert system for initial quality assurance checks.
+
+Paton writes:
+\begin{quotation}
+    Fitting multi-parameter models, particularly those involving large numbers of parameters, usually require very large training datasets to obtain satisfactory results. However, model accuracy (however that may be scored) usually do not scale linearly with the size of the training set. Rather, after initial rapid improvements with increasing train set size, they reach often a point of diminishing returns. The point where diminishing returns has been reached will be a combination of the model accuracy required, the nature of the model and the data being used, and the cost of refitting the model with new data.
+
+    In the case of the current project in which we are attempting to automate the search for data errors in a very complex hydrological data set, we wish to know the value (in terms of increased accuracy and precision) of retraining the model as new data become available. We propose that the model be trained with subsets of the original training data (eg. 95\%, 90\%, 80\%, 66\% and 50\%). The resulting models will be evaluated against the model based on 100\% of the training set in order to explore how quickly the model improves with increasing training set size. This will inform us on how frequently the model might be updated (if at all) with additional data in order to appreciably improve the results.\autocite{phaseiiPC}
+\end{quotation}
+
+
+A reflection on some of the challenges faced over the course of this project can be found in Appendix SITE APPENDIX AND MOVE CHALLENGES.
+
 \subsection{Challenges}
 
-A number of unforeseen challenges were faced during the analysis, due in-part to the newness of the project itself.
+A number of unforeseen challenges were faced during the analysis, due in-part to the novelty and size of the project itself.
 % However, each was able to provide a unique learning opportunity and skill sharpening.
 It was known that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
 
-For instance, data cleaning and wrangling took significantly longer than expected.
+Data cleaning and wrangling also took significantly longer than expected.
 % This was partly due to the need for clarifications of custom 
-Although all data was already relatively uniform in its existing state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
+Although all data was relatively uniform in its available state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
 % Additionally, the differences in data frequency for obstruction detection
-Fortunately, this reduces the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
+% Fortunately, this will reduce the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
+Fortunately, this will reduce the preparation required for future analysis of other failure modes.
 
 Communication with the expert data contact at STRI was not possible the majority of October and November due to the federal government shutdown.
 This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
 % This did result in some data selection ``executive decisions'' since clarifications were not possible.
 
-Computational power also proved a challenge, as there were more than 4.15~million total entries in the raw data set.
-This expanded further with feature engineering, since each data point had more than one hundred values associated with it.
+Computational power also proved a challenge, as there were more than 4.17~million data points (each with their own associated datetime-stamp) collectively in the imported sets.
+Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
 Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
 
 Although only one failure mode was able to be addressed in the scope of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
@@ -1124,11 +1158,6 @@ Although only one failure mode was able to be addressed in the scope of the proj
 
 % Unforeseen difficulties experienced during these analys
 
-\pagebreak
-
-\section{Future Work}
-
-Text.
 \pagebreak
 \pagebreak
 \pagebreak
@@ -1353,29 +1382,70 @@ If the correction models do not work, it will still provide valuable insights in
 
 \pagebreak
 
+\appendix
 \section{Appendix}\label{sec_appendix}
 
 
 \setcounter{subsection}{1}
 \renewcommand{\thesubsection}{\Alph{subsection}.\hspace{1em}}
-\custsubsection{My Title}
+\custsubsection{Failure Mode Examples}
 
-\setcounter{subsubsection}{1}
-\renewcommand{\thesubsubsection}{\arabic{subsubsection} )\hspace{1em}}
-\custsubsubsection{My subtitle}
-Text
+% \setcounter{subsubsection}{1}
+% \renewcommand{\thesubsubsection}{\arabic{subsubsection} )\hspace{1em}}
+% \custsubsubsection{Obstruction}
 
-\custsubsubsection{My subtitle}
-\begin{itemize}
-    \item The Faculty Advisor will provide knowledge and expertise to help the group stretch their skills. 
-    \item The Faculty Advisor will participate in a weekly or bi-weekly call/meeting with the Project Team to review the project status, upcoming deliverables, priorities, issues, and progress to the agreed Project Plan.
-    \item The Faculty Advisor will provide document review, feedback and approval, rejection, approval with contingencies with adequate time for the Project Team to meet the course due dates. 
-    \item The Faculty Advisor will provide feedback to requested support requirements from the Project Team. This includes feedback and guidance on design implementations decisions, design files, test plans, test procedures and test results.
-    \item The Faculty Advisor shall provide technical advice and guidance to the Project Team answering inquiries approximately 1 hour per week. 
-    \item Modifications to the Project Plan by the Project Team will be resolved and documented within 1 week of the request.
-    \item Grade the finalized project using a skill-based rubric
-    \item Attend iShowcase in May.
-\end{itemize}
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ex_block.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Example of consecutive distinct obstruction events.}
+    \label{fig_ex_block}
+\end{figure}
+
+% \custsubsubsection{Spike}
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ex_spike.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Example of two distinct spike events.}
+    \label{fig_ex_spike}
+\end{figure}
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ex_cal.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Example of an long-spanning calibration adjustment.}
+    \label{fig_ex_cal}
+\end{figure}
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ex_subz.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Example of sub-zero runoff measurements.}
+    \label{fig_ex_subz}
+\end{figure}
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ex_noise.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Example of noisy runoff measurements, which have yet to have accurate adjusted values assigned.}
+    \label{fig_ex_noise}
+\end{figure}
+
+% \begin{itemize}
+%     \item The Faculty Advisor will provide knowledge and expertise to help the group stretch their skills. 
+%     \item The Faculty Advisor will participate in a weekly or bi-weekly call/meeting with the Project Team to review the project status, upcoming deliverables, priorities, issues, and progress to the agreed Project Plan.
+%     \item The Faculty Advisor will provide document review, feedback and approval, rejection, approval with contingencies with adequate time for the Project Team to meet the course due dates. 
+%     \item The Faculty Advisor will provide feedback to requested support requirements from the Project Team. This includes feedback and guidance on design implementations decisions, design files, test plans, test procedures and test results.
+%     \item The Faculty Advisor shall provide technical advice and guidance to the Project Team answering inquiries approximately 1 hour per week. 
+%     \item Modifications to the Project Plan by the Project Team will be resolved and documented within 1 week of the request.
+%     \item Grade the finalized project using a skill-based rubric
+%     \item Attend iShowcase in May.
+% \end{itemize}
 
 \pagebreak
 \custsubsection{Ground Rules}
