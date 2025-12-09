@@ -1365,228 +1365,6 @@ However, failure mode flagging models with good recall may still be able to be s
 % A reflection on some of the challenges faced over the course of the project can be found in Appendix~\ref{apx_challenges}.
 
 \pagebreak
-\pagebreak
-\pagebreak
-
-% sections
-% Description of problem
-% why it's important
-% data explination
-% raw data
-% sources of failure (easy to hard)
-% challenges faced (incl cleanup)
-% progress of each failure mode
-% explain what done so far
-% future work
-% conclusions
-% limitations why the prob is complicated & why you go tt to here
-
-\pagebreak
-\pagebreak
-\pagebreak
-
-\section{Literature Review/Market Research}\label{sec_lit}
-% This section describes who your research project is for, what they want and what other work has been done on your topic area.. This section is designed to illustrate you have an understanding of the existing research and work previously completed.
-
-
-\subsection*{Overall research landscape}
-% Overall research landscape: Do some basic research about existing research, cite papers and clarify how your project will contribute new knowledge to the world and or utilize novel approaches to existing data sets. 
-
-
-% 
-% In hydrology, machine learning (ML) has been used for predictive runoff modelling,\autocite{mohammadi2021} modelling agricultural drought,\autocite{houmma2022}, MORE EXAMPLES.
-ML has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
-% In hydrology, machine learning (ML) has been used for predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
-% Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-% 
-% \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
-% 
-Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(\ac{lstm})---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
-% 
-In environmental ML, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
-% Data leakage issues are another consideration in environmental ML, and can stem from improper missing data management techniques.\autocite{zhu2023}
-
-% 
-% Rainfall-runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-% According to Paton, ML algorithms have yet to be applied to singular catchment runoff data quality~assurance.
-
-The Lutz~catchment (Figure~\ref{fig_map}) is a 9.73~ha area located in the secondary low land tropical rainforest on \ac{bci}, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
-% \ac{bci} is located in the middle of the largest lake in the Republic of Panama.
-% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on Barro Colorado Island (\ac{bci}). \ac{bci} is a 15~km2 island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
-\ac{bci} is operated by \ac{stri}, a branch of the Smithsonian~Institution.\autocite{stri2025}
-% \ac{bci} is one of the most intensely studied tropical rainforests in the world.
-Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
-% Data from this catchment provide critical information concerning the hydrological balance of \ac{bci}.
-
-% According to Paton, there have been few---if any---attempts to apply ML algorithms to singular catchment runoff data quality~assurance.
-% Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
-% % However, what makes the Lutz~catchment data unique is th
-% % Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
-% Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data as well as inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
-
-External variables of rainfall and soil moisture content are necessary for a well-informed model.
-In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
-
-% \bigbreak
-
-% \begin{figure}[!hbt]
-%     \centering
-%     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-%     % \caption{The locations of the weir and tower in relation to the 10 soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
-%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
-%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
-%     \label{fig_map}
-% \end{figure}
-% The inclusion of additional variables is also expected to improve the models, as \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary for modeling expected droughts due to climate change and ``exceptional situations'' making extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
-% 
-% Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
-% Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
-
-% In the context of bioinformatics, \citean{kane2022} uses NN workflows for multiclass classification while avoiding data leakage, compensating for missing values, and reducing dimensionality.
-% NN workflows are used in bioinformatics for multiclass classification
-% The paper focuses on a proposed NN workflow in the context of bioinformatics for multiclass classification while avoiding data leakage, compensating for missing values, and reducing dimensionality.
-% To compensate for missing data, kNN-imputation and Iterative imputation were used (numeric models could not be used due to the presence of non-numeric variables). 
-
-% Literature review to show and explain common misunderstandings of ML in environmental research publications.
-% Examples from environmental literature of different missing data management (MDM) techniques, including removal, imputation, and replacement (p. 17674). Data leakage issues that can stem from improper MDM are also addressed (p. 17678)
-
-% \pagebreak
-
-\subsection*{User insights}
-% User insights: It is important to listen to potential users to identify their needs and pain points. Utilize the empathy interview to speak with potential users of your research output and list the key insights  and pain points you have discovered during the process and detail how your product will address them. 
-
-% The target user for these models will be hydrology researchers analyzing temporal weir and environmental data in parallel.
-% However, given the specificity in location of the weir of interest, it is possible that other factors (such as temperature) may have greater or less influence on runoff data at other weirs around the world and could render final correction models unsuitable for other weirs.
-Paton currently uses Visual~FoxPro to manipulate the data.
-% Visual~FoxPro is currently the only software used by Paton to manipulate the data.
-While the interface has been sufficient for completing the tasks at hand, the software is vulnerable due to its depreciation.
-Furthermore, current quality assurance methods rely on subjective decisions by the individual analyzing the data, meaning that results are potentially biased to some unknown degree.\autocite{mapPC}
-% Quality assurance requires some subjective decisions by the person analyzing the data using the \ac{vfp} system (Paton so far been the only one involved in this activity) meaning that the results are potentially biased to some, unknown degree.
-Additionally, it is not currently set up to automatically detect problematic portions of the data.
-Because data monitoring is ongoing, new data must be regularly checked for occurrence of any type of failure mode.
-
-% Currently, there is no plan to ``market'' these tools---rather, emphases on readability, accessibility, and reproducibility will be maintained.
-% % 
-
-According to Paton, there have been few---if any---attempts to apply ML algorithms to singular catchment runoff data quality~assurance.
-Previously, stochastic methods were attempted for automation of the Lutz~catchment data quality assurance, however the team concluded it was unsuccessful in being more accurate than Paton's manual corrections.
-% However, what makes the Lutz~catchment data unique is th
-% Although water flow is a complex phenomenon (especially with other environmental considerations such as soil moisture content and temperature), it is anticipated that the quantity of raw and manually-corrected data and inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree even without the complexities of hydrological movement.
-Although water flow is a complex phenomenon, it is anticipated that the quantity of raw and manually-corrected data as well as inclusion of additional variables will enable an algorithmic approach to correct the data to a reasonably-accurate degree.
-
-\pagebreak
-
-% \begin{figure}[!hbt]
-%     \centering
-%     \fbox{\includegraphics[width=.95\textwidth]{figures/map_bci_soil.jpg}}
-%     % \caption{The locations of the weir and tower in relation to the 10 soil moisture sampling sites in the Lutz~catchment on Barro~Colorado~Island, Panama.\autocite{stri2025}}
-%     % \caption{A fine-scale topographic map of the Lutz~catchment on Barro~Colorado~Island, Panama, showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
-%     \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and 10 soil moisture sampling sites.\autocite{hydroPC}}
-%     % \caption{The location of Barro~Colorado~Island in Panama CITE.}
-%     \label{fig_map}
-% \end{figure}
-
-\pagebreak
-
-\section{Research Project Deliverables}\label{sec_deliv}
-% This section describes the scope and features of the _analysis_ created by the _project_. It is what the project will PRODUCE. You should write a draft version of these but this is what your mentor will help you with especially. This is often the breakdown of what will and will not be considered a passing project so make this detailed!
-
-% The key objective of the next section is to address the following itels: 
-% \renewcommand{\thesubsection}{\bf{}}
-% \setcounter{subsection}{1}
-\subsection{Final Presentation Format}
-% Final Presentation Format
-% How will your final project be submitted? Will it culminate in a paper with introduction, methods, and results section and at least 5 peer reviewed citations, that is <10 pages long and has at least two informative graphics? Will it culminate in an RShiny application that is also available on GitHub?
-
-The final project will be submitted in the form of a GitHub repository containing code that is relevant, readable, and thoroughly annotated to maximize accessibility and reproducibility.
-In addition to code files, a written report with background information, methods/approach, and final model performance statistics \& visualizations will also be created.
-% A written report with model performance statistics \& visualizations.
-
-% The system will determine where there are readings containing a potential failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
-% A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
-
-\subsection{What Analysis Is Being Run?}
-% Once the data is in, what analyses exactly should be run? E.G. what type of neural network is being run, what type of correlation analysis is being run, etc.
-
-\subsubsection*{Classification of Failure Mode}
-
-Periods of time in the data can be flagged as containing ``failure modes'', as explained in Table~\ref{tab_fm}.
-The system will determine where there are readings containing a particular failure mode. This also requires the system to determine the time range in which a failure mode is occurring.
-A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
-
-% Seasonal autoregressive integrated moving average (seasonal ARIMA [SARIMA]) can be used to analyze time series data that have seasonal patterns by combining seasonal autoregressive (SAR), seasonal differencing (SI), and seasonal moving average (SMA) terms.
-
-% Periods of time in the data can be flagged as containing particular ``failure modes'', as explained in Table~\ref{tab_fm}.
-To flag data points, supervised classification can utilize rolling statistics and the external environmental variables (which provide some seasonal insights).
-Gradient boosted trees or \ac{lstm} can be used, but more literature review and exploratory data analysis will need to be conducted prior to finalizing which model(s) to utilize.
-% Upon a period being flagged as containing a failure mode, it will need to be classified.
-% A brief overview of different failure modes is provided in Table~\ref{tab_fm}.
-
-% \bigskip
-% \bigskip
-
-% % \vspace*{\fill}
-% \begin{table}[htbp]
-%     % \small
-%     \centering
-%     \rowcolors{2}{white}{gray!20}
-%     \renewcommand{\arraystretch}{1.23}
-%     \begin{tabular}{l p{0.395\textwidth} p{0.395\textwidth}}
-%         \toprule
-%         Failure Mode & Description & Complicating Factors \\
-%         \midrule
-%         Calibration & Standard checks that require baseline correction or slight data pivot. & Recovery after blockage clearing can render calibration points ineffective.\\
-%         Spike & Short and abrupt changes in level typically caused by equipment issues. & Extremely short-term issue that could be skipped over by random sampling. \\
-%         Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable.\\
-%         Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix.\\
-%         % \midrule
-%         % Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
-%         Blockage & Debris blocks the weir's `V', resulting in gradual increases in water level, and later abrupt decreases following blockage removal. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
-%         % Blockage & Debris blocks the weir's `V', resulting in a gentle increase in water level. \\
-%         % Blockage after rainfall & A blockage interrupts the normal water level decay curve following a rainfall event. \\
-%         % Blockage during rainfall & A blockage occurs during a rainfall event, interrupting the base flow and decay curves.\\
-%         \bottomrule
-%     \end{tabular}
-%     \caption{Overview of Weir Failure Modes\autocite{hydroPC}}
-%     \label{tab_fm}
-% \end{table}
-% % \vspace*{\fill}
-
-% \pagebreak
-
-\subsubsection*{Quality Assurance on Periods of Failure}
-
-% Feature~\hyperref[subsec_class]{2}
-% Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had an error not occurred.
-Based on the classification result(s), additional models will attempt to adjust the raw outputs to the appropriate values had one of the above-mentioned failure modes not occurred.
-This will involve creation of multiple separate models, as the method in which the data is corrected differs based on the classification of failure type---for example, an interrupted drainage caused by a blockage in the weir can be fixed by the expected decay curve, while a spike is simply ``flattened'' to the level of adjacent data points using a simple linear regression model.
-
-\subsection{What Accuracy Is Expected?}
-% Sometimes models don't perform super well. If you're running a model, do you expect 100% accuracy? 65% accuracy across multiple outputs? An R2 of .6? What happens if the model isn't very accurate?
-
-Accuracy for certain failure mode classifications are expected to be high---for instance, ``sub-zero'' values are simple to flag. Others, such as ``spikes'', are also expected to be easily found.
-Accuracy for multiple failure modes may be more difficult, especially in the dry season when there are non-erroneous fluctuations in flow caused by evapotranspiration.
-Multiple, large rainfall events also pose particular challenges, as well as overlapping failure modes (e.g., simultaneous blockage and calibration problems).
-
-Similarly, correction models for simpler failure modes are expected to be highly accurate and precise, since they are often simple linear gap-fills.
-Corrections for the failure mode of a blockage in combination with a rain event may have reasonable accuracy but lower precision.
-
-\subsection{What if the Analysis doesn't work?}
-% Sometimes analyses don't work. Is a null result acceptable, or do you need to do work to circumvent that?
-
-If the error type categorization has poor performance or is unable to consistently perform, and the needs of the correction models become more pressing as the semester continues, the data set does include the manually-flagged error types.
-The results of the ML-assisted corrections will be compared against the results of the manual~corrections to data not included in the training sets.
-Large deviations from the expected values will be considered ``failures''.\autocite{mapPC}
-If the correction models do not work, it will still provide valuable insights into which failure modes are most difficult to automate or most ``resistant'' to certain algorithms.
-
-% \subsection{What if the Data Isn't Available?}
-% This is only for projects that require data scraping – what will happen if your data is not scrapable? How will you salvage your project?
-% \bigbreak
-% \bigbreak
-
-\pagebreak
 
 \appendix
 \section*{Appendices}
@@ -1647,16 +1425,6 @@ If the correction models do not work, it will still provide valuable insights in
     \label{fig_ex_noise}
 \end{figure}
 
-% \begin{itemize}
-%     \item The Faculty Advisor will provide knowledge and expertise to help the group stretch their skills. 
-%     \item The Faculty Advisor will participate in a weekly or bi-weekly call/meeting with the Project Team to review the project status, upcoming deliverables, priorities, issues, and progress to the agreed Project Plan.
-%     \item The Faculty Advisor will provide document review, feedback and approval, rejection, approval with contingencies with adequate time for the Project Team to meet the course due dates. 
-%     \item The Faculty Advisor will provide feedback to requested support requirements from the Project Team. This includes feedback and guidance on design implementations decisions, design files, test plans, test procedures and test results.
-%     \item The Faculty Advisor shall provide technical advice and guidance to the Project Team answering inquiries approximately 1 hour per week. 
-%     \item Modifications to the Project Plan by the Project Team will be resolved and documented within 1 week of the request.
-%     \item Grade the finalized project using a skill-based rubric
-%     \item Attend iShowcase in May.
-% \end{itemize}
 
 \pagebreak
 \setcounter{section}{2}
@@ -1669,7 +1437,7 @@ It was known that past stochastic approaches had failed; thus, extensive backgro
 
 Data cleaning and wrangling also took significantly longer than expected.
 % This was partly due to the need for clarifications of custom 
-Although all data was relatively uniform in its available state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
+Although all data was relatively uniform in its available state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge.
 % Additionally, the differences in data frequency for obstruction detection
 % Fortunately, this will reduce the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
 Fortunately, this will reduce the preparation required for future analysis of other failure modes.
@@ -1682,7 +1450,7 @@ Computational power also proved a challenge, as there were more than 4.17~millio
 Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
 Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
 
-Although only one failure mode was able to be addressed in the scope of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
+Although only one failure mode was able to be addressed in the duration of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
 
 % It was knwon that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
 
