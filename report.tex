@@ -370,7 +370,7 @@ Because quality assurance requires some subjective decisions by the individual a
 \begin{figure}[hbt!]
     \centering
     \includegraphics[width=.6\textwidth]{figures/larsen2021figs_setup.jpg}
-    \caption[Photograph of the Lutz~Weir]{A photograph of the Lutz~Weir, including the electronic sensor measuring runoff.\autocite{larsen2021figs}}
+    \caption[Photograph of the Lutz~weir]{A photograph of the Lutz~weir, including the electronic sensor measuring runoff.\autocite{larsen2021figs}}
     \label{pic_weir}
 \end{figure}
 
@@ -575,19 +575,19 @@ Non-continuous nature of other variables may also prevent meaningful pattern det
 \ac{lstm} models are also sensitive to noisy data, and may result in less accurate predictions.\autocite{baek2023}
 Furthermore, \ac{lstm} are difficult to interpret, and would thus have resulted in a black box issue as to why a particular failure mode flag was triggered since feature importance is unclear.\autocite{jakubowski2021}
 
-% Ultimately, XGBoost was selected as the first model to try with the obstruction model.
+% Ultimately, \ac{xgb} was selected as the first model to try with the obstruction model.
 Boosting uses many weak learning models to sequentially boost its performance such that the final model is a strong learner.\autocite{murphy2022}
 % 
 Gradient tree boosting uses simple \& shallow decision trees as weak learners, finding good terminal nodes using standard regression tree learning on the residuals then resolving for the weights of each leaf by minimizing the loss function.\autocite{murphy2022}
 % 
 It is optimized for large datasets and is made even faster with parallel processing.\autocite{chen2016}
 \acf{xgb} adds a regularizer, utilizes a second-order loss approximation, can sample features internally, and scales better.\autocites{murphy2022}{chen2016}
-% Extreme gradient boosting (XGBoost) extends beyond gradient boosted trees by adding a regularizer, utilizing second-order loss approximation, internal feature sampling, and scales better.\autocites{murphy2022}{chen2016}
+% Extreme gradient boosting (\ac{xgb}) extends beyond gradient boosted trees by adding a regularizer, utilizing second-order loss approximation, internal feature sampling, and scales better.\autocites{murphy2022}{chen2016}
 \ac{xgb} has been used for time series anomaly classification in quality assurance in the manufacturing sector.\autocite{mellah2022}
 % It also handles class imbalance better (as is the case with the failure mode flags).
 Importantly, it does not require perfectly clean or consistent data---thus, it can handle missing values and noise.\autocite{chen2016}
 However, it requires careful hyperparameter tuning and explicit feature inputs since it does not ``learn'' temporal trends.
-Ultimately, XGBoost was selected as the first model to try with the obstruction model.
+Ultimately, \ac{xgb} was selected as the first model to attempt for flagging instances of the obstruction failure mode.
 
 % chen2016, 
 % murphy2022
@@ -600,13 +600,13 @@ Ultimately, XGBoost was selected as the first model to try with the obstruction 
 % loss).
 % ➢ The final model is an ensemble, which sums up the predictions from all the individual
 % trees.
-% “What is XGBoost actually doing?”
-% ➢ Compared to standard gradient tree boosting, XGBoost adds a regularizer, utilizes a
+% “What is \ac{xgb} actually doing?”
+% ➢ Compared to standard gradient tree boosting, \ac{xgb} adds a regularizer, utilizes a
 % second-order loss approximation, can sample features internally, and scales better.
-% “Is XGBoost using random bootstrap? If so, how does it extract the bootstrap?”
+% “Is \ac{xgb} using random bootstrap? If so, how does it extract the bootstrap?”
 % ➢ Gradient boosted trees do not use bootstrapping.
 % ➢ Gradient boosted trees can use (random, without replacement) subsampling.
-% ➢ In XGBoost the subsampling ratio can be specified, as can the ratios for subsampling by
+% ➢ In \ac{xgb} the subsampling ratio can be specified, as can the ratios for subsampling by
 % tree, level, or node.
 % ○ All default to 1 unless specified (i.e., no subsampling; uses the entirety of the
 % input data).
@@ -711,10 +711,10 @@ Annotated code, data files, and project reports can be found in the project's Gi
 %     \item Engineer features
 %     \item Conduct train/test split % accidentally reversed in poster
 %     \item Remove highly-correlated features % accidentally reversed in poster
-%     \item Tune XGBoost hyperparameters
+%     \item Tune \ac{xgb} hyperparameters
 %     \item Fit to get out-of-fold (\ac{oof}) predictions
 %     \item Tune post-hoc smoothing parameters
-%     \item Fit tuned XGBoost model to entire training set
+%     \item Fit tuned \ac{xgb} model to entire training set
 %     \item Predict on the test set
 %     \item Analyze results (with and without post-hoc parameters)
 % \end{enumerate}
@@ -729,12 +729,12 @@ Annotated code, data files, and project reports can be found in the project's Gi
 % Engineer features (time, lags, & rolling stats)
 % Remove high-correlation features (>0.97)
 % Conduct Train/Test split (80:20)
-% Tune XGBoost hyperparameters
+% Tune \ac{xgb} hyperparameters
 % 	(w/ PR-AUC—good for imbalanced classes)
 % Fit to get out-of-fold predictions (\ac{oof})
 % Tune post-hoc smoothing parameters w/ $F_1$
 % 	(median-windowing & classification threshold)
-% Fit tuned XGBoost model to entire training set
+% Fit tuned \ac{xgb} model to entire training set
 % Predict on the test set (the held-out 20%)
 % Analyze results (w/ & w/o post-hoc params.)
 
@@ -803,7 +803,7 @@ These consisted of: obstruction, spike, gap~fill (often related to sub-zero fail
 % \subsection{Feature Engineering}
 \subsubsection{Feature engineering}
 
-Because XGBoost models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
+Because \ac{xgb} models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
 These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff ten minutes prior).
 In the context of obstruction detection, rolling statistics included the sum and standard deviation of runoff values in windows spanning 10~minutes~(min), 15~min, 20~min, 25~min, 30~min, 1~hour~(hr), 3~hr, 6~hr, 12~hr, and 24~hr prior to the data point, and rainfall values in windows spanning 10~min, 30~min, 1~hr, 3~hr, and 6~hr prior.
 Every other runoff value from 5~min through 3~hr prior were added as lag features, as were the lags for every aforementioned rain rolling sum features from 15~min, 30~min, 1~hr, 2~hr, and 3~hr prior.
@@ -861,13 +861,13 @@ This was conducted by using an existing function to compute the pairwise Pearson
 % df.corr(): When called on a Pandas DataFrame, this method computes the pairwise correlation between all columns in the DataFrame. By default, it uses the Pearson correlation coefficient, which measures the linear relationship between continuous variables.
 
 \subsection{Modelling}
-%     \item Tune XGBoost hyperparameters
-% \subsection*{6) Tune XGBoost hyperparameters}
-% \subsection{XGBoost Hyperparameter Tuning}
-\subsubsection{XGBoost hyperparameter tuning}
+%     \item Tune \ac{xgb} hyperparameters
+% \subsection*{6) Tune \ac{xgb} hyperparameters}
+% \subsection{\ac{xgb} Hyperparameter Tuning}
+\subsubsection{\ac{xgb} hyperparameter tuning}
 
-% To tune the XGBoost hyperparameters, the training data was further split into five expanding
-% XGBoost requires careful hyperparameter tuning.
+% To tune the \ac{xgb} hyperparameters, the training data was further split into five expanding
+% \ac{xgb} requires careful hyperparameter tuning.
 To tune \ac{xgb} hyperparameters, an expanding window cross-validation (Figure~\ref{fig_chu1995}.1b) approach was used.
 This is similar to how a model would act once deployed, as it would only gain more data over time.
 Five splits on the training data were conducted, with the internal ``training'' set expanding with each fold (Figure~\ref{fig_methods_split}).
@@ -900,7 +900,7 @@ The specific set of hyperparameters and boosting rounds found to yield the highe
 %         Alpha & L1 regularization value & 0.936 \\
 %         \bottomrule
 %     \end{tabular}
-%     \caption{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
+%     \caption{Tuned hyperparameters for the \ac{xgb} classification model of obstruction detection.}
 %     \label{tab_xgbparams}
 % \end{table}
 
@@ -929,12 +929,12 @@ The specific set of hyperparameters and boosting rounds found to yield the highe
 % ------------------------------------------------------------
 
 
-% As per XGBoosting documentation and tutorials, early stopping with random search for hyperparameter tuning had to be iterated upon manually, as RandomizedSearchCV does not support using a separate validation set within each CV fold.
+% As per \ac{xgb}ing documentation and tutorials, early stopping with random search for hyperparameter tuning had to be iterated upon manually, as RandomizedSearchCV does not support using a separate validation set within each CV fold.
 % Source: https://xgboosting.com/xgboost-early-stopping-with-random-search/
 
 % The area under the precision-recall curve (AUC-PR) can be used to evaluate the performance, since it considers a range of classification thresholds. This is better than an ROC AUC metric since there is greater class imbalance (i.e., True is more rare).
 % Source: https://xgboosting.com/evaluate-xgboost-performance-with-precision-recall-curve/
-% XGBoost information here.
+% \ac{xgb} information here.
 
 
 % \subsection*{7) Fit to get out-of-fold (\ac{oof}) predictions}
@@ -988,13 +988,13 @@ Thus, the window/threshold combination with the smallest median window and an $F
 % \end{figure}
 
 
-% \subsection*{9) Fit tuned XGBoost model to entire training set}
+% \subsection*{9) Fit tuned \ac{xgb} model to entire training set}
 % \subsection{Fitting Tuned Model}
 \subsection{Testing Model}
 \subsubsection{Fitting tuned model}
 
 Prior to analyzing performance, the tuned \ac{xgb} model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the data) (Figure~\ref{fig_methods_split}).
-%     \item Fit tuned XGBoost model to entire training set
+%     \item Fit tuned \ac{xgb} model to entire training set
 
 % \subsection*{10) Predict on the test set}
 % \subsection{Test Set Prediction}
@@ -1115,9 +1115,9 @@ This resulted in a total of 108 input features ($X$).
 % 
 For the obstruction failure mode, the initial 80/20 split resulted in a training set spanning from 19~July~1989~11:55 through 08~March~2018~21:50 ($n=2,778,145$) and a test set from 08~March~2018~21:55 through 01~August~2025~13:00 ($n=694,537$).
 
-% \subsection{XGBoost hyperparameters}
+% \subsection{\ac{xgb} hyperparameters}
 
-The tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
+The tuned \ac{xgb} hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
 \begin{table}[htbp]
     % \small
@@ -1138,7 +1138,7 @@ The tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
         Alpha & L1 regularization value & 0.936 \\
         \bottomrule
     \end{tabular}
-    \caption[Tuned hyperparameters for the obstruction detection classification model]{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
+    \caption[Tuned hyperparameters for the obstruction detection classification model]{Tuned hyperparameters for the \ac{xgb} classification model of obstruction detection.}
     \label{tab_xgbparams}
 \end{table}
 
@@ -1232,10 +1232,10 @@ The threshold selected at the absolute best (i.e., before marginal gains filteri
 
 % \subsection{Limitations}
 
-The engineered features for the XGBoost model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
+The engineered features for the \ac{xgb} model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
 This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
 % 
-Despite XGBoost being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
+Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
 
 From Figure~\ref{fig_ts_accuracy}, model accuracy seems to improve when there are fewer actual instances of obstructions.
 The jagged accuracy line indicates that the current model will perform inconsistently on time periods with differing concentrations of obstruction events.
@@ -1244,7 +1244,7 @@ The performance example in Figure~\ref{fig_performance_ex} shows that the model 
 % Although smoothing with median windowing did not quantifiably improve performance, it is possible that other smothing 
 % The highlighted window in the afternoon of July 2 does follow the pattern of other obstruction instances (due to not having a rain event to cause the increase), however not all non-rain increases are indicative of a blockage.\footnote{Such as periods of of evapotranspiration.}
 
-% Regarding the tuned XGBoost hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
+% Regarding the tuned \ac{xgb} hyperparameters (Table~\ref{tab_xgbparams}), it is possible that the column subsampling could be negatively impacting the performance.
 It is also possible that column subsampling (Table~\ref{tab_xgbparams}) could be negatively impacting model performance.
 % An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially ``due to the fact that there are few important features in [the] dataset'' and that it would instead benefit to greedily select from all features.
 An analysis by \citean{chen2016} found that column subsampling in a classification experiment gave slightly worse performance compared to using all features, potnetially due to the lack of ``important'' features in the dataset, and that the model may benefit from greedily selecting from all features instead.
