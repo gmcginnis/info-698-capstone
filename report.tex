@@ -50,6 +50,14 @@
 % Improved typography
 \usepackage{microtype}
 
+% Acronym management
+\usepackage{acro}
+
+\DeclareAcronym{bci}{
+    short=BCI,
+    long=Barro~Colorado~Island
+}
+
 % URL and hyperlink settings
 % \usepackage[dvipsnames]{xcolor}
 \usepackage[table, dvipsnames]{xcolor}
@@ -92,17 +100,35 @@
 % ]{biblatex}
 \newcommand{\citean}[1]{\citeauthor{#1}\autocite{#1}}
 
-% % ToC Settings
-\usepackage{tocloft}
-% Dots for sections
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-% No dots for other sections
-\renewcommand{\cftsubsecdotsep}{\cftnodots}
-\renewcommand{\cftsubsubsecdotsep}{\cftnodots}
+% % % ToC Settings
+% \usepackage{tocloft}
+% % Dots for sections
+% \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+% % No dots for other sections
+% \renewcommand{\cftsubsecdotsep}{\cftnodots}
+% \renewcommand{\cftsubsubsecdotsep}{\cftnodots}
+% 
+% % Spacing for ToC section titles
+% \setlength{\cftsubsecnumwidth}{0pt}
+% \setlength{\cftsubsubsecnumwidth}{0pt}
 
-% Spacing for ToC section titles
-\setlength{\cftsubsecnumwidth}{0pt}
-\setlength{\cftsubsubsecnumwidth}{0pt}
+% % IEEE settings
+% \usepackage{fmtcount}
+% \usepackage[titles]{tocloft}
+% 
+% % TOC entries to use Roman numerals and bold small caps
+% \renewcommand{\cftsecfont}{\scshape\bfseries} % Small caps, bold
+% \renewcommand{\cftsecpagefont}{\bfseries}      % Page numbers bold
+% 
+% % Modifying section numbering
+% \renewcommand{\thesection}{\Roman{section}}
+% \renewcommand{\thesubsection}{\thesection.\Alph{subsection}}
+% \renewcommand{\thesubsubsection}{\arabic{subsubsection})} % sub-sections, (1) 2)
+% 
+% % Adjust spacing
+% % \setlength{\cftsecindent}{0pt}
+% % \setlength{\cftsecnumwidth}{2em}
+
 
 % Custom commands for new section titles to TOC
 \newcommand{\custsubsection}[1]{%
@@ -196,11 +222,14 @@
 \tableofcontents
 
 \thispagestyle{empty}
-% \pagebreak
-% \listoffigures
+\pagebreak
+\listoffigures
 
-% \listoftables
-% \thispagestyle{empty}
+\listoftables
+
+\printacronyms
+
+\thispagestyle{empty}
 \pagebreak
 \pagenumbering{arabic}
 
@@ -208,7 +237,8 @@
 \section*{Abstract}
 \addcontentsline{toc}{section}{Abstract}
 
-The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(BCI) on the Republic~of~Panama.
+% The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(BCI) on the Republic~of~Panama.
+The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of \ac{bci} on the Republic~of~Panama.
 % The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
 This will remove the need for manual data corrections, which not only use the valuable time and energy of researchers, but also have the potential to be imprecise or inconsistent.
 % This will streamline the analytical process for researchers, freeing up more time and energy for more pressing analyses.
@@ -219,9 +249,9 @@ Rainfall and soil moisture measurement data will be integrated to produce a more
 
 \section{Introduction}\label{sec_es}
 
-The Lutz~catchment (Figure~\ref{map_bcilutz}) is a 9.73~ha area located in the secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
+The Lutz~catchment (Figure~\ref{map_bcilutz}) is a 9.73~ha area located in 100-year-old, secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in Lake Gatun in the Republic~of~Panama.\autocite{mapPC}
 % BCI is located in the middle of the largest lake in the Republic of Panama.
-% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on Barro Colorado Island (BCI). BCI is a 15~km2 island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
+% The Lutz~catchment encompasses 9.73~ham and is located in 100-year-old, secondary low land tropical rainforest on BCI, a 15~km\textsuperscript{2} island located in the middle of Lake Gatun, the largest lake in the Republic of Panama and a key section of the Panama Canal.
 BCI is operated by the Smithsonian Tropical Research Institute~(STRI), a branch of the Smithsonian~Institution.\autocite{stri2025}
 % BCI is one of the most intensely studied tropical rainforests in the world.
 Runoff at the Lutz~catchment---as well as other meteorological and hydrological data---have been continually monitored since 1972, making it one longest, continually monitored micro-catchment datasets for the neotropics.\autocite{mapPC}
@@ -243,12 +273,15 @@ Soil moisture measurements have been taken weekly from 10 sampling sites within 
 % The weir has been electronically collecting runoff data since 1989 in frequencies ranging from three~minutes to three~hours, resulting in millions of data points with more added every day.
 Quality issues in the runoff data come about due to environmental factors (such as partial blockages of the outflow channel), sensor failures, and calibration issues, to name a few.
 % Currently, quality assurance is conducted manually in Visual~FoxPro interactive interface.
-Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
+% Currently, quality assurance is conducted manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
+Currently, quality assurance is conducted manually using a custom written program in Visual~FoxPro~(VFP), a popular data management program from the 2000s.
+This program permits the visual inspection and correction of the data, a critical feature for manual quality assurance of micro-catchment data.
 % Currently, Steven~Paton---director of the Physical Monitoring Program at the STRI---conducts quality assurance manually using a customized program in Visual~FoxPro~(VFP) to allow for visual inspection and correction of the data.
 % Steven~Paton---director of the Physical Monitoring Program at the STRI---will be the primary contact regarding background information of the data, knowledge of exceptional data points, and any hydrological questions that come about.
 % Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable.
-Not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of the language and interface leaves it vulnerable to inaccessibility.
+However, not only does this approach run the risk of imprecise or inconsistent corrections, but the deprecated status of VFP leaves it vulnerable to future inaccessibility as it may eventually no longer be supported.
 Past attempts at automated quality assurance have failed due to the failure modes' resilience against traditional stochastic methods.
+Because quality assurance requires some subjective decisions by the individual analyzing the data using the VFP system, the results are potentially biased to some, unknown degree.
 
 % % % LONGER
 % The weir has been electronically collecting runoff data since July 19, 1989, with frequency measurements ranging from three~minutes to three~hours.
@@ -272,21 +305,21 @@ Past attempts at automated quality assurance have failed due to the failure mode
 \begin{figure}[hbt!]
     \centering
     \fbox{\includegraphics[width=.6\textwidth]{figures/larsen2021figs_bci.jpg}}
-    \caption{The~Lutz~Catchment on Barro~Colorado~Island in the~Republic~of~Panama.\autocite{larsen2021figs}}
+    \caption[Map showing the~Lutz~Catchment on Barro~Colorado~Island in the~Republic~of~Panama]{Map highlighting the location of the~Lutz~Catchment on Barro~Colorado~Island in the~Republic~of~Panama.\autocite{larsen2021figs}}
     \label{map_bcilutz}
 \end{figure}
 
 \begin{figure}[!hbt]
     \centering
     \fbox{\includegraphics[width=.6\textwidth]{figures/map_bci_soil.jpg}}
-    \caption{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
+    \caption[Fine-scale topographic map of the Lutz~catchment sampling sites]{A fine-scale topographic map of the Lutz~catchment showing the locations of the weir, tower, and ten soil moisture sampling sites.\autocite{hydroPC}}
     \label{map_soil}
 \end{figure}
 
 \begin{figure}[hbt!]
     \centering
     \includegraphics[width=.6\textwidth]{figures/larsen2021figs_setup.jpg}
-    \caption{The Lutz~Weir.\autocite{larsen2021figs}}
+    \caption[Photograph of the Lutz~Weir]{A photograph of the Lutz~Weir, including the electronic sensor measuring runoff.\autocite{larsen2021figs}}
     \label{pic_weir}
 \end{figure}
 
@@ -340,33 +373,54 @@ Past attempts at automated quality assurance have failed due to the failure mode
 \subsection{Failure Modes}
 
 % There are five major failure modes flagged in the data set: obstruction, spike, calibration, weir cleaning, and signal noise.
-Periods of time in the data can be flagged as containing ``failure modes'', as explained in Table~\ref{tab_fmtypes}.
+Periods of time in the data are flagged as containing ``failure modes'', as explained in Table~\ref{tab_fmtypes}.
 Some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
 One long-term goal of this project is to create systems to determine where there are readings containing a particular failure mode.
 % This also requires the system to determine the time range in which a failure mode is occurring.
 % A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
+Examples of each failure mode can be found in APPENDIX CITE.
+
+% \begin{table}[htbp]
+%     % \small
+%     \centering
+%     \rowcolors{2}{white}{gray!20}
+%     \renewcommand{\arraystretch}{1.23}
+%     \begin{tabular}{l p{0.395\textwidth} p{0.395\textwidth}}
+%         \toprule
+%         Failure mode & Description & Complicating factors \\
+%         \midrule
+%         Obstruction & Debris blocks the weir's `V', resulting in gradual increases in water level, and later abrupt decreases following blockage removal. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
+%         Spike & Short and abrupt changes in level typically caused by equipment issues. & Extremely short-term issue that could be skipped over by random sampling. \\
+%         Calibration & Standard checks that require baseline correction or slight data pivot. & Recovery after blockage clearing can render calibration points ineffective.\\
+%         Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable.\\
+%         Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix \& resists standard de-noising.\\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Overview of weir failure modes\autocite{hydroPC}}
+%     \label{tab_fmtypes}
+% \end{table}
 
 \begin{table}[htbp]
-    % \small
+    \small
     \centering
     \rowcolors{2}{white}{gray!20}
     \renewcommand{\arraystretch}{1.23}
-    \begin{tabular}{l p{0.395\textwidth} p{0.395\textwidth}}
+    \begin{tabular}{l p{0.335\textwidth} p{0.335\textwidth} l}
         \toprule
-        Failure mode & Description & Complicating factors \\
+        Failure mode & Description & Complicating factors & Example\\
         \midrule
-        Obstruction & Debris blocks the weir's `V', resulting in gradual increases in water level, and later abrupt decreases following blockage removal. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. \\
-        Spike & Short and abrupt changes in level typically caused by equipment issues. & Extremely short-term issue that could be skipped over by random sampling. \\
-        Calibration & Standard checks that require baseline correction or slight data pivot. & Recovery after blockage clearing can render calibration points ineffective.\\
-        Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable.\\
-        Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix \& resists standard de-noising.\\
+        Obstruction & Debris blocks the weir's `V', resulting in gradual increases in water level, and later abrupt decreases following blockage removal. & Rainfall events before, during, or shortly after a blockage can interrupt the base flow and decay curves. & Figure~\ref{fig_ex_block}\\
+        Spike & Short and abrupt changes in level typically caused by equipment issues. & Extremely short-term issue that could be skipped over by random sampling.  & Figure~\ref{fig_ex_spike}\\
+        Calibration & Standard checks that require baseline correction or slight data pivot. & Recovery after blockage clearing can render calibration points ineffective. & Figure~\ref{fig_ex_cal}\\
+        Sub-zero & The stream runs dry, or the pond is being drained for cleaning. & Rain during a pond draining can render new data unrecoverable. & Figure~\ref{fig_ex_subz}\\
+        Signal noise & Equipment failure results in impossible variability of reported values. & Impossible to manually fix \& resists standard de-noising. & Figure~\ref{fig_ex_noise}\\
         \bottomrule
     \end{tabular}
-    \caption{Overview of weir failure modes\autocite{hydroPC}}
+    \caption[Overview of weir failure modes]{Overview of weir failure modes.\autocite{hydroPC}}
     \label{tab_fmtypes}
 \end{table}
 
-Examples of each failure mode can be found in APPENDIX CITE.
+% Examples of each failure mode can be found in APPENDIX CITE.
 % Not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
 % Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
 % Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
@@ -405,30 +459,34 @@ However, not all failure modes require all available variables in order to be su
 % Multiple different binary models can be constructed, as each failure mode has differing indicators and variable influences (e.g., a “spike” only depends on the raw value itself, “calibration” depends on the raw value versus the calibration point, and “obstruction” can be influenced from the raw value, rainfall, and soil moisture).
 Thus, individual models can be constructed based on failure mode and input variables in order to minimize the complexity of each.
 
-Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
-External variables of rainfall and soil moisture content are necessary for a well-informed model.
-Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
-In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
-
 \begin{table}[htbp]
     % \small
     \centering
-    \rowcolors{2}{white}{gray!20}
+    % \rowcolors{3}{white}{gray!20}
+    \rowcolors{3}{gray!20}{white}
     \renewcommand{\arraystretch}{1.23}
     \begin{tabular}{l | c c c c}
         \toprule
+         & \multicolumn{4}{c}{Variable} \\
         Failure mode & Raw runoff & Rainfall & Calibration & Soil moisture \\
         \midrule
         Obstruction & \checkmark & \checkmark & \checkmark & \checkmark \\
         Spike & \checkmark & & & \\
         Calibration & \checkmark & & \checkmark & \\
-        Sub-zero & \checkmark & & & \\
+        % Sub-zero & \checkmark & & & \\
+        Sub-zero & \checkmark & \checkmark & & \\
         Signal noise & \checkmark & & & \\
         \bottomrule
     \end{tabular}
-    \caption{Variables that relate to each failure mode\autocite{hydroPC}}
+    % \caption{Variables that relate to each failure mode\autocite{hydroPC}}
+    \caption[Variables as they relate to each failure mode]{Variables that relate to or otherwise complicate each failure mode.}
     \label{tab_fmvars}
 \end{table}
+
+Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
+External variables of rainfall and soil moisture content are necessary for a well-informed model.
+Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
+In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 
 Despite time series data not being independently \& identically distributed (\textit{iid}), statistical time-series problems can still use binary classification.\autocite{ryabko2012}
 For example, in hydrology \citean{hudnurkar2022} applied binary classification to rainfall time series, categorizing ``rain'' or ``not rain''.
@@ -549,7 +607,7 @@ This approach is beneficial for tuning hyperparameters, as it can indicate model
     \centering
     \fbox{\includegraphics[width=.5\textwidth]{figures/chu1995.png}}
     % \caption{Different time series segmentation techniques (\citeauthor{chu1995}, \citeyear{chu1995}, Figure~1.\autocite{chu1995}).}
-    \caption{Different time series segmentation techniques.\autocite{chu1995}}
+    \caption[Different time series segmentation techniques]{A comparison of different time series segmentation techniques.\autocite{chu1995}}
     \label{fig_chu1995}
 \end{figure}
 
@@ -607,13 +665,15 @@ Annotated code, data files, and project reports can be found in the project's Gi
 % Analyze results (w/ & w/o post-hoc params.)
 
 % \subsection{\thesection.1 Import data}
-\subsection*{1) Import data}
+% \subsection*{1) Import data}
+\subsection{Data import}
 
 All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
 % The data is in four files, relating to runoff, rain, shallow-depth soil moisture
 In their raw form, the data were stored in five individual data sets: runoff measurements (including raw and adjusted measurements), rain measurements, weir calibration values, shallow-depth soil moisture measurements, and deep-depth soil moisture measurements.
 
-\subsection*{2) Prepare data}
+% \subsection*{2) Prepare data}
+\subsection{Data preparation}
 
 In order to conduct model analyses, data first had to be uniformly coded and united into cohesive sets.
 % 
@@ -660,7 +720,8 @@ These consisted of: obstruction, spike, gap~fill (often related to sub-zero fail
 %    \item Import data
 %     \item Prepare data
 
-\subsection*{3) Engineer features}
+% \subsection*{3) Engineer features}
+\subsection{Feature Engineering}
 
 Because XGBoost models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
 These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff ten minutes prior).
@@ -678,7 +739,8 @@ These took the form of day of the year, month of the year, hour of the day, and 
 % Additional features were
 
 %     \item Conduct train/test split
-\subsection*{4) Conduct train/test split}
+% \subsection*{4) Conduct train/test split}
+\subsection{Train/Test Split}
 
 % Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
 % This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
@@ -695,12 +757,13 @@ A visual overview of this initial 80/20 split and methodology for splits in subs
 \begin{figure}[hbt!]
     \centering
     \fbox{\includegraphics[width=.5\textwidth]{figures/methods_split.png}}
-    \caption{Visual representation of splitting techniques used in the analysis.}
+    \caption[Splitting techniques used in the analysis]{Visual representation of splitting techniques used in the analysis.}
     \label{fig_methods_split}
 \end{figure}
 
 %     \item Remove highly-correlated features
-\subsection*{5) Remove highly-correlated features}
+% \subsection*{5) Remove highly-correlated features}
+\subsection{Feature Selection}
 
 To reduce high-dimensionality, avoid overfitting, and improve processing time \& internal memory, highly-correlated features were removed.
 This was conducted by using an existing function to compute the pairwise Pearson correlation between all features in the $X$ training set, and removing one of those in pairs in which correlation was calculated as greater than 0.97.
@@ -717,7 +780,8 @@ This was conducted by using an existing function to compute the pairwise Pearson
 
 
 %     \item Tune XGBoost hyperparameters
-\subsection*{6) Tune XGBoost hyperparameters}
+% \subsection*{6) Tune XGBoost hyperparameters}
+\subsection{XGBoost Hyperparameter Tuning}
 
 % To tune the XGBoost hyperparameters, the training data was further split into five expanding
 % XGBoost requires careful hyperparameter tuning.
@@ -790,7 +854,8 @@ The specific set of hyperparameters and boosting rounds found to yield the highe
 % XGBoost information here.
 
 
-\subsection*{7) Fit to get out-of-fold (OOF) predictions}
+% \subsection*{7) Fit to get out-of-fold (OOF) predictions}
+\subsection{Out-of-Fold Predictions}
 %     \item Fit to get out-of-fold (OOF) predictions
 
 % Out-of-fold (OOF) predictions are used be used to tune smoothing and thresholding parameters. To do this, the model with tuned hyperparameters will predict each sliding window set from before. This reflects the real-world performance of the model as it can fit to more data.
@@ -801,7 +866,8 @@ For further post-hoc tuning, out-of-fold (OOF) predictions were collected using 
 % These predictions use the same expanding-window splits as in hyperparameter tuning, fitting to each fold's ``training'' set and storing the predicted probability values on the window's ``test'' set (Figure~\ref{fig_methods_split}).
 % Smoothing & Thresholding
 
-\subsection*{8) Tune post-hoc smoothing parameters}
+% \subsection*{8) Tune post-hoc smoothing parameters}
+\subsection{Tuning Post-Hoc Parameters}
 %     \item Tune post-hoc smoothing parameters
 
 Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{e.g., having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
@@ -836,12 +902,14 @@ Thus, the window/threshold combination with the smallest median window and an $F
 % \end{figure}
 
 
-\subsection*{9) Fit tuned XGBoost model to entire training set}
+% \subsection*{9) Fit tuned XGBoost model to entire training set}
+\subsection{Fitting Tuned Model}
 
 Prior to analyzing performance, the tuned XGBoost model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the data) (Figure~\ref{fig_methods_split}).
 %     \item Fit tuned XGBoost model to entire training set
 
-\subsection*{10) Predict on the test set}
+% \subsection*{10) Predict on the test set}
+\subsection{Test Set Prediction}
 
 Finally, the fitted model was used to predict the values on the test set (i.e., the held-out 20\% of the data).
 % The resulting precision-recall curve (showing performance across different thresholds) is shown in Figure~\ref{fig_final_prcurve}.
@@ -858,7 +926,8 @@ The outputs were stored as predicted probabilities in order to test the differen
 
 
 %     \item Analyze results (with and without post-hoc parameters)
-\subsection*{11) Analyze results (with and without post-hoc parameters)}
+% \subsection*{11) Analyze results (with and without post-hoc parameters)}
+\subsection{Analyze Results}
 
 To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
 
@@ -935,7 +1004,7 @@ A time series of runoff and soil moisture samples of the complete data set used 
     \centering
     % \fbox{\includegraphics[width=.95\textwidth]{outputs/figures/ts_month_rosoil.png}}
     \includegraphics[width=\textwidth]{outputs/figures/ts_month_rosoil.png}
-    \caption{Time series showing monthly raw \& adjusted runoff and soil moisture values.}
+    \caption[Time series of monthly average runoff and soil moisture values]{Time series showing monthly averages of raw \& adjusted runoff and soil moisture values.}
     \label{fig_ts_month_rosoil}
 \end{figure}
 
@@ -979,7 +1048,7 @@ The tuned XGBoost hyperparameters are provided in Table~\ref{tab_xgbparams}.
         Alpha & L1 regularization value & 0.936 \\
         \bottomrule
     \end{tabular}
-    \caption{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
+    \caption[Tuned hyperparameters for the obstruction detection classification model]{Tuned hyperparameters for the XGBoost classification model of obstruction detection.}
     \label{tab_xgbparams}
 \end{table}
 
@@ -993,7 +1062,7 @@ The results of threshold and $F_1$ score for all smoothing windows are shown in 
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption{$F_1$ vs threshold size for all windows on OOF set.}
+    \caption[Performance of different classificaiton thresholds on out-of-fold data]{$F_1$ vs classification threshold for all windows on OOF set.}
     \label{fig_oof_tune}
 \end{figure}
 
@@ -1006,7 +1075,7 @@ The resulting precision-recall curve of the model after being fitted on the full
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption{Precision-recall curve of the test set with average precision (AP) values.}
+    \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with average precision (AP) values.}
     \label{fig_final_prcurve}
 \end{figure}
 
@@ -1032,7 +1101,7 @@ The resulting precision-recall curve of the model after being fitted on the full
         - & 0.317 & 0.518 & 0.206 & 0.838 & 0.331 \\
         \bottomrule
     \end{tabular}
-    \caption{Performance metrics of the final model at different smoothing and thresholds.}
+    \caption[Performance metrics of the final model]{Performance metrics of the final model at different smoothing and thresholds.}
     \label{tab_metrics}
 \end{table}
 
@@ -1042,7 +1111,7 @@ A time series showing monthly averages of model accuracy over the complete test 
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ts_accuracy.png}
     % \includegraphics{outputs/figures/ts_accuracy.png}
-    \caption{Monthly model accuracy (teal) and percentage of data points containing blockages (light green).}
+    \caption[Monthly model accuracy and concentration of blockages]{Monthly model accuracy (teal) and percentage of data points containing blockages (light green).}
     \label{fig_ts_accuracy}
 \end{figure}
 
@@ -1053,7 +1122,7 @@ An example of model performance in detecting blockages is shown in Figure~\ref{f
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/preformance_ex.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Model performance on a small subset of the test data, where red lines are actual instances of an obstruction.}
+    \caption[Example of final model performance on a small subset of test data]{Example of final model performance on a small subset of the test data, where red lines are actual instances of an obstruction.}
     \label{fig_performance_ex}
 \end{figure}
 
@@ -1398,7 +1467,7 @@ If the correction models do not work, it will still provide valuable insights in
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ex_block.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Example of consecutive distinct obstruction events.}
+    \caption[Example of obstruction failure mode]{Example of consecutive distinct obstruction events.}
     \label{fig_ex_block}
 \end{figure}
 
@@ -1408,7 +1477,7 @@ If the correction models do not work, it will still provide valuable insights in
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ex_spike.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Example of two distinct spike events.}
+    \caption[Example of spike failure mode]{Example of two distinct spike events.}
     \label{fig_ex_spike}
 \end{figure}
 
@@ -1416,7 +1485,7 @@ If the correction models do not work, it will still provide valuable insights in
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ex_cal.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Example of an long-spanning calibration adjustment.}
+    \caption[Example of calibration failure mode]{Example of an long-spanning calibration adjustment.}
     \label{fig_ex_cal}
 \end{figure}
 
@@ -1424,7 +1493,7 @@ If the correction models do not work, it will still provide valuable insights in
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ex_subz.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Example of sub-zero runoff measurements.}
+    \caption[Example of sub-zero failure mode]{Example of sub-zero runoff measurements.}
     \label{fig_ex_subz}
 \end{figure}
 
@@ -1432,7 +1501,7 @@ If the correction models do not work, it will still provide valuable insights in
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ex_noise.png}
     % \includegraphics{outputs/figures/preformance_ex.png}
-    \caption{Example of noisy runoff measurements, which have yet to have accurate adjusted values assigned.}
+    \caption[Example of noise failure mode]{Example of noisy runoff measurements, which have yet to have accurate adjusted values assigned.}
     \label{fig_ex_noise}
 \end{figure}
 
