@@ -84,11 +84,25 @@
 }
 
 \DeclareAcronym{iid}{
-    % short=iid,
-    short=\textit{iid},
+    short = \textit{iid},
     long = independently \& identically distributed,
     sort = iid
-    % format = \itshape
+}
+
+    
+\DeclareAcronym{aucpr}{
+    short = AUC~PR,
+    long = area under the precision-recall curve
+}
+
+\DeclareAcronym{rocauc}{
+    short = ROC~AUC,
+    long = receiver operating characteristic area under the curve
+}
+
+\DeclareAcronym{ap}{
+    short = AP,
+    long = average precision
 }
 
 % URL and hyperlink settings
@@ -433,7 +447,7 @@ Some failures occur in extremely short intervals of time (even as few as one rea
 One long-term goal of this project is to create systems to determine where there are readings containing a particular failure mode.
 % This also requires the system to determine the time range in which a failure mode is occurring.
 % A challenge for this feature is that some failures occur in extremely short intervals of time (even as few as one reading), while others can spoil data spanning multiple weeks.
-Examples of each failure mode can be found in APPENDIX CITE.
+Examples of each failure mode can be found in Appendix~\ref{apx_fm}.
 
 % \begin{table}[htbp]
 %     % \small
@@ -537,6 +551,8 @@ Thus, individual models can be constructed based on failure mode and input varia
     \caption[Variables as they relate to each failure mode]{Variables that relate to or otherwise complicate each failure mode.}
     \label{tab_fmvars}
 \end{table}
+
+\pagebreak
 
 Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
 External variables of rainfall and soil moisture content are necessary for a well-informed model.
@@ -662,7 +678,8 @@ This approach is beneficial for tuning hyperparameters, as it can indicate model
 
 \begin{figure}[hbt!]
     \centering
-    \fbox{\includegraphics[width=.5\textwidth]{figures/chu1995.png}}
+    \fbox{\includegraphics[width=.65\textwidth]{figures/chu1995.png}}
+    % \fbox{\includegraphics[height=.95\textheight]{figures/chu1995.png}}
     % \caption{Different time series segmentation techniques (\citeauthor{chu1995}, \citeyear{chu1995}, Figure~1.\autocite{chu1995}).}
     \caption[Different time series segmentation techniques]{A comparison of different time series segmentation techniques.\autocite{chu1995}}
     \label{fig_chu1995}
@@ -721,17 +738,19 @@ Annotated code, data files, and project reports can be found in the project's Gi
 % Predict on the test set (the held-out 20%)
 % Analyze results (w/ & w/o post-hoc params.)
 
-% \subsection{Data Preparation}
+\subsection{Data Preparation}
 % \subsection{\thesection.1 Import data}
 % \subsection*{1) Import data}
-\subsection{Data import}
+% \subsubsection{Data import}
+\subsubsection{Importing}
 
 All data sets are readily available in the form of \texttt{.csv} files, which are regularly posted to the Smithsonian~Research~Data~Repository with \texttt{CC BY 4.0}~licenses.\autocite{srdrRepo}
 % The data is in four files, relating to runoff, rain, shallow-depth soil moisture
 In their raw form, the data were stored in five individual data sets: runoff measurements (including raw and adjusted measurements), rain measurements, weir calibration values, shallow-depth soil moisture measurements, and deep-depth soil moisture measurements.
 
 % \subsection*{2) Prepare data}
-\subsection{Data preparation}
+% \subsection{Data preparation}
+\subsubsection{Wrangling}
 
 In order to conduct model analyses, data first had to be uniformly coded and united into cohesive sets.
 % 
@@ -753,7 +772,8 @@ Other gaps of missing values occur and should be addressed.\footnote{This also d
 In the manually-adjusted results, the levels of such points had been set to $0.0$, but because there were so few instances of them in the filtered data set, they were removed for obstruction analysis ($n=12$).
 
 % \subsubsection{Soil Moisture Abnormalities}
-\subsubsection*{Soil moisture abnormalities}
+% \subsubsection*{Soil moisture abnormalities}
+\paragraph{Soil moisture abnormalities}
 
 There were some discrepancies in records between the shallow and deep soil moisture data sets.
 Although the ``deep'' set is for depths of 30-40~cm, some entires from 0-10~cm were included.
@@ -767,7 +787,8 @@ Additionally, a few ``shallow'' samples with non-standard location numbers were 
 Duplicated entries were also removed, as were those flagged as being ``bad'' or ``doubtful'' values.
 
 % \subsubsection{Failure Mode Flags}
-\subsubsection*{Failure mode flags}
+% \subsubsection*{Failure mode flags}
+\paragraph{Failure mode flags}
 
 The failure modes were originally encoded in singular string entries.
 Some data points have multiple failure modes, and some entries contained duplicated flags.
@@ -779,7 +800,8 @@ These consisted of: obstruction, spike, gap~fill (often related to sub-zero fail
 %     \item Prepare data
 
 % \subsection*{3) Engineer features}
-\subsection{Feature Engineering}
+% \subsection{Feature Engineering}
+\subsubsection{Feature engineering}
 
 Because XGBoost models use one entry of input features at a time, data had to be extended such that each entry also contains information of data before it.
 These representations came in the form of rolling statistics (e.g., mean rainfall over the past three hours) and lag features (a shift to a past data point, e.g., runoff ten minutes prior).
@@ -798,7 +820,8 @@ These took the form of day of the year, month of the year, hour of the day, and 
 
 %     \item Conduct train/test split
 % \subsection*{4) Conduct train/test split}
-\subsection{Train/Test Split}
+% \subsection{Train/Test Split}
+\subsubsection{Train/test split}
 
 % Unlike other applications of train/test splits in machine learning, time-series data in this context should \textit{not} be randomly split.
 % This is because chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
@@ -821,7 +844,8 @@ A visual overview of this initial 80/20 split and methodology for splits in subs
 
 %     \item Remove highly-correlated features
 % \subsection*{5) Remove highly-correlated features}
-\subsection{Feature Selection}
+% \subsection{Feature Selection}
+\subsubsection{Feature selection}
 
 To reduce high-dimensionality, avoid overfitting, and improve processing time \& internal memory, highly-correlated features were removed.
 This was conducted by using an existing function to compute the pairwise Pearson correlation between all features in the $X$ training set, and removing one of those in pairs in which correlation was calculated as greater than 0.97.
@@ -836,14 +860,15 @@ This was conducted by using an existing function to compute the pairwise Pearson
 
 % df.corr(): When called on a Pandas DataFrame, this method computes the pairwise correlation between all columns in the DataFrame. By default, it uses the Pearson correlation coefficient, which measures the linear relationship between continuous variables.
 
-
+\subsection{Modelling}
 %     \item Tune XGBoost hyperparameters
 % \subsection*{6) Tune XGBoost hyperparameters}
-\subsection{XGBoost Hyperparameter Tuning}
+% \subsection{XGBoost Hyperparameter Tuning}
+\subsubsection{XGBoost hyperparameter tuning}
 
 % To tune the XGBoost hyperparameters, the training data was further split into five expanding
 % XGBoost requires careful hyperparameter tuning.
-To tune XGBoost hyperparameters, an expanding window cross-validation (Figure~\ref{fig_chu1995}.1b) approach was used.
+To tune \ac{xgb} hyperparameters, an expanding window cross-validation (Figure~\ref{fig_chu1995}.1b) approach was used.
 This is similar to how a model would act once deployed, as it would only gain more data over time.
 Five splits on the training data were conducted, with the internal ``training'' set expanding with each fold (Figure~\ref{fig_methods_split}).
 Because the data is mostly high-resolution, a larger window width is permissible.\autocite{ranjan2021}
@@ -851,8 +876,8 @@ Because the data is mostly high-resolution, a larger window width is permissible
 % For 50 iterations, for each of the five expanding-window splits,
 In each of 50 iterations, a unique and randomly-selected combination of hyperparameters was selected from predefined distributions.
 The set was then evaluated across the five expanding-window splits, wherein the model was trained on the subset and used an internal validation set for early stopping to determine the optimal number of boosting ``rounds'' necessary before performance degrades or has diminishing returns.
-The performance metric for all rounds was the area under the precision-recall curve (AUC~PR).\footnote{In this context, AUC~PR is the better metric compared to receiver operating characteristic area under the curve (ROC~AUC) since it is better-suited for imbalanced classes and places more emphasis on positive cases, and is superior to $F_1$ since it considers the full range of classification thresholds.}
-The specific set of hyperparameters and boosting rounds found to yield the highest AUC~PR score across all cross-validation folds were then selected as the options for the model.
+The performance metric for all rounds was the \ac{aucpr}.\footnote{In this context, \ac{aucpr} is the better metric compared to \acf{rocauc} since it is better-suited for imbalanced classes and places more emphasis on positive cases, and is superior to $F_1$ since it considers the full range of classification thresholds.}
+The specific set of hyperparameters and boosting rounds found to yield the highest \ac{aucpr} score across all cross-validation folds were then selected as the options for the model.
 
 % The resulting best hyperparameters are provided in Table~\ref{tab_xgbparams}.
 
@@ -913,7 +938,8 @@ The specific set of hyperparameters and boosting rounds found to yield the highe
 
 
 % \subsection*{7) Fit to get out-of-fold (\ac{oof}) predictions}
-\subsection{Out-of-Fold Predictions}
+% \subsection{Out-of-Fold Predictions}
+\subsubsection{Out-of-fold predictions}
 %     \item Fit to get out-of-fold (\ac{oof}) predictions
 
 % Out-of-fold (\ac{oof}) predictions are used be used to tune smoothing and thresholding parameters. To do this, the model with tuned hyperparameters will predict each sliding window set from before. This reflects the real-world performance of the model as it can fit to more data.
@@ -925,7 +951,8 @@ For further post-hoc tuning, \ac{oof} predictions were collected using the same 
 % Smoothing & Thresholding
 
 % \subsection*{8) Tune post-hoc smoothing parameters}
-\subsection{Tuning Post-Hoc Parameters}
+% \subsection{Tuning Post-Hoc Parameters}
+\subsection{Tuning post-hoc parameters}
 %     \item Tune post-hoc smoothing parameters
 
 Smoothing can improve predictions by preventing standalone points that differ from their neighbors.\footnote{e.g., having a sequence of ``True'' interrupted by one ``False'', or vice-versa, both of which are unlikely in the context of obstructions.}
@@ -939,7 +966,8 @@ These measures were found by finding the combination of median window size and t
 Median windows from 1 (no windowing) through 35 were tested with 100 thresholds ranging from 0.01 through 0.99.
 % Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
 
-\subsubsection*{Removing marginal gains}
+% \subsubsection*{Removing marginal gains}
+\paragraph{Removing marginal gains}
 % Remembering Occam's Razor... marginal gains in $F_1$ can result in over-fitting (such as applying large smoothing windows for an $F_1$ gain of, for instance, 0.0003).
 % The changes in $F_1$ differed so little from one median window to another, another
 % Prioritizing minor changes in $F_1$ can result in over-fitting or creating an overly-complex model process (such as applying large smoothing windows for an $F_1$ gain of only 0.0003 in the \ac{oof} set).
@@ -961,13 +989,16 @@ Thus, the window/threshold combination with the smallest median window and an $F
 
 
 % \subsection*{9) Fit tuned XGBoost model to entire training set}
-\subsection{Fitting Tuned Model}
+% \subsection{Fitting Tuned Model}
+\subsection{Testing Model}
+\subsubsection{Fitting tuned model}
 
-Prior to analyzing performance, the tuned XGBoost model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the data) (Figure~\ref{fig_methods_split}).
+Prior to analyzing performance, the tuned \ac{xgb} model with optimal parameters was fitted to the entire training set (i.e., the first 80\% of the data) (Figure~\ref{fig_methods_split}).
 %     \item Fit tuned XGBoost model to entire training set
 
 % \subsection*{10) Predict on the test set}
-\subsection{Test Set Prediction}
+% \subsection{Test Set Prediction}
+\subsubsection{Test set prediction}
 
 Finally, the fitted model was used to predict the values on the test set (i.e., the held-out 20\% of the data).
 % The resulting precision-recall curve (showing performance across different thresholds) is shown in Figure~\ref{fig_final_prcurve}.
@@ -985,7 +1016,8 @@ The outputs were stored as predicted probabilities in order to test the differen
 
 %     \item Analyze results (with and without post-hoc parameters)
 % \subsection*{11) Analyze results (with and without post-hoc parameters)}
-\subsection{Analyze Results}
+% \subsection{Analyze Results}
+\subsubsection{Performance analysis}
 
 To quantify performance improvement using the tuned threshold, results were calculated using the default, initial-best (with median smoothing), and final thresholds.
 
@@ -1120,7 +1152,7 @@ The results of threshold and $F_1$ score for all smoothing windows are shown in 
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/oof_tune.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption[Performance of different classificaiton thresholds on out-of-fold data]{$F_1$ vs classification threshold for all windows on \ac{oof} set.}
+    \caption[Performance of different classificaiton thresholds on \acl{oof} data]{$F_1$ vs classification threshold for all windows on \acl{oof} set.}
     \label{fig_oof_tune}
 \end{figure}
 
@@ -1133,7 +1165,7 @@ The resulting precision-recall curve of the model after being fitted on the full
     \centering
     \includegraphics[width=.6\textwidth]{outputs/figures/final_prcurve.png}
     % \includegraphics{outputs/figures/oof_tune.png}
-    \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with average precision (AP) values.}
+    \caption[Precision-recall curve of the test set]{Precision-recall curve of the test set with \acf{ap} values.}
     \label{fig_final_prcurve}
 \end{figure}
 
@@ -1163,18 +1195,21 @@ The resulting precision-recall curve of the model after being fitted on the full
     \label{tab_metrics}
 \end{table}
 
+\pagebreak
+
 A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
+An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
 
 \begin{figure}[hbtp!]
     \centering
     \includegraphics[width=\textwidth]{outputs/figures/ts_accuracy.png}
     % \includegraphics{outputs/figures/ts_accuracy.png}
-    \caption[Monthly model accuracy and concentration of blockages]{Monthly model accuracy (teal) and percentage of data points containing blockages (light green).}
+    \caption[Monthly model accuracy and concentration of blockages]{Monthly model accuracy (teal) and percentage of data containing blockages (light green).}
     \label{fig_ts_accuracy}
 \end{figure}
 
 
-An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
+% An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
 
 \begin{figure}[hbtp!]
     \centering
@@ -1237,53 +1272,7 @@ Paton writes:
 \end{quotation}
 
 
-A reflection on some of the challenges faced over the course of this project can be found in Appendix SITE APPENDIX AND MOVE CHALLENGES.
-
-\subsection{Challenges}
-
-A number of unforeseen challenges were faced during the analysis, due in-part to the novelty and size of the project itself.
-% However, each was able to provide a unique learning opportunity and skill sharpening.
-It was known that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
-
-Data cleaning and wrangling also took significantly longer than expected.
-% This was partly due to the need for clarifications of custom 
-Although all data was relatively uniform in its available state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
-% Additionally, the differences in data frequency for obstruction detection
-% Fortunately, this will reduce the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
-Fortunately, this will reduce the preparation required for future analysis of other failure modes.
-
-Communication with the expert data contact at \ac{stri} was not possible the majority of October and November due to the federal government shutdown.
-This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
-% This did result in some data selection ``executive decisions'' since clarifications were not possible.
-
-Computational power also proved a challenge, as there were more than 4.17~million data points (each with their own associated datetime-stamp) collectively in the imported sets.
-Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
-Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
-
-Although only one failure mode was able to be addressed in the scope of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
-
-% It was knwon that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
-
-% Unfamiliarity with time series analysis and the appropriate machine~learning models was an additional challenge.
-% However, this provided the opportunity to research and explore further.
-% Additionally, the federal government shutdown spanning the majority of October and November resulted in a large span 
-
-% Challenges
-% New project & approach
-% Past stochastic approaches had failed; extensive background research was necessary to determine appropriate machine learning model types
-% Gaps & missing data
-% Sensor failures, missing values, and inconsistent labels, comments, & flags
-% Differences in data frequency
-% Runoff & rain:
-%   every 5 minutes for 36 years from 1 site
-% Soil moisture:
-%   once a week from 10 sites ×2 depths each
-% Computational power
-% More than 4.15 million total entries
-% Access & communication
-% Primary data contact was unavailable the majority of Oct & Nov due to the federal government shutdown
-
-% Unforeseen difficulties experienced during these analys
+A reflection on some of the challenges faced over the course of this project can be found in Appendix~\ref{apx_challenges}.
 
 \pagebreak
 \pagebreak
@@ -1518,7 +1507,7 @@ If the correction models do not work, it will still provide valuable insights in
 % \subsection{Failure Mode Examples}
 \setcounter{section}{1}
 \renewcommand{\thesubsection}{\thesection}
-\subsection{Failure Mode Examples}\label{sec_appendix}
+\subsection{Failure Mode Examples}\label{apx_fm}
 % \renewcommand{\thefigure}{A\arabic{figure}}
 \renewcommand{\thefigure}{\thesubsection\arabic{figure}}
 \setcounter{figure}{0}
@@ -1582,9 +1571,51 @@ If the correction models do not work, it will still provide valuable insights in
 \pagebreak
 \setcounter{section}{2}
 \subsection{Challenges}
-% How the team will conduct the business of completing this project. What are the expectations and ground rules the team will agree to? How will you conduct discussions, manage dissenting views, and make decisions? How will you hold each other accountable for completing this project? Each team member must sign the Approvals section below indicating their acknowledgement of these Ground Rules. Do not remove items from this list, but you may add items to this list.
+\label{apx_challenges}
 
-Text.
+A number of unforeseen challenges were faced during the analysis, due in-part to the novelty and size of the project itself.
+% However, each was able to provide a unique learning opportunity and skill sharpening.
+It was known that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
+
+Data cleaning and wrangling also took significantly longer than expected.
+% This was partly due to the need for clarifications of custom 
+Although all data was relatively uniform in its available state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
+% Additionally, the differences in data frequency for obstruction detection
+% Fortunately, this will reduce the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
+Fortunately, this will reduce the preparation required for future analysis of other failure modes.
+
+Communication with the expert data contact at \ac{stri} was not possible the majority of October and November due to the federal government shutdown.
+This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
+% This did result in some data selection ``executive decisions'' since clarifications were not possible.
+
+Computational power also proved a challenge, as there were more than 4.17~million data points (each with their own associated datetime-stamp) collectively in the imported sets.
+Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
+Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
+
+Although only one failure mode was able to be addressed in the scope of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
+
+% It was knwon that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
+
+% Unfamiliarity with time series analysis and the appropriate machine~learning models was an additional challenge.
+% However, this provided the opportunity to research and explore further.
+% Additionally, the federal government shutdown spanning the majority of October and November resulted in a large span 
+
+% Challenges
+% New project & approach
+% Past stochastic approaches had failed; extensive background research was necessary to determine appropriate machine learning model types
+% Gaps & missing data
+% Sensor failures, missing values, and inconsistent labels, comments, & flags
+% Differences in data frequency
+% Runoff & rain:
+%   every 5 minutes for 36 years from 1 site
+% Soil moisture:
+%   once a week from 10 sites ×2 depths each
+% Computational power
+% More than 4.15 million total entries
+% Access & communication
+% Primary data contact was unavailable the majority of Oct & Nov due to the federal government shutdown
+
+% Unforeseen difficulties experienced during these analys
 
 \pagebreak
 % \nocite{*}
