@@ -169,7 +169,8 @@
         \bigskip
 
         \LARGE
-        Date: December 10, 2025
+        December 10, 2025
+        % Date: December 10, 2025
 
         % \bigskip
         \bigskip
@@ -187,25 +188,25 @@
 
     \end{center}
 \end{titlepage}
-% \thispagestyle{empty}
+\thispagestyle{empty}
 
 
 
 
 \tableofcontents
 
-% \thispagestyle{empty}
-\pagebreak
+\thispagestyle{empty}
+% \pagebreak
 % \listoffigures
 
 % \listoftables
 % \thispagestyle{empty}
-% \pagebreak
-% \pagenumbering{arabic}
+\pagebreak
+\pagenumbering{arabic}
 
 % Abstract, Introduction, Methods, Results, Discussion/Conclusions
 \section*{Abstract}
-
+\addcontentsline{toc}{section}{Abstract}
 
 The primary goal of this project is to create models that can automate quality assurance of temporal runoff data from the Lutz~catchment of Barro~Colorado~Island~(BCI) on the Republic~of~Panama.
 % The algorithms will conduct quality assurance of temporal runoff data from the Lutz~Weir of Barro~Colorado~Island, Panama.
@@ -391,7 +392,13 @@ Examples of each failure mode can be found in APPENDIX CITE.
 % \end{table}
 
 
-\subsection{Model}
+\subsection{Model Selection}
+
+Machine learning has been used in hydrology for applications such as predictive runoff modelling\autocite{mohammadi2021} and modelling agricultural drought.\autocite{houmma2022}
+Rainfall runoff data collected by citizen scientists in Ethiopia has been visually (via graphical inspections) and quantitatively (via statistical methods) analyzed for quality compared to nearby professional references.\autocite{mengistiea2024}
+% In the field of remote sensing and geospatial analysis, recurrent~neural~networks---especially~long short\nobreakdash-term~memory~(LSTM)---are successful for analyzing multi-temporal data, however scalability is limited and they can be prone to overfitting.\autocite{dritsas2025}
+% 
+In environmental machine learning, improper missing data management techniques can also worsen data leakage.\autocite{zhu2023}
 
 Initially, a multi-class classification model was considered to flag points containing failure modes.
 However, not all failure modes require all available variables in order to be successfully flagged, as shown in Table~\ref{tab_fmvars}.
@@ -399,7 +406,9 @@ However, not all failure modes require all available variables in order to be su
 Thus, individual models can be constructed based on failure mode and input variables in order to minimize the complexity of each.
 
 Obstructions are the most difficult failure mode to detect and correct, and thus were selected as the first failure mode to construct a model for.
+External variables of rainfall and soil moisture content are necessary for a well-informed model.
 Additionally, the calibration variable can have mixed success, since an obstruction or weir~cleaning can render it useless.
+In the context of modelling expected droughts, \citean{houmma2022} highlights how incorporation of local and microclimate variables are becoming increasingly necessary due to climate change and ``exceptional~situations'' which otherwise make extreme peaks of variables \& interdependencies no longer able to be statistically modelable.
 
 \begin{table}[htbp]
     % \small
@@ -417,7 +426,7 @@ Additionally, the calibration variable can have mixed success, since an obstruct
         Signal noise & \checkmark & & & \\
         \bottomrule
     \end{tabular}
-    \caption{Variables that can influence each failure mode\autocite{hydroPC}}
+    \caption{Variables that relate to each failure mode\autocite{hydroPC}}
     \label{tab_fmvars}
 \end{table}
 
@@ -518,7 +527,7 @@ Ultimately, XGBoost was selected as the first model to try with the obstruction 
 %     \label{tab_fmvars}
 % \end{table}
 
-\subsection{Data splitting}
+\subsection{Data Splitting}
 
 % chronological order is important to preserve, and there would be severe data leakage if test samples were taken sporadically throughout the set.
 % Things to keep in mind:
@@ -556,7 +565,7 @@ This approach is beneficial for tuning hyperparameters, as it can indicate model
 Analyses were conducted in Python and compiled in Jupyter~Notebooks.
 Annotated code, data files, and project reports can be found in the project's GitHub repository.\footnote{Project repository: \url{https://github.com/gmcginnis/info-698-capstone}.}
 
-Prior to analysis, a significant amount of background research was conducted to determine an appropriate model and methodology for the time-series binary classification.
+% Prior to analysis, a significant amount of background research was conducted to determine an appropriate model and methodology for the time-series binary classification.
 
 % 
 % For the obstruction failure mode flagging model, the following approach was used:
@@ -623,7 +632,7 @@ Because the obstruction failure mode detection depends on these values (due to d
 
 Data points which were both marked as ``missing'' and had reported raw runoff values of $-999.0$ were also removed
 Other gaps of missing values occur and should be addressed.\footnote{This also differs from instances of gap fills.}
-In the manually-adjusted results, the levels of such points had been set to $0.0$, but because there were so few instances of these in the filtered data set, they were removed for obstruction analysis ($n=12$).
+In the manually-adjusted results, the levels of such points had been set to $0.0$, but because there were so few instances of them in the filtered data set, they were removed for obstruction analysis ($n=12$).
 
 % \subsubsection{Soil Moisture Abnormalities}
 \subsubsection*{Soil moisture abnormalities}
@@ -665,7 +674,7 @@ A decay feature was also added for this cumulative rain feature, which duplicate
 The decay rate was set to -0.1, but would benefit from expert insight for a more precise value to better represent actual flow decay behavior.
 
 Features to represent seasonality and time-of-day considerations were also added.
-These took the form of day of the year, month of the year, hour of the day, and minute of the the hour, each transformed with sine and cosine to allow the model to be based on the cyclical patterns of time rather than abrupt distances (e.g., the raw numeric value for the 365th day of the year [December~31] is 'far' from the 1st day of the year [January~01], but in reality they are very near).
+These took the form of day of the year, month of the year, hour of the day, and minute of the the hour, each transformed with sine and cosine to allow the model to be based on the cyclical patterns of time rather than abrupt distances.\footnote{For example, the numeric value for the day of the year of December~31 (365) is `far' from that of January~01 (001), but in reality they are very near}.
 % Additional features were
 
 %     \item Conduct train/test split
@@ -920,6 +929,16 @@ $F_1$ is a measure that combines precision \& recall:
 
 \section{Results}
 
+A time series of runoff and soil moisture samples of the complete data set used in the analysis is shown in Figure~\ref{fig_ts_month_rosoil}.
+
+\begin{figure}[hbt!]
+    \centering
+    % \fbox{\includegraphics[width=.95\textwidth]{outputs/figures/ts_month_rosoil.png}}
+    \includegraphics[width=\textwidth]{outputs/figures/ts_month_rosoil.png}
+    \caption{Time series showing monthly raw \& adjusted runoff and soil moisture values.}
+    \label{fig_ts_month_rosoil}
+\end{figure}
+
 % Annotated code, data files, and project reports can be found in the project's GitHub repository.\footnote{Project repository: \url{https://github.com/gmcginnis/info-698-capstone}.}
 
 % Performance metrics information here.
@@ -1014,29 +1033,78 @@ The resulting precision-recall curve of the model after being fitted on the full
     \label{tab_metrics}
 \end{table}
 
+A time series showing monthly averages of model accuracy over the complete test set is shown in Figure~\ref{fig_ts_accuracy}.
 
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/ts_accuracy.png}
+    % \includegraphics{outputs/figures/ts_accuracy.png}
+    \caption{Monthly model accuracy (teal) and percentage of data points containing blockages (light green).}
+    \label{fig_ts_accuracy}
+\end{figure}
+
+
+An example of model performance in detecting blockages is shown in Figure~\ref{fig_performance_ex}.
+
+\begin{figure}[hbtp!]
+    \centering
+    \includegraphics[width=\textwidth]{outputs/figures/preformance_ex.png}
+    % \includegraphics{outputs/figures/preformance_ex.png}
+    \caption{Model performance on a small subset of the test data, where red lines are actual instances of an obstruction.}
+    \label{fig_performance_ex}
+\end{figure}
 
 \pagebreak
 
 \section{Discussion}
 
+Based on Figure~\ref{fig_oof_tune}, it was be concluded that threshold tuning significantly improved model performanc, however window smoothing appeared ineffective.
+The test results in Table~\ref{tab_metrics} show that threshold tuning greatly improved recall but at the detriment of other metrics:
+% This was further proven by the test results in Table~\ref{tab_metrics}, since all metrics improved .
+high recall indicates that the tuned-threshold model can successfully identify most true instances of obstructions, however low precision indicates that many data points were erroneously flagged as being obstructions.
+% 
+The threshold selected at the absolute best (i.e., before marginal gains filtering) smoothing window had a slightly higher recall than the final threshold.
+
+% \subsection{Limitations}
+
+The engineered features for the XGBoost model are all look-behind to avoid data leakage and reflect performance of a ``live'' model.
+This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep dropoff in runoff values followed by a calibratino point can indicate the end of a blockage.}
+% 
+Despite XGBoost being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes significantly impede model performance.
+
+From Figure~\ref{fig_ts_accuracy}, model accuracy seems to improve when there are fewer actual instances of obstructions.
+The jagged accuracy line indicates that the current model will perform inconsistently on time periods with differing concentrations of obstruction events.
+% However, the matching of peaks in mid-2018 and late 2024 to early 2025 seem to indicate that performance improved with greater instances of actual blco
+The performance example in Figure~\ref{fig_performance_ex} shows that the model successfully highlighted much of the obstruction events, however struggled to maintain a smooth window to indicate the full range of the failure mode.
+% Although smoothing with median windowing did not quantifiably improve performance, it is possible that other smothing 
+% The highlighted window in the afternoon of July 2 does follow the pattern of other obstruction instances (due to not having a rain event to cause the increase), however not all non-rain increases are indicative of a blockage.\footnote{Such as periods of of evapotranspiration.}
+
 \subsection{Challenges}
 
 A number of unforeseen challenges were faced during the analysis, due in-part to the newness of the project itself.
-However, each was able to provide a unique learning opportunity and skill sharpening.
+% However, each was able to provide a unique learning opportunity and skill sharpening.
+It was known that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
 
 For instance, data cleaning and wrangling took significantly longer than expected.
 % This was partly due to the need for clarifications of custom 
 Although all data was already relatively uniform in its existing state, filtering for the specific entries of interest and removing problematic entries without unnecessary data deletion was a challenge at time.
+% Additionally, the differences in data frequency for obstruction detection
 Fortunately, this reduces the preparation required for future analysis of other failure modes, and also provided the opportunity for some more advanced wrangling techniques.
 
-Additionally, communication with the expert data contact at STRI was not possible the majority of October and November due to the federal government shutdown.
+Communication with the expert data contact at STRI was not possible the majority of October and November due to the federal government shutdown.
 This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
 % This did result in some data selection ``executive decisions'' since clarifications were not possible.
 
-Unfamiliarity with time-series analysis and the appropriate machine~learning models was an additional challenge.
+Computational power also proved a challenge, as there were more than 4.15~million total entries in the raw data set.
+This expanded further with feature engineering, since each data point had more than one hundred values associated with it.
+Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize paralelle processing.
 
+Although only one failure mode was able to be addressed in the scope of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
 
+% It was knwon that past stochastic approaches had failed; thus, extensive background research was necessary to determine the appropriate machine learning model types.
+
+% Unfamiliarity with time series analysis and the appropriate machine~learning models was an additional challenge.
+% However, this provided the opportunity to research and explore further.
 % Additionally, the federal government shutdown spanning the majority of October and November resulted in a large span 
 
 % Challenges
@@ -1057,6 +1125,8 @@ Unfamiliarity with time-series analysis and the appropriate machine~learning mod
 % Unforeseen difficulties experienced during these analys
 
 \pagebreak
+
+\section{Future Work}
 
 Text.
 \pagebreak
