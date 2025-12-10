@@ -984,7 +984,7 @@ Median windowing is often used for image analysis,\autocite{rezaee2021} but is e
 
 By default, a threshold of $0.5$ is selected in binary classification for categorizing a point as ``True'' or ``False''.
 However, in practice a model that is more or less sensitive to ``True'' may make final results more useful.
-These measures were found by finding the combination of median window size and threshold that maximizes the $F_1$ score.\footnote{$F_1$ balances considerations for both precision and accuracy.}
+These measures were found by finding the combination of median window size and threshold that maximizes the $F_1$ score,\autocite{giannakopoulos2022} which balances consideration for both precision and accuracy and can be a superior metric for class-imbalanced data.\autocite{lipton2015}
 % 
 Applying smoothing via median windows of sizes from 1 (no smoothing) through~35 were tested with 100~thresholds ranging from 0.01~through~0.99.
 % Initially, the best parameters selected were a median windowing size of 29 and a classification threshold of 0.307 ($F_1=0.463$).
@@ -1330,6 +1330,10 @@ The model only relied on look-behind features to avoid data leakage and reflect 
 This differs from the manually-identified flags, which often use look-ahead metrics.\footnote{For example, a steep drop-off in runoff values followed by a calibration point can indicate the end of a blockage.}
 It is possible that performance would improve if instead the classification model was able to utilize such ``look-ahead'' features, although implementation of this would require careful consideration since it is atypical from usual time series analysis, and would prevent the model from being able to predict on live data as it arrives in the database.
 % 
+Additionally, although small tests were conducted in an attempt to integrate a feature of the previous value's predicted obstruction state, this proved computationally infeasible at the time since high-power GPU access was integrated later in the project process.
+With this new resource, it is possible that integration of this feature may also improve results.
+% Additionally, although small tests were conducted in an attempt to integrate a feature of the previous value's predicted obstruction state, this proved computationally infeasible at the time. 
+% 
 % Despite \ac{xgb} being able to yield successful results despite noisy data,\autocite{chen2016} it is possible that other failure modes impede model performance.
 
 Future work will also improve on the model for obstruction detection, and create other models for the other failure modes.
@@ -1445,10 +1449,13 @@ Fortunately, this will reduce the preparation required for future analysis of ot
 Communication with the expert data contact at \ac{stri} was not possible the majority of October and November due to the federal government shutdown.
 This did, however, provide the opportunity for more thoughtful data selection decisions since relying solely on external clarifications was not immediately available.
 % This did result in some data selection ``executive decisions'' since clarifications were not possible.
+% 
+% Other modelling approaches such as integration of immediatley prediction was attempted but proved too computationally expensive.
 
 Computational power also proved a challenge, as there were more than 4.17~million data points (each with their own associated datetime-stamp) collectively in the imported sets.
 Even after removing irrelevant data points, the complexity was expanded further with feature engineering, as this resulted in most data points having more than one hundred individual values associated with it.
 Ultimately, a cloud-based high-RAM GPU proved the most efficient approach for the final model runs, although this required other code adjustments to further improve memory and prioritize parallel processing.
+% Additionally, although small tests were conducted in an attempt to integrate a feature of the previous value's predicted obstruction state, this proved computationally infeasible at the time.
 
 Although only one failure mode was able to be addressed in the duration of the project, it was specifically chosen because it was the most difficult, and because such machine~learning analysis had yet to be applied in this way to hydrological time series data on such a large scale.
 
